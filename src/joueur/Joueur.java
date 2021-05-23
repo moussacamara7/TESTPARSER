@@ -131,4 +131,8 @@ public class Joueur {
                 ", proprietesJoueur=\n\t" + proprietesJoueur +
                 "}\n";
     }
+
+
+
+
 }

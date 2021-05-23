@@ -7,10 +7,14 @@ public class Construire extends Action{
 
 
 
-    public void fait(String ligne) throws Exception{
+    public void fait(int ligne) throws Exception{
+
     }
 
-    public boolean saitFaire(String ligne) {
+    public boolean saitFaire(int ligne) {
+        if(ligne == 2)
+            return true;
+
         return false;
     }
 }

@@ -183,7 +183,7 @@ public class Plateau {
 
     public int getNombreJoueurs(){return listeJoueurs.size();}
 
-    public Joueur getJoueur(int i) {
+    public static Joueur getJoueur(int i) {
         if (i<0 || i>NB_JOUEUR_MAX)
             throw new IllegalArgumentException("L'indice du joueur est incorrect");
 

@@ -1,5 +1,13 @@
 package mecanismeJeu;
 
+
+/****************************************
+ * Actions :
+ * 1 - Acheter
+ * 2 - Construire
+ * 3 - Payer
+****************************************/
+
 public abstract class Action {
     private Action suivant = null;
 
@@ -9,7 +17,7 @@ public abstract class Action {
     }
 
 
-    public void traiter(String action) throws Exception {
+    public void traiter(int action) throws Exception {
         if (saitFaire(action))
             fait(action);
         else if (aUnSuivant())
@@ -27,7 +35,7 @@ public abstract class Action {
         return suivant != null;
     }
 
-    public abstract void fait(String action) throws Exception;
+    public abstract void fait(int action) throws Exception;
 
-    public abstract boolean saitFaire(String action);
+    public abstract boolean saitFaire(int action);
 }
