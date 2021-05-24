@@ -1,10 +1,12 @@
 package plateau;
 
 import carte.Cartes;
-import fichier.*;
+import fichier.LectureFichier;
 import joueur.Joueur;
-import parserCarte.*;
-import parserTerrain.*;
+import parser.Parser;
+import parser.parserCarteChance.*;
+import parser.parserCarteCommunaute.*;
+import parser.parserTerrain.*;
 import terrain.Terrain;
 
 import java.io.IOException;
@@ -12,10 +14,10 @@ import java.util.ArrayList;
 
 public class Plateau {
     private static final int NB_JOUEUR_MAX = 10;
-    private static ArrayList<Joueur> listeJoueurs = new ArrayList<Joueur>();
-    private static ArrayList<Terrain> cases = new ArrayList<Terrain>();
-    private static ArrayList<Cartes> chance = new ArrayList<Cartes>();
-    private static ArrayList<Cartes> caisseCommunaute = new ArrayList<Cartes>();
+    private final ArrayList<Joueur> listeJoueurs = new ArrayList<>();
+    private final ArrayList<Terrain> cases = new ArrayList<>();
+    private final ArrayList<Cartes> chance = new ArrayList<>();
+    private final ArrayList<Cartes> caisseCommunaute = new ArrayList<>();
 
 
     public Plateau() throws IOException {
@@ -24,13 +26,12 @@ public class Plateau {
         initialisationCarteChance();
     }
 
-    public void initialisationTerrain(){
+    public void initialisationTerrain() {
 
         try {
             String fichierTerrain = "data/Terrains.csv";
 
-            ParserT premierParser = null;
-            premierParser = new ParserAllezEnPrison(premierParser);
+            Parser premierParser = new ParserAllezEnPrison(null);
             premierParser = new ParserCaisseCommunaute(premierParser);
             premierParser = new ParserCaseDepart(premierParser);
             premierParser = new ParserChance(premierParser);
@@ -44,61 +45,57 @@ public class Plateau {
             premierParser = new ParserTerrainConstructible(premierParser);
 
 
-            FichierTerrain.lire(fichierTerrain, premierParser);
+            LectureFichier.lire(fichierTerrain, premierParser, this);
 
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
         }
     }
 
-    public void initialisationCarteCommunaute(){
+    public void initialisationCarteCommunaute() {
 
         try {
             String fichierCommunaute = "data/CartesCommunaute.csv";
 
 
+            Parser premierParser = new ParserCommunauteAnniversaire(null);
+            premierParser = new ParserCommunauteImpots(premierParser);
+            premierParser = new ParserCommunauteReparations(premierParser);
+            premierParser = new ParserCommunauteDeplacement(premierParser);
+            premierParser = new ParserCommunauteEncaisser(premierParser);
+            premierParser = new ParserCommunauteLiberation(premierParser);
+            premierParser = new ParserCommunautePayer(premierParser);
+            premierParser = new ParserCommunauteChance(premierParser);
 
-            ParserC premierParserC = null;
-            premierParserC = new ParserAnniversaire(premierParserC);
-            premierParserC = new ParserChanceC(premierParserC);
-            premierParserC = new ParserDeplacement(premierParserC);
-            premierParserC = new ParserEncaisser(premierParserC);
-            premierParserC = new ParserLiberation(premierParserC);
-            premierParserC = new ParserPayer(premierParserC);
 
-
-            FichierCarte.lire(fichierCommunaute, premierParserC);
+            LectureFichier.lire(fichierCommunaute, premierParser, this);
 
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
         }
     }
 
-    public void initialisationCarteChance(){
+    public void initialisationCarteChance() {
 
         try {
             String fichierChance = "data/CartesChance.csv";
 
 
+            Parser premierParser = new ParserChanceAnniversaire(null);
+            premierParser = new ParserChanceImpots(premierParser);
+            premierParser = new ParserChanceReparations(premierParser);
+            premierParser = new ParserChanceDeplacement(premierParser);
+            premierParser = new ParserChanceEncaisser(premierParser);
+            premierParser = new ParserChanceLiberation(premierParser);
+            premierParser = new ParserChancePayer(premierParser);
 
-            ParserC premierParserC = null;
-            premierParserC = new ParserDeplacementC(premierParserC);
-            premierParserC = new ParserEncaisserC(premierParserC);
-            premierParserC = new ParserImpots(premierParserC);
-            premierParserC = new ParserLiberationC(premierParserC);
-            premierParserC = new ParserPayerC(premierParserC);
-            premierParserC = new ParserReparations(premierParserC);
 
-
-            FichierCarte.lire(fichierChance, premierParserC);
+            LectureFichier.lire(fichierChance, premierParser, this);
 
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
         }
     }
-
-
-
 
 
     ////////////////////////////////////////////
@@ -106,7 +103,7 @@ public class Plateau {
     //      Methodes relatifs aux Cases
     //
     ////////////////////////////////////////////
-    public static void ajouterCases(Terrain cas) {
+    public void ajouterCases(Terrain cas) {
         if (cas == null)
             throw new IllegalArgumentException("Case erronee");
 
@@ -115,18 +112,16 @@ public class Plateau {
     }
 
 
-    public int getNombreCase(){return cases.size();}
+    public int getNombreCase() {
+        return cases.size();
+    }
 
-    public static Terrain getCase(int i) {
-        if (i<0 || i>40)
+    public Terrain getCase(int i) {
+        if (i < 0 || i > 40)
             throw new IllegalArgumentException("L'indice de la case est incorrect");
 
         return cases.get(i);
     }
-
-
-
-
 
 
     ////////////////////////////////////////////
@@ -134,17 +129,20 @@ public class Plateau {
     //      Methodes relatifs aux Cartes Chance
     //
     ////////////////////////////////////////////
-    public static void ajouterChance(Cartes cChance) {
+    public void ajouterChance(Cartes cChance) {
         if (cChance == null)
             throw new IllegalArgumentException("Carte chance erronee");
 
         chance.add(cChance);
 
     }
-    public int getNombreCarteChance(){return chance.size();}
+
+    public int getNombreCarteChance() {
+        return chance.size();
+    }
 
     public Cartes getChance(int i) {
-        if (i<0 || i>15)
+        if (i < 0 || i > 15)
             throw new IllegalArgumentException("L'indice de la carte est incorrect");
 
         return chance.get(i);
@@ -155,7 +153,7 @@ public class Plateau {
     //      Methodes relatifs aux Cartes Caisse de communauté
     //
     ////////////////////////////////////////////
-    public static void ajouterCommunaute(Cartes cCommunaute) {
+    public void ajouterCommunaute(Cartes cCommunaute) {
         if (cCommunaute == null)
             throw new IllegalArgumentException("Carte communaute erronee");
 
@@ -163,10 +161,12 @@ public class Plateau {
 
     }
 
-    public int getNombreCarteCommunaute(){return caisseCommunaute.size();}
+    public int getNombreCarteCommunaute() {
+        return caisseCommunaute.size();
+    }
 
     public Cartes getCommunaute(int i) {
-        if (i<0 || i>15)
+        if (i < 0 || i > 15)
             throw new IllegalArgumentException("L'indice de la carte est incorrect");
 
         return caisseCommunaute.get(i);
@@ -178,7 +178,7 @@ public class Plateau {
     //      Methodes relatifs aux Joueurs
     //
     ////////////////////////////////////////////
-    public static void ajouterJoueur(Joueur joueur) {
+    public void ajouterJoueur(Joueur joueur) {
         if (joueur == null)
             throw new IllegalArgumentException("joueur erroné");
 
@@ -186,13 +186,20 @@ public class Plateau {
 
     }
 
-    public int getNombreJoueurs(){return listeJoueurs.size();}
+    public int getNombreJoueurs() {
+        return listeJoueurs.size();
+    }
 
-    public static Joueur getJoueur(int i) {
-        if (i<0 || i>NB_JOUEUR_MAX)
+    public Joueur getJoueur(int i) {
+        if (i < 0 || i > NB_JOUEUR_MAX)
             throw new IllegalArgumentException("L'indice du joueur est incorrect");
 
         return listeJoueurs.get(i);
+    }
+
+    public void jouer(){
+        //jeu
+
     }
 
 }

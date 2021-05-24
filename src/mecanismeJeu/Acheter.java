@@ -19,11 +19,13 @@ public class Acheter extends Action{
 
     public void fait(Joueur joueur, int numeroTerrain) throws Exception{
 
-        if(! Plateau.getCase(numeroTerrain).estAchetable())
+        Plateau plateau = joueur.getPlateau();
+
+        if(! plateau.getCase(numeroTerrain).estAchetable())
             throw new IllegalArgumentException("terrain non achetable");
 
         //c'est bien un terrain achetable
-        TerrainAchetable T = (TerrainAchetable) Plateau.getCase(numeroTerrain);
+        TerrainAchetable T = (TerrainAchetable) plateau.getCase(numeroTerrain);
 
         //on vérifie que le terrain n'ai pas de propriétaire
         if(T.getProprietaire() != null)
@@ -36,7 +38,7 @@ public class Acheter extends Action{
         //On retire l'argent au joueur et on lui ajoute la popriété
         joueur.setCapitalJoueur(joueur.getCapitalJoueur()-T.getPrixAchat());
         joueur.ajouterPropriete(T);
-        ((TerrainAchetable) Plateau.getCase(numeroTerrain)).setProprietaire(joueur);
+        ((TerrainAchetable) plateau.getCase(numeroTerrain)).setProprietaire(joueur);
 
     }
 
@@ -64,8 +66,6 @@ public class Acheter extends Action{
     }
 
     public boolean saitFaire(int ligne) {
-        if (ligne == 1)
-            return true;
-        return false;
+        return ligne == 1;
     }
 }

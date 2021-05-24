@@ -1,5 +1,6 @@
 package joueur;
 
+import plateau.Plateau;
 import terrain.TerrainAchetable;
 
 import java.util.ArrayList;
@@ -9,18 +10,29 @@ public class Joueur {
 
     private String nomJoueur;
     private int capitalJoueur;
-    private final ArrayList<TerrainAchetable> proprietesJoueur = new ArrayList<TerrainAchetable>();
+    private final ArrayList<TerrainAchetable> proprietesJoueur = new ArrayList<>();
     private int positionJoueur;
     private boolean estprisonnier;
+    private Plateau plateau;
 
 
 
-    public Joueur(String nomJoueur, int capitalJoueur, int positionJoueur, boolean estprisonnier) {
+    public Joueur(String nomJoueur, int capitalJoueur, int positionJoueur, boolean estprisonnier,Plateau plateau) {
 
         setNomJoueur(nomJoueur);
         setCapitalJoueur(capitalJoueur);
         setPositionJoueur(positionJoueur);
         setEstprisonnier(estprisonnier);
+        setPlateau(plateau);
+    }
+
+    public Joueur(String nomJoueur, Plateau plateau) {
+
+        setNomJoueur(nomJoueur);
+        setCapitalJoueur(1500);
+        setPositionJoueur(0);
+        setEstprisonnier(false);
+        setPlateau(plateau);
     }
 
 
@@ -110,12 +122,22 @@ public class Joueur {
         this.estprisonnier = estprisonnier;
     }
 
+    public Plateau getPlateau() {
+        return plateau;
+    }
+
+    public void setPlateau(Plateau plateau) throws IllegalArgumentException{
+        if(plateau == null)
+            throw new IllegalArgumentException("Plateau null");
+        this.plateau = plateau;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Joueur joueur = (Joueur) o;
-        return capitalJoueur == joueur.capitalJoueur && positionJoueur == joueur.positionJoueur && estprisonnier == joueur.estprisonnier && Objects.equals(nomJoueur, joueur.nomJoueur) && Objects.equals(proprietesJoueur, joueur.proprietesJoueur);
+        return capitalJoueur == joueur.capitalJoueur && positionJoueur == joueur.positionJoueur && estprisonnier == joueur.estprisonnier && Objects.equals(nomJoueur, joueur.nomJoueur) && Objects.equals(proprietesJoueur, joueur.proprietesJoueur) && Objects.equals(plateau, joueur.plateau);
     }
 
     @Override
@@ -123,14 +145,10 @@ public class Joueur {
         return "Joueur{" +
                 "nomJoueur='" + nomJoueur + '\'' +
                 ", capitalJoueur=" + capitalJoueur +
-
+                ", proprietesJoueur=" + proprietesJoueur +
                 ", positionJoueur=" + positionJoueur +
                 ", estprisonnier=" + estprisonnier +
-                ", proprietesJoueur=\n\t" + proprietesJoueur +
-                "}\n";
+                ", plateau=" + plateau +
+                '}';
     }
-
-
-
-
 }

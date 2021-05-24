@@ -1,23 +1,10 @@
 package main;
 
-import joueur.Joueur;
 import plateau.Plateau;
-import mecanismeJeu.*;
 
 import java.io.IOException;
 
 public class Main {
-
-    //numero du joueur dont c'est le tour dans listJoueur
-    private static int numeroJoueurActuel;
-
-    public static int getNumeroJoueurActuel(){
-        return numeroJoueurActuel;
-    }
-
-    public static void setNumeroJoueurActuel(int numeroJoueurActuel) {
-        Main.numeroJoueurActuel = numeroJoueurActuel;
-    }
 
     public static void main(String[] args) throws IOException {
 
@@ -41,12 +28,6 @@ public class Main {
 
         for(int i=0; i<plt.getNombreCarteCommunaute(); i++)
             System.out.println(plt.getCommunaute(i));
-
-        joueur.Joueur A = new Joueur("A",200,0,false);
-        joueur.Joueur B = new Joueur("B",200,0,false);
-
-
-
 
     }
 }
