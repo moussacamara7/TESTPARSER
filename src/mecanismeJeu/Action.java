@@ -1,5 +1,5 @@
 package mecanismeJeu;
-
+import joueur.Joueur;
 
 /****************************************
  * Actions :

@@ -1,5 +1,8 @@
 package mecanismeJeu;
 
+
+import joueur.Joueur;
+
 public class Payer extends Action{
     public Payer(Action suivant) {
         super(suivant);
@@ -11,7 +14,7 @@ public class Payer extends Action{
 
 
 
-    public void fait(int somme,joueur.Joueur depart, joueur.Joueur destination) throws Exception{
+    public void fait(int somme, Joueur depart, Joueur destination) throws Exception{
         if(depart.getCapitalJoueur() < somme)
             throw new Exception("Capital insuffisant");
 

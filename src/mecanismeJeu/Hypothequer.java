@@ -7,10 +7,10 @@ public class Hypothequer extends Action{
 
 
 
-    public void fait(String ligne) throws Exception{
+    public void fait(int ligne) throws Exception{
     }
 
-    public boolean saitFaire(String ligne) {
+    public boolean saitFaire(int ligne) {
         return false;
     }
 }

@@ -15,8 +15,6 @@ public class Joueur {
 
 
 
-
-
     public Joueur(String nomJoueur, int capitalJoueur, int positionJoueur, boolean estprisonnier) {
 
         setNomJoueur(nomJoueur);

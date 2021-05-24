@@ -117,12 +117,17 @@ public class Plateau {
 
     public int getNombreCase(){return cases.size();}
 
-    public Terrain getCase(int i) {
+    public static Terrain getCase(int i) {
         if (i<0 || i>40)
             throw new IllegalArgumentException("L'indice de la case est incorrect");
 
         return cases.get(i);
     }
+
+
+
+
+
 
     ////////////////////////////////////////////
     //

@@ -1,14 +1,18 @@
 package terrain;
 
+import joueur.Joueur;
+
 public abstract class TerrainAchetable implements Terrain{
     private int numeroTerrain;
     private String nomTerrain;
     private int prixAchat;
+    private Joueur proprietaire;
 
     public TerrainAchetable(int numeroTerrain, String nomTerrain, int prixAchat) {
         setNumeroTerrain(numeroTerrain);
         setNomTerrain(nomTerrain);
         setPrixAchat(prixAchat);
+        setProprietaire(null);
     }
 
     public void setNumeroTerrain(int numeroTerrain) {
@@ -34,6 +38,14 @@ public abstract class TerrainAchetable implements Terrain{
 
     public int getPrixAchat() {
         return prixAchat;
+    }
+
+    public void setProprietaire(Joueur proprietaire) {
+        this.proprietaire = proprietaire;
+    }
+
+    public Joueur getProprietaire() {
+        return proprietaire;
     }
 
     public boolean estAchetable() {
