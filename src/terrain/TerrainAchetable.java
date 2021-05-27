@@ -52,6 +52,10 @@ public abstract class TerrainAchetable implements Terrain{
         return true;
     }
 
+    public boolean aUnProprietaire(){
+        return this.proprietaire != null;
+    }
+
     public abstract boolean estConstructible();
 
     @Override
