@@ -1,4 +1,5 @@
 package mecanismeJeu;
+
 import joueur.Joueur;
 import plateau.Plateau;
 import terrain.Terrain;
@@ -7,7 +8,7 @@ import terrain.TerrainAchetable;
 
 public class Action {
 
-    /***********************
+    /****************************
      *
      * actions :
      *
@@ -19,68 +20,115 @@ public class Action {
      *      se deplacer
      *      hypotequer
      *
-     ***********************/
+     ****************************/
 
 
-
-    public void payer(int somme, Joueur depart, Joueur destination) throws Exception{
-        if(depart.getCapitalJoueur() < somme)
+    public void payer(int somme, Joueur depart, Joueur destination) throws Exception {
+        if (somme <= 0)
+            throw new IllegalArgumentException("somme invalide");
+        if (depart.getCapitalJoueur() < somme)
             throw new Exception("Capital insuffisant");
 
         //On retire l'argent au Joueur qui donne
         depart.setCapitalJoueur(depart.getCapitalJoueur() - somme);
         //On ajoute l'argent au joueur qui le recoit
+        destination.setCapitalJoueur(destination.getCapitalJoueur() - somme);
+    }
+
+    //pour payer depuis la banque
+    public void payer(int somme, Joueur destination){
+        if (somme <= 0)
+            throw new IllegalArgumentException("somme invalide");
         destination.setCapitalJoueur(destination.getCapitalJoueur() + somme);
     }
 
+    //retirer la somme à un joueur
+    public void retirer(int somme, Joueur destination){
+        if (somme <= 0)
+            throw new IllegalArgumentException("somme invalide");
+        destination.setCapitalJoueur(destination.getCapitalJoueur() + somme);
 
-    public void acheter(Joueur joueur, int numeroTerrain) throws Exception{
+    }
+
+    /**
+     * acheter un terrain
+     * pas de verification de la position du joueur
+     */
+    public void acheter(Joueur joueur, int numeroTerrain) throws Exception {
 
         Plateau plateau = joueur.getPlateau();
 
-        if(! plateau.getCase(numeroTerrain).estAchetable())
+        if (!plateau.getCase(numeroTerrain).estAchetable())
             throw new IllegalArgumentException("terrain non achetable");
 
         //c'est bien un terrain achetable
         TerrainAchetable T = (TerrainAchetable) plateau.getCase(numeroTerrain);
 
         //on vérifie que le terrain n'ai pas de propriétaire
-        if(T.aUnProprietaire())
+        if (T.aUnProprietaire())
             throw new Exception("Le terrain a deja un proprietaire");
 
         //on vérifie si le joueur peut l'acheter
-        if(joueur.getCapitalJoueur() < T.getPrixAchat())
+        if (joueur.getCapitalJoueur() < T.getPrixAchat())
             throw new Exception("Capital insuffisant");
 
         //On retire l'argent au joueur et on lui ajoute la popriété
-        joueur.setCapitalJoueur(joueur.getCapitalJoueur()-T.getPrixAchat());
+        joueur.setCapitalJoueur(joueur.getCapitalJoueur() - T.getPrixAchat());
         joueur.ajouterPropriete(T);
         ((TerrainAchetable) plateau.getCase(numeroTerrain)).setProprietaire(joueur);
 
     }
 
-    public void acheter(Joueur joueur, Terrain T) throws Exception{
+    public void acheter(Joueur joueur, Terrain T) throws Exception {
 
-        if(! T.estAchetable())
+        if (!T.estAchetable())
             throw new IllegalArgumentException("terrain non achetable");
 
         //c'est bien un terrain achetable
         TerrainAchetable Ta = (TerrainAchetable) T;
 
         //on vérifie que le terrain n'ai pas de propriétaire
-        if(Ta.aUnProprietaire())
+        if (Ta.aUnProprietaire())
             throw new Exception("Le terrain a deja un proprietaire");
 
         //on vérifie si le joueur peut l'acheter
-        if(joueur.getCapitalJoueur() < Ta.getPrixAchat())
+        if (joueur.getCapitalJoueur() < Ta.getPrixAchat())
             throw new Exception("Capital insuffisant");
 
         //On retire l'argent au joueur et on lui ajoute la popriété
-        joueur.setCapitalJoueur(joueur.getCapitalJoueur()-Ta.getPrixAchat());
+        joueur.setCapitalJoueur(joueur.getCapitalJoueur() - Ta.getPrixAchat());
         joueur.ajouterPropriete(Ta);
         ((TerrainAchetable) T).setProprietaire(joueur);
 
     }
+
+    public void allerEnPrison(Joueur joueur){
+        if (joueur.isEstprisonnier())
+            throw new IllegalArgumentException("joueur deja prisonnier");
+        joueur.setEstprisonnier(true);
+        joueur.setPositionJoueur(40);
+    }
+
+    public void sortirDePrison(Joueur joueur) {
+        if (!joueur.isEstprisonnier())
+            throw new IllegalArgumentException("joueur non prisonnier");
+        joueur.setEstprisonnier(false);
+    }
+
+    public void deplacer(Joueur joueur, int position){
+        if (position < joueur.getPositionJoueur())
+            payer(200, joueur);
+        joueur.setPositionJoueur(position);
+    }
+
+    public void construire(int terrain){
+
+    }
+
+    public void hypotequer(int terrain){
+
+    }
+
 
 
 
