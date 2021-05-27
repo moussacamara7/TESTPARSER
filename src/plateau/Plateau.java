@@ -18,8 +18,10 @@ public class Plateau {
     private final ArrayList<Terrain> cases = new ArrayList<>();
     private final ArrayList<Cartes> chance = new ArrayList<>();
     private final ArrayList<Cartes> caisseCommunaute = new ArrayList<>();
-
-
+//////////////////////////////////////////////////////////////////////////////
+//      On mettra la plupart des fonctions de cette classe en "static"      //
+//      On va analyser cela ensemble                                        //
+//////////////////////////////////////////////////////////////////////////////
     public Plateau() throws IOException {
         initialisationTerrain();
         initialisationCarteCommunaute();
@@ -196,7 +198,11 @@ public class Plateau {
 
         return listeJoueurs.get(i);
     }
-
+    ////////////////////////////////////////////////////////////////////////
+    //                                                                    //
+    //              Jouer pourrait être directement dans le main          //
+    //                                                                    //
+    ////////////////////////////////////////////////////////////////////////
     public void jouer(){
         //jeu
 

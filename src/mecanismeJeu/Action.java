@@ -32,16 +32,28 @@ public class Action {
         //On retire l'argent au Joueur qui donne
         depart.setCapitalJoueur(depart.getCapitalJoueur() - somme);
         //On ajoute l'argent au joueur qui le recoit
-        destination.setCapitalJoueur(destination.getCapitalJoueur() - somme);
+        destination.setCapitalJoueur(destination.getCapitalJoueur() + somme);
     }
-
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  Pour les opérations vers la banque on peut supposer que la banque a un budjet illimité          //
+    //  Donc on a même pas besoin de définir une methode en destination de la banque                    //
+    //  On ajoute ou on soustrait selon le cas ou il doit être crédité ou prelevé                       //
+    //////////////////////////////////////////////////////////////////////////////////////////////////////
     //pour payer depuis la banque
+
+
     public void payer(int somme, Joueur destination){
         if (somme <= 0)
             throw new IllegalArgumentException("somme invalide");
         destination.setCapitalJoueur(destination.getCapitalJoueur() + somme);
     }
-
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
+    //  les cas ou le joueur perd de l'argent c'est quand quand il doit payer une amende, payer un autre    //
+    //  Joueur (Loyer, aniverssaire)                                                                        //
+    //  Pour le loyer on a déjà payer(...)                                                                  //
+    //  Pour anniversaire on peut parcourir la liste des joueurs du plateau puis les soustraire a chacun    //
+    //  la somme puis pour le joueur concerné il recoit: recu = somme * (Plateau.getNombreJoueurs() - 1)    //
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////
     //retirer la somme à un joueur
     public void retirer(int somme, Joueur destination){
         if (somme <= 0)
@@ -49,7 +61,13 @@ public class Action {
         destination.setCapitalJoueur(destination.getCapitalJoueur() + somme);
 
     }
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//  Dans notre cas je présuppose qu'il ne peut avoir qu'un seul plateau de monopoly                         //
+//  Plateau p1 = new Plateau();                                                                             //
+//      est une ruse pour juste charger les terrains et cartes                                              //
+//      Si on a besoin d'acceder aux cases, joueurs ou cartes on fait par ex: PLateau.getNombreJoueurs()    //
+//      C'est pour cela j'ai privilégié les fonctions de plateau en "static"                                //
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
     /**
      * acheter un terrain
      * pas de verification de la position du joueur
@@ -79,7 +97,7 @@ public class Action {
 
     }
 
-    public void acheter(Joueur joueur, Terrain T) throws Exception {
+    public void acheterPropriété(Joueur joueur, Terrain T) throws Exception {
 
         if (!T.estAchetable())
             throw new IllegalArgumentException("terrain non achetable");
@@ -113,6 +131,7 @@ public class Action {
         if (!joueur.isEstprisonnier())
             throw new IllegalArgumentException("joueur non prisonnier");
         joueur.setEstprisonnier(false);
+        joueur.setPositionJoueur(10);   //On le place sur la case simple visite
     }
 
     public void deplacer(Joueur joueur, int position){
