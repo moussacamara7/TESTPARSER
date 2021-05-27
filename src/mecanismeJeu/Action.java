@@ -1,41 +1,87 @@
 package mecanismeJeu;
 import joueur.Joueur;
+import plateau.Plateau;
+import terrain.Terrain;
+import terrain.TerrainAchetable;
 
-/****************************************
- * Actions :
- * 1 - Acheter
- * 2 - Construire
- * 3 - Payer
-****************************************/
 
-public abstract class Action {
-    private Action suivant = null;
+public class Action {
 
-    public Action(Action suivant) {
+    /***********************
+     *
+     * actions :
+     *
+     *      payer un joueur
+     *      acheter une propriété
+     *      construire
+     *      aller en prison
+     *      sortir de prison
+     *      se deplacer
+     *      hypotequer
+     *
+     ***********************/
 
-        this.suivant = suivant;
+
+
+    public void payer(int somme, Joueur depart, Joueur destination) throws Exception{
+        if(depart.getCapitalJoueur() < somme)
+            throw new Exception("Capital insuffisant");
+
+        //On retire l'argent au Joueur qui donne
+        depart.setCapitalJoueur(depart.getCapitalJoueur() - somme);
+        //On ajoute l'argent au joueur qui le recoit
+        destination.setCapitalJoueur(destination.getCapitalJoueur() + somme);
     }
 
 
-    public void traiter(int action) throws Exception {
-        if (saitFaire(action))
-            fait(action);
-        else if (aUnSuivant())
-            getSuivant().traiter(action);
-        else
-            throw new IllegalArgumentException("Action Manquante");
+    public void acheter(Joueur joueur, int numeroTerrain) throws Exception{
+
+        Plateau plateau = joueur.getPlateau();
+
+        if(! plateau.getCase(numeroTerrain).estAchetable())
+            throw new IllegalArgumentException("terrain non achetable");
+
+        //c'est bien un terrain achetable
+        TerrainAchetable T = (TerrainAchetable) plateau.getCase(numeroTerrain);
+
+        //on vérifie que le terrain n'ai pas de propriétaire
+        if(T.aUnProprietaire())
+            throw new Exception("Le terrain a deja un proprietaire");
+
+        //on vérifie si le joueur peut l'acheter
+        if(joueur.getCapitalJoueur() < T.getPrixAchat())
+            throw new Exception("Capital insuffisant");
+
+        //On retire l'argent au joueur et on lui ajoute la popriété
+        joueur.setCapitalJoueur(joueur.getCapitalJoueur()-T.getPrixAchat());
+        joueur.ajouterPropriete(T);
+        ((TerrainAchetable) plateau.getCase(numeroTerrain)).setProprietaire(joueur);
 
     }
 
-    private Action getSuivant() {
-        return suivant;
+    public void acheter(Joueur joueur, Terrain T) throws Exception{
+
+        if(! T.estAchetable())
+            throw new IllegalArgumentException("terrain non achetable");
+
+        //c'est bien un terrain achetable
+        TerrainAchetable Ta = (TerrainAchetable) T;
+
+        //on vérifie que le terrain n'ai pas de propriétaire
+        if(Ta.aUnProprietaire())
+            throw new Exception("Le terrain a deja un proprietaire");
+
+        //on vérifie si le joueur peut l'acheter
+        if(joueur.getCapitalJoueur() < Ta.getPrixAchat())
+            throw new Exception("Capital insuffisant");
+
+        //On retire l'argent au joueur et on lui ajoute la popriété
+        joueur.setCapitalJoueur(joueur.getCapitalJoueur()-Ta.getPrixAchat());
+        joueur.ajouterPropriete(Ta);
+        ((TerrainAchetable) T).setProprietaire(joueur);
+
     }
 
-    private boolean aUnSuivant() {
-        return suivant != null;
-    }
 
-    public abstract void fait(int action) throws Exception;
 
-    public abstract boolean saitFaire(int action);
 }

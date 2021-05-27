@@ -3,7 +3,7 @@ package parser;
 import plateau.Plateau;
 
 public abstract class Parser {
-    private Parser suivant;
+    private final Parser suivant;
 
     public Parser(Parser suivant) {
 

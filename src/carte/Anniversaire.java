@@ -1,7 +1,7 @@
 package carte;
 
 
-public class Anniversaire implements Cartes{
+public class Anniversaire implements Cartes {
     private String message;
     private int somme;
 
