@@ -125,6 +125,10 @@ public class Plateau {
         return cases.get(i);
     }
 
+    public ArrayList<Terrain> getListeCases(){
+        return this.cases;
+    }
+
 
     ////////////////////////////////////////////
     //

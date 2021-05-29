@@ -4,6 +4,7 @@ import joueur.Joueur;
 import plateau.Plateau;
 import terrain.Terrain;
 import terrain.TerrainAchetable;
+import terrain.TerrainConstructible;
 
 
 public class Action {
@@ -23,30 +24,20 @@ public class Action {
      ****************************/
 
 
-    public void payer(int somme, Joueur depart, Joueur destination) throws Exception {
-        if (somme <= 0)
-            throw new IllegalArgumentException("somme invalide");
-        if (depart.getCapitalJoueur() < somme)
-            throw new Exception("Capital insuffisant");
 
-        //On retire l'argent au Joueur qui donne
-        depart.setCapitalJoueur(depart.getCapitalJoueur() - somme);
-        //On ajoute l'argent au joueur qui le recoit
-        destination.setCapitalJoueur(destination.getCapitalJoueur() + somme);
-    }
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //  Pour les opérations vers la banque on peut supposer que la banque a un budjet illimité          //
     //  Donc on a même pas besoin de définir une methode en destination de la banque                    //
     //  On ajoute ou on soustrait selon le cas ou il doit être crédité ou prelevé                       //
     //////////////////////////////////////////////////////////////////////////////////////////////////////
+
     //pour payer depuis la banque
-
-
     public void payer(int somme, Joueur destination){
         if (somme <= 0)
             throw new IllegalArgumentException("somme invalide");
         destination.setCapitalJoueur(destination.getCapitalJoueur() + somme);
     }
+
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
     //  les cas ou le joueur perd de l'argent c'est quand quand il doit payer une amende, payer un autre    //
     //  Joueur (Loyer, aniverssaire)                                                                        //
@@ -54,12 +45,29 @@ public class Action {
     //  Pour anniversaire on peut parcourir la liste des joueurs du plateau puis les soustraire a chacun    //
     //  la somme puis pour le joueur concerné il recoit: recu = somme * (Plateau.getNombreJoueurs() - 1)    //
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     //retirer la somme à un joueur
     public void retirer(int somme, Joueur destination){
         if (somme <= 0)
             throw new IllegalArgumentException("somme invalide");
-        destination.setCapitalJoueur(destination.getCapitalJoueur() + somme);
+        destination.setCapitalJoueur(destination.getCapitalJoueur() - somme);
 
+        //on peut lancer l'exception de faillite ici si le joueur est en negatif
+        //ce qui l'obligera a hypotequer ou perdre la partie
+
+    }
+
+    public void payer(int somme, Joueur depart, Joueur destination) throws Exception {
+        if (somme <= 0)
+            throw new IllegalArgumentException("somme invalide");
+        if (depart.getCapitalJoueur() < somme)
+            throw new Exception("Capital insuffisant");
+        //on ne considere pas l'exception ou depart = destination
+
+        //On retire l'argent au Joueur qui donne
+        retirer(somme, depart);
+        //On ajoute l'argent au joueur qui le recoit
+        payer(somme, destination);
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Dans notre cas je présuppose qu'il ne peut avoir qu'un seul plateau de monopoly                         //
@@ -97,7 +105,7 @@ public class Action {
 
     }
 
-    public void acheterPropriété(Joueur joueur, Terrain T) throws Exception {
+    public void acheterPropriete(Joueur joueur, Terrain T) throws Exception {
 
         if (!T.estAchetable())
             throw new IllegalArgumentException("terrain non achetable");
@@ -140,8 +148,59 @@ public class Action {
         joueur.setPositionJoueur(position);
     }
 
-    public void construire(int terrain){
 
+    //pour verifier si un joueur peut construire sur un terrain
+    //cette methode peut etre utilisée dans la gestion du jeu
+    public boolean peutConstruire(int terrain, Plateau plateau){
+
+        if(! plateau.getCase(terrain).estAchetable())
+            return false;
+        //terrain non achetable
+
+
+        TerrainAchetable ta = (TerrainAchetable) plateau.getCase(terrain);
+
+        if(! ta.estConstructible())
+            return false;
+        //terrain non constructible
+
+        if(! ta.aUnProprietaire())
+            return false;
+        //le terrain n'a pas de propriétaire
+
+        TerrainConstructible tc = (TerrainConstructible) ta;
+        String couleur = tc.getCouleur();
+        Joueur propietaire = tc.getProprietaire();
+        int nbMaison = tc.getNombreMaison();
+
+        for(Terrain n : plateau.getListeCases()){
+            if(n.estAchetable()){
+                TerrainAchetable na = (TerrainAchetable) n;
+                if(na.estConstructible()){
+                    TerrainConstructible nc = (TerrainConstructible)  na;
+                    if(nc.getCouleur().equals(couleur)){
+
+                        if(! propietaire.equals(nc.getProprietaire()))
+                            return false;
+                            //le joueur ne possède pas tous les terrains de cette couleur
+                        if(nc.getNombreMaison() < nbMaison)
+                            return false;
+                            //terrain non eligible a la construction
+                            //le joueur n'a pas assez de construction sur les autres terrains de meme couleur
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    public void construire(int terrain, Plateau plateau){
+
+        if(! peutConstruire(terrain, plateau))
+            throw new IllegalArgumentException(("terrain non eligible a la construction"));
+        TerrainConstructible tc = (TerrainConstructible) plateau.getCase(terrain);
+        retirer(tc.getPrixAchatMaison(),tc.getProprietaire());
+        tc.setNombreMaison(tc.getNombreMaison()+1);
     }
 
     public void hypotequer(int terrain){
