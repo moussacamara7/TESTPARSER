@@ -1,5 +1,6 @@
 package joueur;
 
+import carte.Cartes;
 import plateau.Plateau;
 import terrain.TerrainAchetable;
 
@@ -14,6 +15,8 @@ public class Joueur {
     private int positionJoueur;
     private boolean estprisonnier;
     private Plateau plateau;
+    private int carteSortirDePrison;
+    private int nombreDeTourEnPrison;
 
 
 
@@ -23,7 +26,10 @@ public class Joueur {
         setCapitalJoueur(capitalJoueur);
         setPositionJoueur(positionJoueur);
         setEstprisonnier(estprisonnier);
+        setNombreDeTourEnPrison(0);
+        setCarteSortirDePrison(0);
         setPlateau(plateau);
+
     }
 
     public Joueur(String nomJoueur, Plateau plateau) {
@@ -32,6 +38,8 @@ public class Joueur {
         setCapitalJoueur(1500);
         setPositionJoueur(0);
         setEstprisonnier(false);
+        setNombreDeTourEnPrison(0);
+        setCarteSortirDePrison(0);
         setPlateau(plateau);
     }
 
@@ -71,6 +79,14 @@ public class Joueur {
         return proprietesJoueur;
     }
 
+    public int getNombreDeTourEnPrison() {
+        return nombreDeTourEnPrison;
+    }
+
+    public void setNombreDeTourEnPrison(int nombreDeTourEnPrison) {
+        this.nombreDeTourEnPrison = nombreDeTourEnPrison;
+    }
+
     /**
      * @param prop the proprietesAAjouter to set
      */
@@ -82,6 +98,14 @@ public class Joueur {
             throw new IllegalArgumentException("Proriete deja possede");
 
         proprietesJoueur.add(prop);
+    }
+
+    public int getCarteSortirDePrison() {
+        return carteSortirDePrison;
+    }
+
+    public void setCarteSortirDePrison(int carteSortirDePrison) {
+        this.carteSortirDePrison = carteSortirDePrison;
     }
 
     public int getNombreProprietes() {

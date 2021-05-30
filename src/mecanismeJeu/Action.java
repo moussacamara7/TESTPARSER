@@ -32,7 +32,7 @@ public class Action {
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //pour payer depuis la banque
-    public void payer(int somme, Joueur destination){
+    public static void payer(int somme, Joueur destination){
         if (somme <= 0)
             throw new IllegalArgumentException("somme invalide");
         destination.setCapitalJoueur(destination.getCapitalJoueur() + somme);
@@ -47,7 +47,7 @@ public class Action {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //retirer la somme à un joueur
-    public void retirer(int somme, Joueur destination){
+    public static void retirer(int somme, Joueur destination){
         if (somme <= 0)
             throw new IllegalArgumentException("somme invalide");
         destination.setCapitalJoueur(destination.getCapitalJoueur() - somme);
@@ -57,7 +57,7 @@ public class Action {
 
     }
 
-    public void payer(int somme, Joueur depart, Joueur destination) throws Exception {
+    public static void payer(int somme, Joueur depart, Joueur destination) throws Exception {
         if (somme <= 0)
             throw new IllegalArgumentException("somme invalide");
         if (depart.getCapitalJoueur() < somme)
@@ -65,9 +65,9 @@ public class Action {
         //on ne considere pas l'exception ou depart = destination
 
         //On retire l'argent au Joueur qui donne
-        retirer(somme, depart);
+        Action.retirer(somme, depart);
         //On ajoute l'argent au joueur qui le recoit
-        payer(somme, destination);
+        Action.payer(somme, destination);
     }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //  Dans notre cas je présuppose qu'il ne peut avoir qu'un seul plateau de monopoly                         //
@@ -80,9 +80,11 @@ public class Action {
      * acheter un terrain
      * pas de verification de la position du joueur
      */
-    public void acheter(Joueur joueur, int numeroTerrain) throws Exception {
+    public static void acheterPropriete(Joueur joueur, int numeroTerrain) throws Exception {
 
         Plateau plateau = joueur.getPlateau();
+
+
 
         if (!plateau.getCase(numeroTerrain).estAchetable())
             throw new IllegalArgumentException("terrain non achetable");
@@ -105,7 +107,7 @@ public class Action {
 
     }
 
-    public void acheterPropriete(Joueur joueur, Terrain T) throws Exception {
+    public static void acheterPropriete(Joueur joueur, Terrain T) throws Exception {
 
         if (!T.estAchetable())
             throw new IllegalArgumentException("terrain non achetable");
@@ -128,30 +130,46 @@ public class Action {
 
     }
 
-    public void allerEnPrison(Joueur joueur){
+    public static void allerEnPrison(Joueur joueur){
         if (joueur.isEstprisonnier())
             throw new IllegalArgumentException("joueur deja prisonnier");
         joueur.setEstprisonnier(true);
         joueur.setPositionJoueur(40);
     }
 
-    public void sortirDePrison(Joueur joueur) {
+    public static void sortirDePrison(Joueur joueur) {
         if (!joueur.isEstprisonnier())
             throw new IllegalArgumentException("joueur non prisonnier");
         joueur.setEstprisonnier(false);
         joueur.setPositionJoueur(10);   //On le place sur la case simple visite
     }
 
-    public void deplacer(Joueur joueur, int position){
+    public static void deplacer(Joueur joueur, int position){
         if (position < joueur.getPositionJoueur())
             payer(200, joueur);
         joueur.setPositionJoueur(position);
     }
 
+    public static void avancerJoueur(Joueur joueur, int nbDeplacement){
+        if(nbDeplacement <= 0 )
+            throw new IllegalArgumentException("deplacement illegal");
+
+        int nouvellePos;
+        if(joueur.getPositionJoueur() + nbDeplacement > 39){
+            nouvellePos = joueur.getPositionJoueur() + nbDeplacement - 40;
+            payer(200, joueur);
+            //case depart
+        }else{
+            nouvellePos = joueur.getPositionJoueur() + nbDeplacement;
+        }
+
+        joueur.setPositionJoueur(nouvellePos);
+    }
+
 
     //pour verifier si un joueur peut construire sur un terrain
     //cette methode peut etre utilisée dans la gestion du jeu
-    public boolean peutConstruire(int terrain, Plateau plateau){
+    public static boolean peutConstruire(int terrain, Plateau plateau){
 
         if(! plateau.getCase(terrain).estAchetable())
             return false;
@@ -194,12 +212,12 @@ public class Action {
         return true;
     }
 
-    public void construire(int terrain, Plateau plateau){
+    public static void construire(int terrain, Plateau plateau){
 
-        if(! peutConstruire(terrain, plateau))
+        if(! Action.peutConstruire(terrain, plateau))
             throw new IllegalArgumentException(("terrain non eligible a la construction"));
         TerrainConstructible tc = (TerrainConstructible) plateau.getCase(terrain);
-        retirer(tc.getPrixAchatMaison(),tc.getProprietaire());
+        Action.retirer(tc.getPrixAchatMaison(),tc.getProprietaire());
         tc.setNombreMaison(tc.getNombreMaison()+1);
     }
 
@@ -207,7 +225,16 @@ public class Action {
 
     }
 
+    public static int lancerDe(){
+        return (int)Math.floor(Math.random()*(6)+1);
+    }
 
+    public static void piocherChance(Joueur joueur){
+
+    }
+    public static void piocherCommunaute(Joueur joueur){
+
+    }
 
 
 }

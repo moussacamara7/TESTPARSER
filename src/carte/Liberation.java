@@ -1,13 +1,13 @@
 package carte;
 
 
+import joueur.Joueur;
 
 public class Liberation implements Cartes {
     private String message;
+    private Joueur proprietaire;
 
-    public Liberation(String message) {
-        setMessage(message);
-    }
+
 
     public String getMessage() {
         return message;
@@ -15,6 +15,19 @@ public class Liberation implements Cartes {
 
     public void setMessage(String message) {
         this.message = message;
+    }
+
+    public Joueur getProprietaire() {
+        return proprietaire;
+    }
+
+    public void setProprietaire(Joueur proptietaire) {
+        this.proprietaire = proptietaire;
+    }
+
+    public Liberation(String message, Joueur proprietaire) {
+        this.message = message;
+        setProprietaire(proprietaire);
     }
 
     @Override

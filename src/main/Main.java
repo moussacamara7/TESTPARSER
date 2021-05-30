@@ -1,6 +1,8 @@
 package main;
 
+import joueur.Joueur;
 import plateau.Plateau;
+import mecanismeJeu.Action;
 
 import java.io.IOException;
 
@@ -10,8 +12,20 @@ public class Main {
 
 
         Plateau plt = new Plateau();
+        Joueur A = new Joueur("Albert", plt);
+        Joueur B = new Joueur("Bertrand", plt);
 
-        System.out.println("Les terrains Du jeu MONOPOLY:");
+        plt.ajouterJoueur(A);
+        plt.ajouterJoueur(B);
+
+        try {
+            plt.jouer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        /*System.out.println("Les terrains Du jeu MONOPOLY:");
         System.out.println("Le nombre de Terrain : " + plt.getNombreCase());
 
         for(int i=0; i<plt.getNombreCase(); i++)
@@ -27,7 +41,10 @@ public class Main {
         System.out.println("Le nombre de Cartes : " + plt.getNombreCarteCommunaute());
 
         for(int i=0; i<plt.getNombreCarteCommunaute(); i++)
-            System.out.println(plt.getCommunaute(i));
+            System.out.println(plt.getCommunaute(i));*/
+
+
 
     }
+
 }

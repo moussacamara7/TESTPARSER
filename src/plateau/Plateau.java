@@ -3,6 +3,8 @@ package plateau;
 import carte.Cartes;
 import fichier.LectureFichier;
 import joueur.Joueur;
+import mecanismeJeu.Action;
+import mecanismeJeu.Gestion;
 import parser.Parser;
 import parser.parserCarteChance.*;
 import parser.parserCarteCommunaute.*;
@@ -11,6 +13,7 @@ import terrain.Terrain;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Plateau {
     private static final int NB_JOUEUR_MAX = 10;
@@ -207,8 +210,85 @@ public class Plateau {
     //              Jouer pourrait être directement dans le main          //
     //                                                                    //
     ////////////////////////////////////////////////////////////////////////
-    public void jouer(){
+    public void jouer() throws Exception {
         //jeu
+        int deUn, deDeux;
+        int nbDeDouble = 0 ;
+        //pour les lancés de dés
+        Scanner sc = new Scanner(System.in);
+
+        while(this.getNombreJoueurs()>=2){
+
+            for(Joueur joueur : this.listeJoueurs){
+                System.out.println("tour de " +joueur.getNomJoueur() +"  Position : " +joueur.getPositionJoueur() +"\n");
+                System.out.println(joueur.toString());
+
+                if(joueur.isEstprisonnier()){
+                    joueur.setNombreDeTourEnPrison(joueur.getNombreDeTourEnPrison()+1);
+                    if(joueur.getCarteSortirDePrison() > 0){
+                        System.out.println("Voulez vous utiliser votre carte sortir de prison ?\n");
+                        System.out.println("0 : non, lancer les dés\n 1: oui\n");
+                        int choix;
+                        do{
+                            choix = sc.nextInt();
+                            switch(choix) {
+                                case 0:
+                                    deUn = Action.lancerDe();
+                                    deDeux = Action.lancerDe();
+                                    System.out.println("\nde 1:" +deUn +"\nde 2:" +deDeux +"\n");
+
+                                    if (deUn == deDeux) {
+                                        Action.sortirDePrison(joueur);
+                                        Gestion.jouerTour(joueur, deUn, deDeux);
+                                    } else {
+                                        if (joueur.getNombreDeTourEnPrison() == 3) {
+                                            //3 tours sans double en prison : il paye 50 et sort
+                                            Action.retirer(50, joueur);
+                                            joueur.setNombreDeTourEnPrison(0);
+                                            Action.sortirDePrison(joueur);
+                                            Gestion.jouerTour(joueur, deUn, deDeux);
+                                        }
+                                    }
+                                    break;
+
+
+                                case 1:
+                                    joueur.setCarteSortirDePrison(joueur.getCarteSortirDePrison() - 1);
+                                    Action.sortirDePrison(joueur);
+                                    Gestion.jouerTour(joueur);
+                                    break;
+                            }
+                        }while(!(choix == 1 || choix == 0));
+                    }else{
+                        System.out.println("Voulez n'avez pas de carte sortir de prison?\n");
+                        System.out.println("Entrez une touche pour lancer les dés?\n");
+                        int choix = sc.nextInt();
+                        deUn = Action.lancerDe();
+                        deDeux = Action.lancerDe();
+                        System.out.println("de 1:" +deUn +"de 2:" +deDeux);
+                        if (deUn == deDeux) {
+                            Action.sortirDePrison(joueur);
+                            Gestion.jouerTour(joueur, deUn, deDeux);
+                        } else {
+                            if (joueur.getNombreDeTourEnPrison() == 3) {
+                                //3 tours sans double en prison : il paye 50 et sort
+                                Action.retirer(50, joueur);
+                                joueur.setNombreDeTourEnPrison(0);
+                                Action.sortirDePrison(joueur);
+                                Gestion.jouerTour(joueur, deUn, deDeux);
+                            }
+                        }
+                    }
+                }else{
+                    //joueur pas en prison
+                    System.out.println("Vous lancez les dés\n");
+                    Gestion.jouerTour(joueur);
+                }
+
+            }
+
+
+        }
 
     }
 

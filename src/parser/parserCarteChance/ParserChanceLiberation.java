@@ -13,7 +13,7 @@ public class ParserChanceLiberation extends Parser {
 
 
     public void parser(String[] values, Plateau plateau) throws Exception{
-        Liberation c = new Liberation(values[1]);
+        Liberation c = new Liberation(values[1], null);
         plateau.ajouterChance(c);
     }
 
