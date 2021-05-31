@@ -35,12 +35,11 @@ public class Anniversaire implements Cartes {
     }
 
     @Override
-    public void action(Joueur joueur) {
+    public void action(Joueur joueur) throws Exception {
         for(Joueur j : joueur.getPlateau().getListeJoueurs()){
             if(! j.equals(joueur))
-                Action.retirer(50,j);
+                Action.payer(50,j,joueur);
         }
-        Action.payer((joueur.getPlateau().getNombreJoueurs()-1)*50, joueur);
         //Parcours des joueurs via l'ArrayList de plateau en diminuant leur capital de 10euros sauf le joueur
     }
 
