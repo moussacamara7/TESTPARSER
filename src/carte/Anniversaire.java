@@ -38,7 +38,7 @@ public class Anniversaire implements Cartes {
     public void action(Joueur joueur) {
         for(Joueur j : joueur.getPlateau().getListeJoueurs()){
             if(! j.equals(joueur))
-                Action.retirer(50,joueur);
+                Action.retirer(50,j);
         }
         Action.payer((joueur.getPlateau().getNombreJoueurs()-1)*50, joueur);
         //Parcours des joueurs via l'ArrayList de plateau en diminuant leur capital de 10euros sauf le joueur
