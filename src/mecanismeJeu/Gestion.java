@@ -14,6 +14,8 @@ public class Gestion {
         Terrain t = joueur.getPlateau().getCase(joueur.getPositionJoueur());
         Scanner sc = new Scanner(System.in);
 
+        System.out.println("Vous arrivez sur la case " +joueur.getPositionJoueur());
+
         if(t.estAchetable()){
             TerrainAchetable ta = (TerrainAchetable) t;
             if(ta.aUnProprietaire() && ta.getProprietaire().equals(joueur)){
@@ -21,8 +23,8 @@ public class Gestion {
                     TerrainConstructible tc = (TerrainConstructible) ta;
                     if(Action.peutConstruire(joueur.getPositionJoueur(),joueur.getPlateau())){
                         //on propose de construire
-                        System.out.println("voulez vous construire ?\n");
-                        System.out.println("Oui : 1 \n Non : 0");
+                        System.out.println("Voulez vous construire ?\n");
+                        System.out.println("Oui : 1 \nNon : 0");
                         int choix = sc.nextInt();
                         if(choix == 1){
                             Action.construire(joueur.getPositionJoueur(),joueur.getPlateau());
@@ -62,7 +64,7 @@ public class Gestion {
                     //le joueur peut acheter le terrain
                     System.out.println("Voulez vous acheter " +ta.getNomTerrain() +"?");
                     System.out.println(ta.toString());
-                    System.out.println("1 : oui \n 0 : non");
+                    System.out.println("1 : oui \n0 : non");
                     int choix = sc.nextInt();
                     if(choix == 1){
                         Action.acheterPropriete(joueur, ta);
@@ -76,17 +78,22 @@ public class Gestion {
                 TerrainAction tac = (TerrainAction) t;
                 switch (tac.getNomTerrain()) {
                     case "TAXE DE LUXE":
+                        System.out.println("Vous payez la taxe de luxe");
                         Action.retirer(TAXE_DE_LUXE, joueur);
                         break;
                     case "IMPOT SUR LE REVENU":
+                        System.out.println("Vous payez la taxe sur le revenue");
                         Action.retirer(TAXE_SUR_LE_REVENU, joueur);
                         break;
                     case "ALLEZ EN PRISON":
+                        System.out.println("Vous allez en prison");
                         Action.allerEnPrison(joueur);
                         break;
                     case "CHANCE":
+                        System.out.println("Vous piochez une carte chance");
                         Action.piocherChance(joueur);
                     case "CAISSE COMMUNAUTE":
+                        System.out.println("Vous piochez une carte communauté");
                         Action.piocherCommunaute(joueur);
                 }
             }
@@ -102,46 +109,55 @@ public class Gestion {
         deDeux = Action.lancerDe();
 
         do{
-            if(deDeux == deUn)
+            if(deDeux == deUn) {
                 nbDouble++;
-            Action.avancerJoueur(joueur, deUn + deDeux);
-            interactionCase(joueur);
-            deUn = Action.lancerDe();
-            deDeux = Action.lancerDe();
-            System.out.println("\nde 1:" +deUn +"\nde 2:" +deDeux +"\n");
+                System.out.println("\nde 1: " + deUn + "\nde 2: " + deDeux + "\n");
+                Action.avancerJoueur(joueur, deUn + deDeux);
+                interactionCase(joueur);
+                System.out.println("Vous avez fait un double, vous relancé.\nNombre de double ce tour : " + nbDouble);
+                deUn = Action.lancerDe();
+                deDeux = Action.lancerDe();
+            }
 
 
         }while(deUn == deDeux && nbDouble < 3 );
 
-        if(nbDouble == 3)
+        if(nbDouble == 3) {
+            System.out.println("3 doubles d'affilé, vous allez en prison" +joueur.getNomJoueur());
             Action.allerEnPrison(joueur);
-        else
+        }
+        else {
+            System.out.println("\nde 1: " + deUn + "\nde 2: " + deDeux + "\n");
             Action.avancerJoueur(joueur, deUn + deDeux);
             interactionCase(joueur);
-
+        }
     }
 
     public static void jouerTour(Joueur joueur, int deUn, int deDeux) throws Exception {
         int nbDouble = 0;
 
         do{
-            if(deDeux == deUn)
+            if(deDeux == deUn) {
                 nbDouble++;
-            Action.avancerJoueur(joueur, deUn + deDeux);
-            interactionCase(joueur);
-
-            deUn = Action.lancerDe();
-            deDeux = Action.lancerDe();
-            System.out.println("\nde 1:" +deUn +"\nde 2:" +deDeux +"\n");
+                System.out.println("\nde 1: " + deUn + "\nde 2: " + deDeux + "\n");
+                Action.avancerJoueur(joueur, deUn + deDeux);
+                interactionCase(joueur);
+                System.out.println("Vous avez fait un double, vous relancé.\nNombre de double ce tour : " + nbDouble);
+                deUn = Action.lancerDe();
+                deDeux = Action.lancerDe();
+            }
 
 
         }while(deUn == deDeux && nbDouble < 3 );
 
-        if(nbDouble == 3)
+        if(nbDouble == 3) {
+            System.out.println("3 doubles d'affilé, vous allez en prison" +joueur.getNomJoueur());
             Action.allerEnPrison(joueur);
-        else
+        }
+        else {
+            System.out.println("\nde 1: " + deUn + "\nde 2: " + deDeux + "\n");
             Action.avancerJoueur(joueur, deUn + deDeux);
             interactionCase(joueur);
-
+        }
     }
 }

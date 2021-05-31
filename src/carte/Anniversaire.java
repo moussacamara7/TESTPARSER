@@ -1,6 +1,9 @@
 package carte;
 
 
+import joueur.Joueur;
+import mecanismeJeu.Action;
+
 public class Anniversaire implements Cartes {
     private String message;
     private int somme;
@@ -32,7 +35,12 @@ public class Anniversaire implements Cartes {
     }
 
     @Override
-    public void action() {
+    public void action(Joueur joueur) {
+        for(Joueur j : joueur.getPlateau().getListeJoueurs()){
+            if(! j.equals(joueur))
+                Action.retirer(50,joueur);
+        }
+        Action.payer((joueur.getPlateau().getNombreJoueurs()-1)*50, joueur);
         //Parcours des joueurs via l'ArrayList de plateau en diminuant leur capital de 10euros sauf le joueur
     }
 

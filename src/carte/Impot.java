@@ -1,6 +1,7 @@
 package carte;
 
 
+import joueur.Joueur;
 
 public class Impot implements Cartes{
     private String message;
@@ -18,7 +19,7 @@ public class Impot implements Cartes{
     }
 
     @Override
-    public void action() {
+    public void action(Joueur joueur) {
 
     }
 

@@ -181,6 +181,9 @@ public class Plateau {
         return caisseCommunaute.get(i);
     }
 
+    public ArrayList<Joueur> getListeJoueurs() {
+        return listeJoueurs;
+    }
 
     ////////////////////////////////////////////
     //
@@ -205,6 +208,8 @@ public class Plateau {
 
         return listeJoueurs.get(i);
     }
+
+
     ////////////////////////////////////////////////////////////////////////
     //                                                                    //
     //              Jouer pourrait être directement dans le main          //
@@ -213,7 +218,6 @@ public class Plateau {
     public void jouer() throws Exception {
         //jeu
         int deUn, deDeux;
-        int nbDeDouble = 0 ;
         //pour les lancés de dés
         Scanner sc = new Scanner(System.in);
 
@@ -227,7 +231,7 @@ public class Plateau {
                     joueur.setNombreDeTourEnPrison(joueur.getNombreDeTourEnPrison()+1);
                     if(joueur.getCarteSortirDePrison() > 0){
                         System.out.println("Voulez vous utiliser votre carte sortir de prison ?\n");
-                        System.out.println("0 : non, lancer les dés\n 1: oui\n");
+                        System.out.println("0 : non, lancer les dés\n1: oui\n");
                         int choix;
                         do{
                             choix = sc.nextInt();
@@ -260,18 +264,19 @@ public class Plateau {
                             }
                         }while(!(choix == 1 || choix == 0));
                     }else{
-                        System.out.println("Voulez n'avez pas de carte sortir de prison?\n");
+                        System.out.println("Voulez n'avez pas de carte sortir de prison.\n");
                         System.out.println("Entrez une touche pour lancer les dés?\n");
                         int choix = sc.nextInt();
                         deUn = Action.lancerDe();
                         deDeux = Action.lancerDe();
-                        System.out.println("de 1:" +deUn +"de 2:" +deDeux);
+                        System.out.println("de 1:" +deUn +"  de 2:" +deDeux);
                         if (deUn == deDeux) {
                             Action.sortirDePrison(joueur);
                             Gestion.jouerTour(joueur, deUn, deDeux);
                         } else {
                             if (joueur.getNombreDeTourEnPrison() == 3) {
                                 //3 tours sans double en prison : il paye 50 et sort
+                                System.out.println("3 tours en prison, vous payez 50 et vous sortez.");
                                 Action.retirer(50, joueur);
                                 joueur.setNombreDeTourEnPrison(0);
                                 Action.sortirDePrison(joueur);

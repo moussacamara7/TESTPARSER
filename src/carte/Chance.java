@@ -1,6 +1,8 @@
 package carte;
 
 
+import joueur.Joueur;
+
 public class Chance implements Cartes{
     private String message;
     private int somme;
@@ -27,7 +29,7 @@ public class Chance implements Cartes{
     }
 
     @Override
-    public void action() {
+    public void action(Joueur joueur) {
 
     }
 

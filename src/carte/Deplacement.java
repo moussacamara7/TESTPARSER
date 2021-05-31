@@ -1,6 +1,7 @@
 package carte;
 
 
+import joueur.Joueur;
 
 public class Deplacement implements Cartes{
     private String message;
@@ -31,7 +32,7 @@ public class Deplacement implements Cartes{
         this.destination = destination;
     }
 
-    public void action(){
+    public void action(Joueur joueur){
         //joueur.deplacer(destination);
     }
 

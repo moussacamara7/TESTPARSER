@@ -31,7 +31,7 @@ public class Liberation implements Cartes {
     }
 
     @Override
-    public void action() {
+    public void action(Joueur joueur) {
 
     }
 
