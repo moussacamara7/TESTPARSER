@@ -2,6 +2,7 @@ package carte;
 
 
 import joueur.Joueur;
+import mecanismeJeu.Action;
 
 public class Encaisser implements Cartes{
     private String message;
@@ -30,6 +31,7 @@ public class Encaisser implements Cartes{
 
     @Override
     public void action(Joueur joueur) {
+        Action.payer(somme, joueur);
 
     }
 
