@@ -2,8 +2,11 @@ package carte;
 
 
 import joueur.Joueur;
+import mecanismeJeu.Action;
 
-public class Chance implements Cartes{
+import java.util.Random;
+
+public class Chance implements Cartes {
     private String message;
     private int somme;
 
@@ -28,8 +31,15 @@ public class Chance implements Cartes{
         this.somme = somme;
     }
 
-    @Override
-    public void action(Joueur joueur) {
+
+    public void action(Joueur joueur, boolean payer) {
+        Random r = new Random();
+        //payer une amande de 10 euros ou piocher une carte chance
+        if (payer)
+            Action.retirer(somme, joueur);
+        else
+            Action.piocherChance(joueur);
+
 
     }
 

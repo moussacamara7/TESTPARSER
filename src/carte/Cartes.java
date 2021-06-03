@@ -4,6 +4,8 @@ package carte;
 import joueur.Joueur;
 
 public interface Cartes {
-    //public abstract void action();
-    public abstract void action(Joueur joueur);
+    default void action(Joueur joueur) throws Exception {
+
+    }
+    //public abstract void action(Joueur joueur);
 }

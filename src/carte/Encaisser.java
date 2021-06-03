@@ -1,6 +1,5 @@
 package carte;
 
-import joueur.Joueur;
 
 import joueur.Joueur;
 import mecanismeJeu.Action;
