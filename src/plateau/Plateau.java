@@ -116,8 +116,13 @@ public class Plateau {
 
     }
 
+    public ArrayList<Terrain> getCases() {
+        return cases;
+    }
 
-    public int getNombreCase() {
+
+
+    public int getNombreCase(ArrayList<Terrain> cases) {
         return cases.size();
     }
 
@@ -146,6 +151,11 @@ public class Plateau {
 
     }
 
+    public ArrayList<Cartes> getChance() {
+        return chance;
+    }
+
+
     public int getNombreCarteChance() {
         return chance.size();
     }
@@ -168,6 +178,11 @@ public class Plateau {
 
         caisseCommunaute.add(cCommunaute);
 
+    }
+
+
+    public ArrayList<Cartes> getCaisseCommunaute() {
+        return caisseCommunaute;
     }
 
     public int getNombreCarteCommunaute() {

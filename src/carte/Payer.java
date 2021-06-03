@@ -1,5 +1,7 @@
 package carte;
 
+import joueur.Joueur;
+import mecanismeJeu.Action;
 
 import joueur.Joueur;
 
@@ -31,6 +33,7 @@ public class Payer implements Cartes{
     @Override
     public void action(Joueur joueur) {
 
+        Action.retirer(getSomme(),joueur);
     }
 
     @Override
