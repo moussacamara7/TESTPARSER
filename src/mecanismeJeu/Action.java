@@ -6,6 +6,8 @@ import terrain.Terrain;
 import terrain.TerrainAchetable;
 import terrain.TerrainConstructible;
 
+import java.util.Random;
+
 
 public class Action {
 
@@ -230,6 +232,9 @@ public class Action {
     }
 
     public static void piocherChance(Joueur joueur){
+        Random r = new Random();
+
+
 
     }
     public static void piocherCommunaute(Joueur joueur){

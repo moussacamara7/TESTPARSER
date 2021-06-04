@@ -4,8 +4,9 @@ import joueur.Joueur;
 import mecanismeJeu.Action;
 
 import joueur.Joueur;
+import mecanismeJeu.Action;
 
-public class Payer implements Cartes{
+public class Payer implements Cartes {
     private String message;
     private int somme;
 
@@ -33,7 +34,7 @@ public class Payer implements Cartes{
     @Override
     public void action(Joueur joueur) {
 
-        Action.retirer(getSomme(),joueur);
+        Action.retirer(getSomme(), joueur);
     }
 
     @Override
