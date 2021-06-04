@@ -11,8 +11,7 @@ public class ParserCommunauteReparations extends Parser {
     }
 
 
-
-    public void parser(String[] values, Plateau plateau) throws Exception{
+    public void parser(String[] values, Plateau plateau) throws Exception {
         Reparation c = new Reparation(values[1]);
         plateau.ajouterCommunaute(c);
     }

@@ -2,7 +2,7 @@ package terrain;
 
 import joueur.Joueur;
 
-public abstract class TerrainAchetable implements Terrain{
+public abstract class TerrainAchetable implements Terrain {
     private int numeroTerrain;
     private String nomTerrain;
     private int prixAchat;
@@ -15,44 +15,43 @@ public abstract class TerrainAchetable implements Terrain{
         setProprietaire(null);
     }
 
-    public void setNumeroTerrain(int numeroTerrain) {
-        this.numeroTerrain = numeroTerrain;
-    }
-
-    public void setNomTerrain(String nomTerrain) {
-        this.nomTerrain = nomTerrain;
-    }
-
-    public void setPrixAchat(int prixAchat) {
-        this.prixAchat = prixAchat;
-    }
-
-
     public int getNumeroTerrain() {
         return numeroTerrain;
+    }
+
+    public void setNumeroTerrain(int numeroTerrain) {
+        this.numeroTerrain = numeroTerrain;
     }
 
     public String getNomTerrain() {
         return nomTerrain;
     }
 
+    public void setNomTerrain(String nomTerrain) {
+        this.nomTerrain = nomTerrain;
+    }
+
     public int getPrixAchat() {
         return prixAchat;
     }
 
-    public void setProprietaire(Joueur proprietaire) {
-        this.proprietaire = proprietaire;
+    public void setPrixAchat(int prixAchat) {
+        this.prixAchat = prixAchat;
     }
 
     public Joueur getProprietaire() {
         return proprietaire;
     }
 
+    public void setProprietaire(Joueur proprietaire) {
+        this.proprietaire = proprietaire;
+    }
+
     public boolean estAchetable() {
         return true;
     }
 
-    public boolean aUnProprietaire(){
+    public boolean aUnProprietaire() {
         return this.proprietaire != null;
     }
 

@@ -13,7 +13,7 @@ public class ParserGare extends Parser {
 
     @Override
     public void parser(String[] values, Plateau plateau) throws Exception {
-        Gare T = new Gare(Integer.parseInt(values[0]),values[2], 400);
+        Gare T = new Gare(Integer.parseInt(values[0]), values[2], 400);
 
         plateau.ajouterCases(T);
     }

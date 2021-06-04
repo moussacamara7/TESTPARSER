@@ -1,6 +1,5 @@
 package joueur;
 
-import carte.Cartes;
 import plateau.Plateau;
 import terrain.TerrainAchetable;
 
@@ -9,9 +8,9 @@ import java.util.Objects;
 
 public class Joueur {
 
+    private final ArrayList<TerrainAchetable> proprietesJoueur = new ArrayList<>();
     private String nomJoueur;
     private int capitalJoueur;
-    private final ArrayList<TerrainAchetable> proprietesJoueur = new ArrayList<>();
     private int positionJoueur;
     private boolean estprisonnier;
     private Plateau plateau;
@@ -19,8 +18,7 @@ public class Joueur {
     private int nombreDeTourEnPrison;
 
 
-
-    public Joueur(String nomJoueur, int capitalJoueur, int positionJoueur, boolean estprisonnier,Plateau plateau) {
+    public Joueur(String nomJoueur, int capitalJoueur, int positionJoueur, boolean estprisonnier, Plateau plateau) {
 
         setNomJoueur(nomJoueur);
         setCapitalJoueur(capitalJoueur);
@@ -44,34 +42,37 @@ public class Joueur {
     }
 
 
-
     /**
      * @return the nomJoueur
      */
     public String getNomJoueur() {
         return nomJoueur;
     }
+
     /**
      * @param nomJoueur the nomJoueur to set
      */
     public void setNomJoueur(String nomJoueur) {
-        if(nomJoueur == null || nomJoueur.isEmpty())
+        if (nomJoueur == null || nomJoueur.isEmpty())
             throw new IllegalArgumentException("Erreur nom Joueur");
 
         this.nomJoueur = nomJoueur;
     }
+
     /**
      * @return the capitalJoueur
      */
     public int getCapitalJoueur() {
         return capitalJoueur;
     }
+
     /**
      * @param capitalJoueur the capitalJoueur to set
      */
     public void setCapitalJoueur(int capitalJoueur) {
         this.capitalJoueur = capitalJoueur;
     }
+
     /**
      * @return the proprietesJoueur
      */
@@ -92,9 +93,9 @@ public class Joueur {
      */
 
     public void ajouterPropriete(TerrainAchetable prop) {
-        if(prop == null)
+        if (prop == null)
             throw new IllegalArgumentException("Erreur propriete");
-        if(proprietesJoueur.contains(prop))
+        if (proprietesJoueur.contains(prop))
             throw new IllegalArgumentException("Proriete deja possede");
 
         proprietesJoueur.add(prop);
@@ -113,7 +114,7 @@ public class Joueur {
     }
 
     public TerrainAchetable getPropriete(int i) {
-        if(i<0 || i> getNombreProprietes())
+        if (i < 0 || i > getNombreProprietes())
             throw new IllegalArgumentException("Propriete inaccessible");
         return proprietesJoueur.get(i);
     }
@@ -124,21 +125,24 @@ public class Joueur {
     public int getPositionJoueur() {
         return positionJoueur;
     }
+
     /**
      * @param positionJoueur the positionJoueur to set
      */
     public void setPositionJoueur(int positionJoueur) {
-        if(positionJoueur<0 || positionJoueur>40)
+        if (positionJoueur < 0 || positionJoueur > 40)
             throw new IllegalArgumentException("Erreur position Joueur");
 
         this.positionJoueur = positionJoueur;
     }
+
     /**
      * @return the estprisonnier
      */
     public boolean isEstprisonnier() {
         return estprisonnier;
     }
+
     /**
      * @param estprisonnier the estprisonnier to set
      */
@@ -150,8 +154,8 @@ public class Joueur {
         return plateau;
     }
 
-    public void setPlateau(Plateau plateau) throws IllegalArgumentException{
-        if(plateau == null)
+    public void setPlateau(Plateau plateau) throws IllegalArgumentException {
+        if (plateau == null)
             throw new IllegalArgumentException("Plateau null");
         this.plateau = plateau;
     }

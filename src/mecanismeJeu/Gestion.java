@@ -1,5 +1,6 @@
 package mecanismeJeu;
 
+import carte.*;
 import joueur.Joueur;
 import terrain.*;
 
@@ -14,67 +15,74 @@ public class Gestion {
         Terrain t = joueur.getPlateau().getCase(joueur.getPositionJoueur());
         Scanner sc = new Scanner(System.in);
 
-        System.out.println("Vous arrivez sur la case " +joueur.getPositionJoueur());
+        System.out.println("Vous arrivez sur la case " + joueur.getPositionJoueur());
 
-        if(t.estAchetable()){
+        if (t.estAchetable()) {
             TerrainAchetable ta = (TerrainAchetable) t;
-            if(ta.aUnProprietaire() && ta.getProprietaire().equals(joueur)){
-                if(ta.estConstructible()){
+            if (ta.aUnProprietaire() && ta.getProprietaire().equals(joueur)) {
+                if (ta.estConstructible()) {
                     TerrainConstructible tc = (TerrainConstructible) ta;
-                    if(Action.peutConstruire(joueur.getPositionJoueur(),joueur.getPlateau())){
+                    if (Action.peutConstruire(joueur.getPositionJoueur(), joueur.getPlateau())) {
                         //on propose de construire
                         System.out.println("Voulez vous construire ?\n");
                         System.out.println("Oui : 1 \nNon : 0");
                         int choix = sc.nextInt();
-                        if(choix == 1){
-                            Action.construire(joueur.getPositionJoueur(),joueur.getPlateau());
+                        if (choix == 1) {
+                            Action.construire(joueur.getPositionJoueur(), joueur.getPlateau());
                         }
                     }
                 }
-            }else{
-                if(ta.aUnProprietaire()){
-                        if(ta instanceof Gare){
-                            Gare g = (Gare) ta;
-                            Action.payer(g.getLoyer(),joueur,g.getProprietaire());
-                        }else if(ta instanceof Compagnie){
-                                Compagnie c = (Compagnie) ta;
-                                Action.payer(c.getLoyer(),joueur,c.getProprietaire());
+            } else {
+                if (ta.aUnProprietaire()) {
+                    if (ta instanceof Gare) {
+                        Gare g = (Gare) ta;
+                        Action.payer(g.getLoyer(), joueur, g.getProprietaire());
+                    } else if (ta instanceof Compagnie) {
+                        Compagnie c = (Compagnie) ta;
+                        Action.payer(c.getLoyer(), joueur, c.getProprietaire());
 
-                        }else{
-                            //c'est constructible
-                            TerrainConstructible tc = (TerrainConstructible) ta;
-                            int prixLoyer = 0;
-                            switch(tc.getNombreMaison()){
-                                case 0 : prixLoyer = tc.getLoyer().getPrixAucuneMaison();
-                                         break;
-                                case 1 : prixLoyer = tc.getLoyer().getPrixUnemaison();
-                                         break;
-                                case 2 : prixLoyer = tc.getLoyer().getPrixDeuxMaison();
-                                         break;
-                                case 3 : prixLoyer = tc.getLoyer().getPrixTroisMaison();
-                                         break;
-                                case 4 : prixLoyer = tc.getLoyer().getPrixQuatreMaison();
-                                         break;
-                                case 5 : prixLoyer = tc.getLoyer().getPrixHotel();
-                                         break;
-                            }
-                            Action.payer(prixLoyer, joueur, tc.getProprietaire());
+                    } else {
+                        //c'est constructible
+                        TerrainConstructible tc = (TerrainConstructible) ta;
+                        int prixLoyer = 0;
+                        switch (tc.getNombreMaison()) {
+                            case 0:
+                                prixLoyer = tc.getLoyer().getPrixAucuneMaison();
+                                break;
+                            case 1:
+                                prixLoyer = tc.getLoyer().getPrixUnemaison();
+                                break;
+                            case 2:
+                                prixLoyer = tc.getLoyer().getPrixDeuxMaison();
+                                break;
+                            case 3:
+                                prixLoyer = tc.getLoyer().getPrixTroisMaison();
+                                break;
+                            case 4:
+                                prixLoyer = tc.getLoyer().getPrixQuatreMaison();
+                                break;
+                            case 5:
+                                prixLoyer = tc.getLoyer().getPrixHotel();
+                                break;
                         }
-                }else if(joueur.getCapitalJoueur() >= ta.getPrixAchat()){
+                        Action.payer(prixLoyer, joueur, tc.getProprietaire());
+                    }
+                } else if (joueur.getCapitalJoueur() >= ta.getPrixAchat()) {
                     //le joueur peut acheter le terrain
-                    System.out.println("Voulez vous acheter " +ta.getNomTerrain() +"?");
+                    System.out.println("Voulez vous acheter " + ta.getNomTerrain() + "?");
                     System.out.println(ta.toString());
                     System.out.println("1 : oui \n0 : non");
                     int choix = sc.nextInt();
-                    if(choix == 1){
+                    if (choix == 1) {
                         Action.acheterPropriete(joueur, ta);
                     }
 
                 }
             }
 
-        }else{
-            if(t instanceof TerrainAction){
+        } else {
+
+            if (t instanceof TerrainAction) {
                 TerrainAction tac = (TerrainAction) t;
                 switch (tac.getNomTerrain()) {
                     case "TAXE DE LUXE":
@@ -89,12 +97,63 @@ public class Gestion {
                         System.out.println("Vous allez en prison");
                         Action.allerEnPrison(joueur);
                         break;
+                }
+            } else if (t instanceof Piocher) {
+                Piocher tpiocher = (Piocher) t;
+
+                switch (tpiocher.getNomTerrain()) {
                     case "CHANCE":
                         System.out.println("Vous piochez une carte chance");
-                        Action.piocherChance(joueur);
+                        Cartes chance = Action.piocherChance(joueur);
+
+                        if (chance instanceof Deplacement) {
+                            Deplacement c = (Deplacement) chance;
+                            System.out.println(c.getMessage());
+                        } else if (chance instanceof Encaisser) {
+                            Encaisser c = (Encaisser) chance;
+                            System.out.println(c.getMessage());
+                        } else if (chance instanceof Liberation) {
+                            Liberation c = (Liberation) chance;
+                            System.out.println(c.getMessage());
+                        } else if (chance instanceof Payer) {
+                            Payer c = (Payer) chance;
+                            System.out.println(c.getMessage());
+                        } else if (chance instanceof Impot) {
+                            Impot c = (Impot) chance;
+                            System.out.println(c.getMessage());
+                        } else if (chance instanceof Reparation) {
+                            Reparation c = (Reparation) chance;
+                            System.out.println(c.getMessage());
+                        }
+                        chance.action(joueur);
+                        break;
+
                     case "CAISSE COMMUNAUTE":
                         System.out.println("Vous piochez une carte communauté");
-                        Action.piocherCommunaute(joueur);
+                        Cartes communautee = Action.piocherCommunaute(joueur);
+                        if (communautee instanceof Chance) {
+                            System.out.println(((Chance) communautee).getMessage());
+                            System.out.println("\nTapez 0 pour payer, 1 pour piocher un carte chance\n");
+                            int choix = sc.nextInt();
+                            ((Chance) communautee).action(joueur, choix == 0);
+                        } else if (communautee instanceof Anniversaire) {
+                            Anniversaire c = (Anniversaire) communautee;
+                            System.out.println(c.getMessage());
+                        } else if (communautee instanceof Deplacement) {
+                            Deplacement c = (Deplacement) communautee;
+                            System.out.println(c.getMessage());
+                        } else if (communautee instanceof Encaisser) {
+                            Encaisser c = (Encaisser) communautee;
+                            System.out.println(c.getMessage());
+                        } else if (communautee instanceof Liberation) {
+                            Liberation c = (Liberation) communautee;
+                            System.out.println(c.getMessage());
+                        } else if (communautee instanceof Payer) {
+                            Payer c = (Payer) communautee;
+                            System.out.println(c.getMessage());
+                        }
+                        communautee.action(joueur);
+                        break;
                 }
             }
 
@@ -108,25 +167,27 @@ public class Gestion {
         deUn = Action.lancerDe();
         deDeux = Action.lancerDe();
 
-        do{
-            if(deDeux == deUn) {
+        do {
+            if (deDeux == deUn) {
                 nbDouble++;
                 System.out.println("\nde 1: " + deUn + "\nde 2: " + deDeux + "\n");
                 Action.avancerJoueur(joueur, deUn + deDeux);
                 interactionCase(joueur);
-                System.out.println("Vous avez fait un double, vous relancé.\nNombre de double ce tour : " + nbDouble);
-                deUn = Action.lancerDe();
-                deDeux = Action.lancerDe();
+                //si le joueur a atteri sur la case aller en prison il ne ralance pas
+                if (!joueur.isEstprisonnier()) {
+                    System.out.println("Vous avez fait un double, vous relancé.\nNombre de double ce tour : " + nbDouble);
+                    deUn = Action.lancerDe();
+                    deDeux = Action.lancerDe();
+                }
             }
 
 
-        }while(deUn == deDeux && nbDouble < 3 );
+        } while (deUn == deDeux && nbDouble < 3 && !joueur.isEstprisonnier());
 
-        if(nbDouble == 3) {
-            System.out.println("3 doubles d'affilé, vous allez en prison" +joueur.getNomJoueur());
+        if (nbDouble == 3) {
+            System.out.println("3 doubles d'affilé, vous allez en prison" + joueur.getNomJoueur());
             Action.allerEnPrison(joueur);
-        }
-        else {
+        } else if (!joueur.isEstprisonnier()) {
             System.out.println("\nde 1: " + deUn + "\nde 2: " + deDeux + "\n");
             Action.avancerJoueur(joueur, deUn + deDeux);
             interactionCase(joueur);
@@ -136,25 +197,26 @@ public class Gestion {
     public static void jouerTour(Joueur joueur, int deUn, int deDeux) throws Exception {
         int nbDouble = 0;
 
-        do{
-            if(deDeux == deUn) {
+        do {
+            if (deDeux == deUn) {
                 nbDouble++;
                 System.out.println("\nde 1: " + deUn + "\nde 2: " + deDeux + "\n");
                 Action.avancerJoueur(joueur, deUn + deDeux);
                 interactionCase(joueur);
-                System.out.println("Vous avez fait un double, vous relancé.\nNombre de double ce tour : " + nbDouble);
-                deUn = Action.lancerDe();
-                deDeux = Action.lancerDe();
+                if (!joueur.isEstprisonnier()) {
+                    System.out.println("Vous avez fait un double, vous relancé.\nNombre de double ce tour : " + nbDouble);
+                    deUn = Action.lancerDe();
+                    deDeux = Action.lancerDe();
+                }
             }
 
 
-        }while(deUn == deDeux && nbDouble < 3 );
+        } while (deUn == deDeux && nbDouble < 3 && !joueur.isEstprisonnier());
 
-        if(nbDouble == 3) {
-            System.out.println("3 doubles d'affilé, vous allez en prison" +joueur.getNomJoueur());
+        if (nbDouble == 3) {
+            System.out.println("3 doubles d'affilé, vous allez en prison" + joueur.getNomJoueur());
             Action.allerEnPrison(joueur);
-        }
-        else {
+        } else if (!joueur.isEstprisonnier()) {
             System.out.println("\nde 1: " + deUn + "\nde 2: " + deDeux + "\n");
             Action.avancerJoueur(joueur, deUn + deDeux);
             interactionCase(joueur);

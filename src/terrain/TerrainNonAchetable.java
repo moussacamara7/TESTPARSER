@@ -1,7 +1,7 @@
 package terrain;
 
 
-public abstract class TerrainNonAchetable implements Terrain{
+public abstract class TerrainNonAchetable implements Terrain {
     private int numeroTerrain;
     private String nomTerrain;
 

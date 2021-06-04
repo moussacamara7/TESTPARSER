@@ -13,7 +13,7 @@ public class ParserCompagnie extends Parser {
 
     @Override
     public void parser(String[] values, Plateau plateau) throws Exception {
-        Compagnie T = new Compagnie(Integer.parseInt(values[0]),values[2], Integer.parseInt(values[3]));
+        Compagnie T = new Compagnie(Integer.parseInt(values[0]), values[2], Integer.parseInt(values[3]));
 
         plateau.ajouterCases(T);
     }

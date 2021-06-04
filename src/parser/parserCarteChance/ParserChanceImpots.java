@@ -11,8 +11,7 @@ public class ParserChanceImpots extends Parser {
     }
 
 
-
-    public void parser(String[] values, Plateau plateau) throws Exception{
+    public void parser(String[] values, Plateau plateau) throws Exception {
         Impot c = new Impot(values[1]);
         plateau.ajouterChance(c);
     }

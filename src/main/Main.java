@@ -2,7 +2,6 @@ package main;
 
 import joueur.Joueur;
 import plateau.Plateau;
-import mecanismeJeu.Action;
 
 import java.io.IOException;
 
@@ -42,7 +41,6 @@ public class Main {
 
         for(int i=0; i<plt.getNombreCarteCommunaute(); i++)
             System.out.println(plt.getCommunaute(i));*/
-
 
 
     }

@@ -11,9 +11,8 @@ public class ParserChancePayer extends Parser {
     }
 
 
-
-    public void parser(String[] values, Plateau plateau) throws Exception{
-        Payer c = new Payer(values[1],Integer.parseInt(values[2]));
+    public void parser(String[] values, Plateau plateau) throws Exception {
+        Payer c = new Payer(values[1], Integer.parseInt(values[2]));
         plateau.ajouterChance(c);
     }
 

@@ -11,8 +11,7 @@ public class ParserCommunauteChance extends Parser {
     }
 
 
-
-    public void parser(String[] values, Plateau plateau) throws Exception{
+    public void parser(String[] values, Plateau plateau) throws Exception {
         Chance c = new Chance(values[1], Integer.parseInt(values[2]));
         plateau.ajouterCommunaute(c);
     }

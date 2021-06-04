@@ -21,6 +21,7 @@ public class Plateau {
     private final ArrayList<Terrain> cases = new ArrayList<>();
     private final ArrayList<Cartes> chance = new ArrayList<>();
     private final ArrayList<Cartes> caisseCommunaute = new ArrayList<>();
+
     //////////////////////////////////////////////////////////////////////////////
 //      On mettra la plupart des fonctions de cette classe en "static"      //
 //      On va analyser cela ensemble                                        //
@@ -121,7 +122,6 @@ public class Plateau {
     }
 
 
-
     public int getNombreCase(ArrayList<Terrain> cases) {
         return cases.size();
     }
@@ -133,7 +133,7 @@ public class Plateau {
         return cases.get(i);
     }
 
-    public ArrayList<Terrain> getListeCases(){
+    public ArrayList<Terrain> getListeCases() {
         return this.cases;
     }
 
@@ -236,25 +236,25 @@ public class Plateau {
         //pour les lancés de dés
         Scanner sc = new Scanner(System.in);
 
-        while(this.getNombreJoueurs()>=2){
+        while (this.getNombreJoueurs() >= 2) {
 
-            for(Joueur joueur : this.listeJoueurs){
-                System.out.println("tour de " +joueur.getNomJoueur() +"  Position : " +joueur.getPositionJoueur() +"\n");
+            for (Joueur joueur : this.listeJoueurs) {
+                System.out.println("tour de " + joueur.getNomJoueur() + "  Position : " + joueur.getPositionJoueur() + "\n");
                 System.out.println(joueur.toString());
 
-                if(joueur.isEstprisonnier()){
-                    joueur.setNombreDeTourEnPrison(joueur.getNombreDeTourEnPrison()+1);
-                    if(joueur.getCarteSortirDePrison() > 0){
+                if (joueur.isEstprisonnier()) {
+                    joueur.setNombreDeTourEnPrison(joueur.getNombreDeTourEnPrison() + 1);
+                    if (joueur.getCarteSortirDePrison() > 0) {
                         System.out.println("Voulez vous utiliser votre carte sortir de prison ?\n");
                         System.out.println("0 : non, lancer les dés\n1: oui\n");
                         int choix;
-                        do{
+                        do {
                             choix = sc.nextInt();
-                            switch(choix) {
+                            switch (choix) {
                                 case 0:
                                     deUn = Action.lancerDe();
                                     deDeux = Action.lancerDe();
-                                    System.out.println("\nde 1:" +deUn +"\nde 2:" +deDeux +"\n");
+                                    System.out.println("\nde 1:" + deUn + "\nde 2:" + deDeux + "\n");
 
                                     if (deUn == deDeux) {
                                         Action.sortirDePrison(joueur);
@@ -277,14 +277,14 @@ public class Plateau {
                                     Gestion.jouerTour(joueur);
                                     break;
                             }
-                        }while(!(choix == 1 || choix == 0));
-                    }else{
+                        } while (!(choix == 1 || choix == 0));
+                    } else {
                         System.out.println("Voulez n'avez pas de carte sortir de prison.\n");
                         System.out.println("Entrez une touche pour lancer les dés?\n");
                         int choix = sc.nextInt();
                         deUn = Action.lancerDe();
                         deDeux = Action.lancerDe();
-                        System.out.println("de 1:" +deUn +"  de 2:" +deDeux);
+                        System.out.println("de 1:" + deUn + "  de 2:" + deDeux);
                         if (deUn == deDeux) {
                             Action.sortirDePrison(joueur);
                             Gestion.jouerTour(joueur, deUn, deDeux);
@@ -299,17 +299,13 @@ public class Plateau {
                             }
                         }
                     }
-                }else{
+                } else {
                     //joueur pas en prison
                     System.out.println("Vous lancez les dés\n");
-                    Gestion.jouerTour(joueur);
+                    Gestion.jouerTour(joueur, 1, 1);
                 }
-
             }
-
-
         }
 
     }
-
 }

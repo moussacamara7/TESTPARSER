@@ -11,8 +11,7 @@ public class ParserChanceReparations extends Parser {
     }
 
 
-
-    public void parser(String[] values, Plateau plateau) throws Exception{
+    public void parser(String[] values, Plateau plateau) throws Exception {
         Reparation c = new Reparation(values[1]);
         plateau.ajouterChance(c);
     }

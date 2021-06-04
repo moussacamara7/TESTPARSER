@@ -11,9 +11,8 @@ public class ParserChanceEncaisser extends Parser {
     }
 
 
-
-    public void parser(String[] values, Plateau plateau) throws Exception{
-        Encaisser c = new Encaisser(values[1],Integer.parseInt(values[2]));
+    public void parser(String[] values, Plateau plateau) throws Exception {
+        Encaisser c = new Encaisser(values[1], Integer.parseInt(values[2]));
         plateau.ajouterChance(c);
     }
 

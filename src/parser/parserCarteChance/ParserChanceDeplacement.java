@@ -11,9 +11,8 @@ public class ParserChanceDeplacement extends Parser {
     }
 
 
-
-    public void parser(String[] values, Plateau plateau) throws Exception{
-        Deplacement c = new Deplacement(values[1],values[2]);
+    public void parser(String[] values, Plateau plateau) throws Exception {
+        Deplacement c = new Deplacement(values[1], values[2]);
         plateau.ajouterChance(c);
     }
 

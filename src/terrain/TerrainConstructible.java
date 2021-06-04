@@ -1,6 +1,6 @@
 package terrain;
 
-public class TerrainConstructible extends TerrainAchetable{
+public class TerrainConstructible extends TerrainAchetable {
 
 
     private String couleur;
@@ -40,11 +40,15 @@ public class TerrainConstructible extends TerrainAchetable{
         this.prixAchatMaison = prixAchatMaison;
     }
 
-    public Loyer getLoyer() { return loyer; }
+    public Loyer getLoyer() {
+        return loyer;
+    }
 
-    public void setLoyer(Loyer loyer) { this.loyer = loyer; }
+    public void setLoyer(Loyer loyer) {
+        this.loyer = loyer;
+    }
 
-    public boolean estConstructible(){
+    public boolean estConstructible() {
         return true;
     }
 

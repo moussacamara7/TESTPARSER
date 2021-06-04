@@ -4,7 +4,7 @@ package carte;
 import joueur.Joueur;
 import mecanismeJeu.Action;
 
-public class Encaisser implements Cartes{
+public class Encaisser implements Cartes {
     private String message;
     private int somme;
 
@@ -43,4 +43,4 @@ public class Encaisser implements Cartes{
                 '}';
     }
 }
-//
+

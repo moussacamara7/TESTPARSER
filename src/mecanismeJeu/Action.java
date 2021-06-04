@@ -1,5 +1,6 @@
 package mecanismeJeu;
 
+import carte.Cartes;
 import joueur.Joueur;
 import plateau.Plateau;
 import terrain.Terrain;
@@ -26,7 +27,6 @@ public class Action {
      ****************************/
 
 
-
     //////////////////////////////////////////////////////////////////////////////////////////////////////
     //  Pour les opérations vers la banque on peut supposer que la banque a un budjet illimité          //
     //  Donc on a même pas besoin de définir une methode en destination de la banque                    //
@@ -34,7 +34,7 @@ public class Action {
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //pour payer depuis la banque
-    public static void payer(int somme, Joueur destination){
+    public static void payer(int somme, Joueur destination) {
         if (somme <= 0)
             throw new IllegalArgumentException("somme invalide");
         destination.setCapitalJoueur(destination.getCapitalJoueur() + somme);
@@ -49,13 +49,14 @@ public class Action {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //retirer la somme à un joueur
-    public static void retirer(int somme, Joueur destination){
+    public static void retirer(int somme, Joueur destination) {
         if (somme <= 0)
             throw new IllegalArgumentException("somme invalide");
         destination.setCapitalJoueur(destination.getCapitalJoueur() - somme);
 
         //on peut lancer l'exception de faillite ici si le joueur est en negatif
         //ce qui l'obligera a hypotequer ou perdre la partie
+
 
     }
 
@@ -78,6 +79,7 @@ public class Action {
 //      Si on a besoin d'acceder aux cases, joueurs ou cartes on fait par ex: PLateau.getNombreJoueurs()    //
 //      C'est pour cela j'ai privilégié les fonctions de plateau en "static"                                //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
     /**
      * acheter un terrain
      * pas de verification de la position du joueur
@@ -85,7 +87,6 @@ public class Action {
     public static void acheterPropriete(Joueur joueur, int numeroTerrain) throws Exception {
 
         Plateau plateau = joueur.getPlateau();
-
 
 
         if (!plateau.getCase(numeroTerrain).estAchetable())
@@ -132,7 +133,7 @@ public class Action {
 
     }
 
-    public static void allerEnPrison(Joueur joueur){
+    public static void allerEnPrison(Joueur joueur) {
         if (joueur.isEstprisonnier())
             throw new IllegalArgumentException("joueur deja prisonnier");
         joueur.setEstprisonnier(true);
@@ -146,22 +147,22 @@ public class Action {
         joueur.setPositionJoueur(10);   //On le place sur la case simple visite
     }
 
-    public static void deplacer(Joueur joueur, int position){
+    public static void deplacer(Joueur joueur, int position) {
         if (position < joueur.getPositionJoueur())
             payer(200, joueur);
         joueur.setPositionJoueur(position);
     }
 
-    public static void avancerJoueur(Joueur joueur, int nbDeplacement){
-        if(nbDeplacement <= 0 )
+    public static void avancerJoueur(Joueur joueur, int nbDeplacement) {
+        if (nbDeplacement <= 0)
             throw new IllegalArgumentException("deplacement illegal");
 
         int nouvellePos;
-        if(joueur.getPositionJoueur() + nbDeplacement > 39){
+        if (joueur.getPositionJoueur() + nbDeplacement > 39) {
             nouvellePos = joueur.getPositionJoueur() + nbDeplacement - 40;
             payer(200, joueur);
             //case depart
-        }else{
+        } else {
             nouvellePos = joueur.getPositionJoueur() + nbDeplacement;
         }
 
@@ -171,20 +172,20 @@ public class Action {
 
     //pour verifier si un joueur peut construire sur un terrain
     //cette methode peut etre utilisée dans la gestion du jeu
-    public static boolean peutConstruire(int terrain, Plateau plateau){
+    public static boolean peutConstruire(int terrain, Plateau plateau) {
 
-        if(! plateau.getCase(terrain).estAchetable())
+        if (!plateau.getCase(terrain).estAchetable())
             return false;
         //terrain non achetable
 
 
         TerrainAchetable ta = (TerrainAchetable) plateau.getCase(terrain);
 
-        if(! ta.estConstructible())
+        if (!ta.estConstructible())
             return false;
         //terrain non constructible
 
-        if(! ta.aUnProprietaire())
+        if (!ta.aUnProprietaire())
             return false;
         //le terrain n'a pas de propriétaire
 
@@ -193,20 +194,20 @@ public class Action {
         Joueur propietaire = tc.getProprietaire();
         int nbMaison = tc.getNombreMaison();
 
-        for(Terrain n : plateau.getListeCases()){
-            if(n.estAchetable()){
+        for (Terrain n : plateau.getListeCases()) {
+            if (n.estAchetable()) {
                 TerrainAchetable na = (TerrainAchetable) n;
-                if(na.estConstructible()){
-                    TerrainConstructible nc = (TerrainConstructible)  na;
-                    if(nc.getCouleur().equals(couleur)){
+                if (na.estConstructible()) {
+                    TerrainConstructible nc = (TerrainConstructible) na;
+                    if (nc.getCouleur().equals(couleur)) {
 
-                        if(! propietaire.equals(nc.getProprietaire()))
+                        if (!propietaire.equals(nc.getProprietaire()))
                             return false;
-                            //le joueur ne possède pas tous les terrains de cette couleur
-                        if(nc.getNombreMaison() < nbMaison)
+                        //le joueur ne possède pas tous les terrains de cette couleur
+                        if (nc.getNombreMaison() < nbMaison)
                             return false;
-                            //terrain non eligible a la construction
-                            //le joueur n'a pas assez de construction sur les autres terrains de meme couleur
+                        //terrain non eligible a la construction
+                        //le joueur n'a pas assez de construction sur les autres terrains de meme couleur
                     }
                 }
             }
@@ -214,30 +215,30 @@ public class Action {
         return true;
     }
 
-    public static void construire(int terrain, Plateau plateau){
+    public static void construire(int terrain, Plateau plateau) {
 
-        if(! Action.peutConstruire(terrain, plateau))
+        if (!Action.peutConstruire(terrain, plateau))
             throw new IllegalArgumentException(("terrain non eligible a la construction"));
         TerrainConstructible tc = (TerrainConstructible) plateau.getCase(terrain);
-        Action.retirer(tc.getPrixAchatMaison(),tc.getProprietaire());
-        tc.setNombreMaison(tc.getNombreMaison()+1);
+        Action.retirer(tc.getPrixAchatMaison(), tc.getProprietaire());
+        tc.setNombreMaison(tc.getNombreMaison() + 1);
     }
 
-    public void hypotequer(int terrain){
-
+    public static int lancerDe() {
+        return (int) Math.floor(Math.random() * (6) + 1);
     }
 
-    public static int lancerDe(){
-        return (int)Math.floor(Math.random()*(6)+1);
-    }
-
-    public static void piocherChance(Joueur joueur){
+    public static Cartes piocherChance(Joueur joueur) {
         Random r = new Random();
-
-
-
+        return joueur.getPlateau().getChance(r.nextInt(joueur.getPlateau().getNombreCarteChance() - 1));
     }
-    public static void piocherCommunaute(Joueur joueur){
+
+    public static Cartes piocherCommunaute(Joueur joueur) {
+        Random r = new Random();
+        return joueur.getPlateau().getCommunaute(r.nextInt(joueur.getPlateau().getNombreCarteCommunaute() - 1));
+    }
+
+    public void hypotequer(int terrain) {
 
     }
 

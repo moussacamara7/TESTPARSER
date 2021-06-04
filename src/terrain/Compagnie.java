@@ -1,8 +1,13 @@
 package terrain;
 
-public class Compagnie extends TerrainAchetable{
+public class Compagnie extends TerrainAchetable {
 
     private int loyer;
+
+    public Compagnie(int numeroTerrain, String nomTerrain, int prixAchat) {
+        super(numeroTerrain, nomTerrain, prixAchat);
+        setLoyer(20);
+    }
 
     public int getLoyer() {
         return loyer;
@@ -12,12 +17,7 @@ public class Compagnie extends TerrainAchetable{
         this.loyer = loyer;
     }
 
-    public Compagnie(int numeroTerrain, String nomTerrain, int prixAchat) {
-        super(numeroTerrain, nomTerrain, prixAchat);
-        setLoyer(20);
-    }
-
-    public boolean estConstructible(){
+    public boolean estConstructible() {
         return false;
     }
 
