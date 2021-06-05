@@ -1,6 +1,7 @@
 package mecanismeJeu;
 
 import carte.Cartes;
+import exception.JoueurFailliteException;
 import joueur.Joueur;
 import plateau.Plateau;
 import terrain.Terrain;
