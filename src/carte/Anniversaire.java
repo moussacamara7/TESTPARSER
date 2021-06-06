@@ -36,7 +36,7 @@ public class Anniversaire implements Cartes {
 
     @Override
     public void action(Joueur joueur) throws Exception {
-        for (Joueur j : joueur.getPlateau().getListeJoueurs()) {
+        for (Joueur j : joueur.getUIPlateau().getListeJoueurs()) {
             if (!j.equals(joueur))
                 Action.payer(somme, j, joueur);
         }

@@ -20,6 +20,7 @@ import joueur.Joueur;
 import terrain.TerrainAchetable;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 
 public class Monopoly extends Application {
@@ -241,7 +242,7 @@ public class Monopoly extends Application {
 
     private void initPartie() {
 
-        uiPlateau = new UIPlateau(/* ? */);
+        uiPlateau = new UIPlateau();
 
         listeJoueurs.add(new Joueur("Han",uiPlateau));
         listePions.add(new Pion("Bateau"));
@@ -275,6 +276,18 @@ public class Monopoly extends Application {
         alert.setHeaderText("");
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public Boolean DialogActionCarteChance() {
+        Alert alert = new Alert(AlertType.CONFIRMATION);
+        alert.setTitle("Carte Chance");
+        alert.setContentText("Piochez une carte chance ou payer 10 ?");
+
+        ButtonType payerButton = new ButtonType("Payer");
+        ButtonType piocherButton = new ButtonType("Piocher");
+        alert.getButtonTypes().setAll(payerButton, piocherButton);
+        Optional<ButtonType> result = alert.showAndWait();
+        return result.get().equals(payerButton);
     }
 
     public int getNbDoubles() {

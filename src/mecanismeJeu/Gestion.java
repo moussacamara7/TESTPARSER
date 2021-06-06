@@ -12,7 +12,7 @@ public class Gestion {
 
 
     public static void interactionCase(Joueur joueur) throws Exception {
-        Terrain t = joueur.getPlateau().getCaseP(joueur.getPositionJoueur());
+        Terrain t = joueur.getUIPlateau().getCaseP(joueur.getPositionJoueur());
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Vous arrivez sur la case " + joueur.getPositionJoueur());
@@ -22,13 +22,13 @@ public class Gestion {
             if (ta.aUnProprietaire() && ta.getProprietaire().equals(joueur)) {
                 if (ta.estConstructible()) {
                     TerrainConstructible tc = (TerrainConstructible) ta;
-                    if (Action.peutConstruire(joueur.getPositionJoueur(), joueur.getPlateau())) {
+                    if (Action.peutConstruire(joueur.getPositionJoueur(), joueur.getUIPlateau())) {
                         //on propose de construire
                         System.out.println("Voulez vous construire ?\n");
                         System.out.println("Oui : 1 \nNon : 0");
                         int choix = sc.nextInt();
                         if (choix == 1) {
-                            Action.construire(joueur.getPositionJoueur(), joueur.getPlateau());
+                            Action.construire(joueur.getPositionJoueur(), joueur.getUIPlateau());
                         }
                     }
                 }

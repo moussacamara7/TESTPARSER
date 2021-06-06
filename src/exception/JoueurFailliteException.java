@@ -6,7 +6,7 @@ import application.ui.UIPlateau;
 
 public class JoueurFailliteException extends Exception{
     public JoueurFailliteException(Joueur joueur){
-        UIPlateau plateau = joueur.getPlateau();
+        UIPlateau plateau = joueur.getUIPlateau();
         System.out.println("Le joueur"+joueur.getNomJoueur()+"est en faillite.");
         plateau.getListeJoueurs().remove(joueur);
         System.out.println("Le joueur"+joueur.getNomJoueur()+"a été retiré du plateau.");

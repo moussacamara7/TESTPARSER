@@ -88,7 +88,7 @@ public class Action {
      */
     public static void acheterPropriete(Joueur joueur, int numeroTerrain) throws Exception {
 
-        UIPlateau plateau = joueur.getPlateau();
+        UIPlateau plateau = joueur.getUIPlateau();
 
 
         if (!plateau.getCaseP(numeroTerrain).estAchetable())
@@ -232,12 +232,12 @@ public class Action {
 
     public static Cartes piocherChance(Joueur joueur) {
         Random r = new Random();
-        return joueur.getPlateau().getChance(r.nextInt(joueur.getPlateau().getNombreCarteChance() - 1));
+        return joueur.getUIPlateau().getChance(r.nextInt(joueur.getUIPlateau().getNombreCarteChance() - 1));
     }
 
     public static Cartes piocherCommunaute(Joueur joueur) {
         Random r = new Random();
-        return joueur.getPlateau().getCommunaute(r.nextInt(joueur.getPlateau().getNombreCarteCommunaute() - 1));
+        return joueur.getUIPlateau().getCommunaute(r.nextInt(joueur.getUIPlateau().getNombreCarteCommunaute() - 1));
     }
 
     public void hypotequer(int terrain) {

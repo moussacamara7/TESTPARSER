@@ -44,7 +44,7 @@ public class UIPlateau {
     private final ArrayList<Cartes> caisseCommunaute = new ArrayList<>();
 
 
-    public UIPlateau(/* paramètres ? */) {
+    public UIPlateau() {
 
         for (int i = 0; i < 41; i++)
             cases.put(i, new UICase());
@@ -107,7 +107,7 @@ public class UIPlateau {
      * La méthode parserCoordonnées vérifie que la ligne à parser respecte le bon format. Sinon arrêt
      * du programme en lançant une exception du type Error
      *
-     * @param ligne La ligne à parser
+     * //@param ligne La ligne à parser
      */
 
     ////////////////////////////////////////

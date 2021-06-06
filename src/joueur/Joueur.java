@@ -151,7 +151,7 @@ public class Joueur {
         this.estprisonnier = estprisonnier;
     }
 
-    public UIPlateau getPlateau() {
+    public UIPlateau getUIPlateau() {
         return plateau;
     }
 
