@@ -1,5 +1,6 @@
 package parser.parserCarteCommunaute;
 
+import application.ui.UIPlateau;
 import carte.Reparation;
 import parser.Parser;
 import plateau.Plateau;
@@ -11,7 +12,7 @@ public class ParserCommunauteReparations extends Parser {
     }
 
 
-    public void parser(String[] values, Plateau plateau) throws Exception {
+    public void parser(String[] values, UIPlateau plateau) throws Exception {
         Reparation c = new Reparation(values[1]);
         plateau.ajouterCommunaute(c);
     }

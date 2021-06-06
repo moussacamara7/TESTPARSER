@@ -1,5 +1,6 @@
 package parser;
 
+import application.ui.UIPlateau;
 import plateau.Plateau;
 
 public abstract class Parser {
@@ -11,7 +12,7 @@ public abstract class Parser {
     }
 
 
-    public void traiter(String[] values, Plateau plateau) throws Exception {
+    public void traiter(String[] values, UIPlateau plateau) throws Exception {
         if (saitParser(values))
             parser(values, plateau);
         else if (aUnSuivant())
@@ -29,7 +30,7 @@ public abstract class Parser {
         return suivant != null;
     }
 
-    public abstract void parser(String[] values, Plateau plateau) throws Exception;
+    public abstract void parser(String[] values, UIPlateau plateau) throws Exception;
 
     public abstract boolean saitParser(String[] values);
 }

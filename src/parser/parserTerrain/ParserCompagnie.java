@@ -1,6 +1,7 @@
 package parser.parserTerrain;
 
 
+import application.ui.UIPlateau;
 import parser.Parser;
 import plateau.Plateau;
 import terrain.Compagnie;
@@ -12,10 +13,10 @@ public class ParserCompagnie extends Parser {
     }
 
     @Override
-    public void parser(String[] values, Plateau plateau) throws Exception {
+    public void parser(String[] values, UIPlateau plateau) throws Exception {
         Compagnie T = new Compagnie(Integer.parseInt(values[0]), values[2], Integer.parseInt(values[3]));
 
-        plateau.ajouterCases(T);
+        plateau.ajouterCasesP(T);
     }
 
     @Override

@@ -1,6 +1,7 @@
 package parser.parserTerrain;
 
 
+import application.ui.UIPlateau;
 import parser.Parser;
 import plateau.Plateau;
 import terrain.Loyer;
@@ -14,7 +15,7 @@ public class ParserTerrainConstructible extends Parser {
     }
 
     @Override
-    public void parser(String[] values, Plateau plateau) throws Exception {
+    public void parser(String[] values, UIPlateau plateau) throws Exception {
         Loyer loyer = new Loyer(
                 Integer.parseInt(values[7]),
                 Integer.parseInt(values[8]),
@@ -32,7 +33,7 @@ public class ParserTerrainConstructible extends Parser {
                 loyer
         );
 
-        plateau.ajouterCases(T);
+        plateau.ajouterCasesP(T);
     }
 
     @Override

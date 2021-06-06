@@ -1,5 +1,6 @@
 package fichier;
 
+import application.ui.UIPlateau;
 import exception.ParserManquantException;
 import parser.Parser;
 import plateau.Plateau;
@@ -19,7 +20,7 @@ public class LectureFichier {
      * @param parser     c'est le premier parser de la liste
      * @param plateau    plateau du jeu
      */
-    public static void lire(String nomFichier, Parser parser, Plateau plateau) {
+    public static void lire(String nomFichier, Parser parser, UIPlateau plateau) {
         if (nomFichier == null)
             throw new IllegalArgumentException("Fichier Carte Illegal !!!");
 

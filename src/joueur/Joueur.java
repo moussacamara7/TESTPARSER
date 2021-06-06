@@ -1,5 +1,6 @@
 package joueur;
 
+import application.ui.UIPlateau;
 import plateau.Plateau;
 import terrain.TerrainAchetable;
 
@@ -13,12 +14,12 @@ public class Joueur {
     private int capitalJoueur;
     private int positionJoueur;
     private boolean estprisonnier;
-    private Plateau plateau;
+    private UIPlateau plateau;
     private int carteSortirDePrison;
     private int nombreDeTourEnPrison;
 
 
-    public Joueur(String nomJoueur, int capitalJoueur, int positionJoueur, boolean estprisonnier, Plateau plateau) {
+    public Joueur(String nomJoueur, int capitalJoueur, int positionJoueur, boolean estprisonnier, UIPlateau plateau) {
 
         setNomJoueur(nomJoueur);
         setCapitalJoueur(capitalJoueur);
@@ -30,7 +31,7 @@ public class Joueur {
 
     }
 
-    public Joueur(String nomJoueur, Plateau plateau) {
+    public Joueur(String nomJoueur, UIPlateau plateau) {
 
         setNomJoueur(nomJoueur);
         setCapitalJoueur(1500);
@@ -150,11 +151,11 @@ public class Joueur {
         this.estprisonnier = estprisonnier;
     }
 
-    public Plateau getPlateau() {
+    public UIPlateau getPlateau() {
         return plateau;
     }
 
-    public void setPlateau(Plateau plateau) throws IllegalArgumentException {
+    public void setPlateau(UIPlateau plateau) throws IllegalArgumentException {
         if (plateau == null)
             throw new IllegalArgumentException("Plateau null");
         this.plateau = plateau;

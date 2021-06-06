@@ -1,5 +1,6 @@
 package main;
 
+import application.ui.UIPlateau;
 import joueur.Joueur;
 import plateau.Plateau;
 
@@ -10,7 +11,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
 
-        Plateau plt = new Plateau();
+        UIPlateau plt = new UIPlateau();
         Joueur A = new Joueur("Albert", plt);
         Joueur B = new Joueur("Bertrand", plt);
 

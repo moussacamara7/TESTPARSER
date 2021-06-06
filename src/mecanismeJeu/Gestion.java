@@ -12,7 +12,7 @@ public class Gestion {
 
 
     public static void interactionCase(Joueur joueur) throws Exception {
-        Terrain t = joueur.getPlateau().getCase(joueur.getPositionJoueur());
+        Terrain t = joueur.getPlateau().getCaseP(joueur.getPositionJoueur());
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Vous arrivez sur la case " + joueur.getPositionJoueur());

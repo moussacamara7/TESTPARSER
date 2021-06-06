@@ -4,6 +4,7 @@ import application.Monopoly;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ToggleButton;
+import joueur.Joueur;
 
 import java.util.ArrayList;
 
@@ -18,8 +19,8 @@ public class EventPasser implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent e) {
         // TODO Verifier lorsqu'il y a eu double, ou prison
-        ArrayList<String> lesJoueurs = monopoly.getListeJoueurs();
-        String jc = monopoly.getJoueurCourant();
+        ArrayList<Joueur> lesJoueurs = monopoly.getListeJoueurs();
+        Joueur jc = monopoly.getJoueurCourant();
         int i = lesJoueurs.indexOf(jc);
         int suivant = (i + 1) % lesJoueurs.size();
 

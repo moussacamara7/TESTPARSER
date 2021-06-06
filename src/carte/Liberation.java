@@ -1,6 +1,7 @@
 package carte;
 
 
+import application.ui.UIPlateau;
 import joueur.Joueur;
 import plateau.Plateau;
 
@@ -22,7 +23,6 @@ public class Liberation implements Cartes {
 
     @Override
     public void action(Joueur joueur) {
-        Plateau plateau = joueur.getPlateau();
         joueur.setCarteSortirDePrison(joueur.getCarteSortirDePrison() + 1);
     }
 

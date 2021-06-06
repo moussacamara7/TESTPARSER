@@ -1,5 +1,6 @@
 package mecanismeJeu;
 
+import application.ui.UIPlateau;
 import carte.Cartes;
 import exception.JoueurFailliteException;
 import joueur.Joueur;
@@ -87,14 +88,14 @@ public class Action {
      */
     public static void acheterPropriete(Joueur joueur, int numeroTerrain) throws Exception {
 
-        Plateau plateau = joueur.getPlateau();
+        UIPlateau plateau = joueur.getPlateau();
 
 
-        if (!plateau.getCase(numeroTerrain).estAchetable())
+        if (!plateau.getCaseP(numeroTerrain).estAchetable())
             throw new IllegalArgumentException("terrain non achetable");
 
         //c'est bien un terrain achetable
-        TerrainAchetable T = (TerrainAchetable) plateau.getCase(numeroTerrain);
+        TerrainAchetable T = (TerrainAchetable) plateau.getCaseP(numeroTerrain);
 
         //on vérifie que le terrain n'ai pas de propriétaire
         if (T.aUnProprietaire())
@@ -107,7 +108,7 @@ public class Action {
         //On retire l'argent au joueur et on lui ajoute la popriété
         joueur.setCapitalJoueur(joueur.getCapitalJoueur() - T.getPrixAchat());
         joueur.ajouterPropriete(T);
-        ((TerrainAchetable) plateau.getCase(numeroTerrain)).setProprietaire(joueur);
+        ((TerrainAchetable) plateau.getCaseP(numeroTerrain)).setProprietaire(joueur);
 
     }
 
@@ -173,14 +174,14 @@ public class Action {
 
     //pour verifier si un joueur peut construire sur un terrain
     //cette methode peut etre utilisée dans la gestion du jeu
-    public static boolean peutConstruire(int terrain, Plateau plateau) {
+    public static boolean peutConstruire(int terrain, UIPlateau plateau) {
 
-        if (!plateau.getCase(terrain).estAchetable())
+        if (!plateau.getCaseP(terrain).estAchetable())
             return false;
         //terrain non achetable
 
 
-        TerrainAchetable ta = (TerrainAchetable) plateau.getCase(terrain);
+        TerrainAchetable ta = (TerrainAchetable) plateau.getCaseP(terrain);
 
         if (!ta.estConstructible())
             return false;
@@ -195,7 +196,7 @@ public class Action {
         Joueur propietaire = tc.getProprietaire();
         int nbMaison = tc.getNombreMaison();
 
-        for (Terrain n : plateau.getListeCases()) {
+        for (Terrain n : plateau.getListeCasesP()) {
             if (n.estAchetable()) {
                 TerrainAchetable na = (TerrainAchetable) n;
                 if (na.estConstructible()) {
@@ -216,11 +217,11 @@ public class Action {
         return true;
     }
 
-    public static void construire(int terrain, Plateau plateau) {
+    public static void construire(int terrain, UIPlateau plateau) {
 
         if (!Action.peutConstruire(terrain, plateau))
             throw new IllegalArgumentException(("terrain non eligible a la construction"));
-        TerrainConstructible tc = (TerrainConstructible) plateau.getCase(terrain);
+        TerrainConstructible tc = (TerrainConstructible) plateau.getCaseP(terrain);
         Action.retirer(tc.getPrixAchatMaison(), tc.getProprietaire());
         tc.setNombreMaison(tc.getNombreMaison() + 1);
     }

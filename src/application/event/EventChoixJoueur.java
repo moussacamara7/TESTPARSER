@@ -4,6 +4,7 @@ import application.Monopoly;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.control.ToggleButton;
+import joueur.Joueur;
 
 public class EventChoixJoueur implements EventHandler<ActionEvent> {
 
@@ -18,7 +19,7 @@ public class EventChoixJoueur implements EventHandler<ActionEvent> {
     public void handle(ActionEvent e) {
         if (e.getSource() instanceof ToggleButton) {
             ToggleButton b = (ToggleButton) e.getSource();
-            String j = (String) b.getUserData();
+            Joueur j = (Joueur) b.getUserData();
 
             monopoly.setJoueurCourant(j);
             System.out.println(monopoly.getJoueurCourant() + " doit jouer");

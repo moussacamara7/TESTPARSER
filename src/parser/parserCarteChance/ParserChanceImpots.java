@@ -1,5 +1,6 @@
 package parser.parserCarteChance;
 
+import application.ui.UIPlateau;
 import carte.Impot;
 import parser.Parser;
 import plateau.Plateau;
@@ -11,7 +12,7 @@ public class ParserChanceImpots extends Parser {
     }
 
 
-    public void parser(String[] values, Plateau plateau) throws Exception {
+    public void parser(String[] values, UIPlateau plateau) throws Exception {
         Impot c = new Impot(values[1]);
         plateau.ajouterChance(c);
     }

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Plateau {
+public class Plateau {/*
     private static final int NB_JOUEUR_MAX = 10;
     private final ArrayList<Joueur> listeJoueurs = new ArrayList<>();
     private final ArrayList<Terrain> cases = new ArrayList<>();
@@ -308,4 +308,8 @@ public class Plateau {
         }
 
     }
+
+    */
 }
+
+

@@ -2,6 +2,7 @@ package application;
 
 
 import application.event.*;
+import application.ui.Pion;
 import application.ui.UIPlateau;
 import javafx.application.Application;
 import javafx.collections.ListChangeListener;
@@ -15,6 +16,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import joueur.Joueur;
+import terrain.TerrainAchetable;
 
 import java.util.ArrayList;
 
@@ -33,8 +36,8 @@ public class Monopoly extends Application {
      * YL : la liste des joueurs est représentée par une liste de noms, ainsi que la liste des pions.
      * --> A modifier !!
      */
-    private final ArrayList<String> listeJoueurs = new ArrayList<>();
-    private final ArrayList<String> listePions = new ArrayList<>();
+    private final ArrayList<Joueur> listeJoueurs = new ArrayList<Joueur>();
+    private final ArrayList<Pion> listePions = new ArrayList<Pion>();
     private final FenetreTerrain fenetreTerrain = new FenetreTerrain();
     private UIPlateau uiPlateau;
     private Canvas grillePane;
@@ -46,8 +49,8 @@ public class Monopoly extends Application {
      * YL : ListView peut contenir n'importe quel type d'objet. Pour l'instant, ce sont des String
      * --> A modifier !!
      */
-    private ListView<String> proprietesJoueurCourant;
-    private String joueurCourant;
+    private ListView<TerrainAchetable> proprietesJoueurCourant;
+    private Joueur joueurCourant;
     private int terrainSelectionne = -1;
     private TextField tfPorteMonnaie;
     private int nbDoubles = 0;
@@ -56,7 +59,7 @@ public class Monopoly extends Application {
         launch(args);
     }
 
-    public ListView<String> getZoneProprietes() {
+    public ListView<TerrainAchetable> getZoneProprietes() {
         return proprietesJoueurCourant;
     }
 
@@ -64,7 +67,7 @@ public class Monopoly extends Application {
         return tabBoutonsJoueurs;
     }
 
-    public ArrayList<String> getListeJoueurs() {
+    public ArrayList<Joueur> getListeJoueurs() {
         return listeJoueurs;
     }
 
@@ -155,7 +158,7 @@ public class Monopoly extends Application {
         proprietesJoueurCourant = new ListView<>();
         proprietesJoueurCourant.setPrefHeight(0);
 
-        proprietesJoueurCourant.getItems().addListener((ListChangeListener<String>) arg0 -> {
+        proprietesJoueurCourant.getItems().addListener((ListChangeListener<TerrainAchetable>) arg0 -> {
             proprietesJoueurCourant.setPrefHeight(proprietesJoueurCourant.getItems().size() * 24 + 4); // 24 et 4 sont des nombres magiques...
         });
 
@@ -215,9 +218,9 @@ public class Monopoly extends Application {
         HBox box = new HBox();
         box.setMouseTransparent(true);
 
-        for (String joueur : listeJoueurs) {
+        for (Joueur joueur : listeJoueurs) {
 
-            ToggleButton bJoueur = new ToggleButton(joueur);
+            ToggleButton bJoueur = new ToggleButton(joueur.getNomJoueur());
             bJoueur.setToggleGroup(group);
             bJoueur.setOnAction(new EventChoixJoueur(this));
             bJoueur.setUserData(joueur);
@@ -238,16 +241,18 @@ public class Monopoly extends Application {
 
     private void initPartie() {
 
-        listeJoueurs.add("Han");
-        listePions.add("Bateau");
-
-        listeJoueurs.add("Luke");
-        listePions.add("Chien");
-
-        listeJoueurs.add("Yoda");
-        listePions.add("Voiture");
-
         uiPlateau = new UIPlateau(/* ? */);
+
+        listeJoueurs.add(new Joueur("Han",uiPlateau));
+        listePions.add(new Pion("Bateau"));
+
+        listeJoueurs.add(new Joueur("Luke", uiPlateau));
+        listePions.add(new Pion("Chien"));
+
+        listeJoueurs.add(new Joueur("Yoda", uiPlateau));
+        listePions.add(new Pion("Voiture"));
+
+        //uiPlateau = new UIPlateau(/* ? */);
     }
 
     public void DialogAction(String message, boolean erreur) {
@@ -292,11 +297,11 @@ public class Monopoly extends Application {
         return fenetreTerrain;
     }
 
-    public String getJoueurCourant() {
+    public Joueur getJoueurCourant() {
         return joueurCourant;
     }
 
-    public void setJoueurCourant(String j) {
+    public void setJoueurCourant(Joueur j) {
         joueurCourant = j;
 
     }
