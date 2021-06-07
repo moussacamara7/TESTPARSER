@@ -26,7 +26,7 @@ public class EventPasser implements EventHandler<ActionEvent> {
 
         ToggleButton button = monopoly.getTabBoutonsJoueurs().get(suivant);
         button.fire();
-        monopoly.setValueTfPorteMonnaie(jc.getCapitalJoueur());
+        monopoly.setValueTfPorteMonnaie(monopoly.getJoueurCourant().getCapitalJoueur());
     }
 
 }
