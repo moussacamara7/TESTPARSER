@@ -1,6 +1,7 @@
 package carte;
 
 
+import application.event.EventJouer;
 import joueur.Joueur;
 import mecanismeJeu.Action;
 
@@ -37,8 +38,9 @@ public class Chance implements Cartes {
         //payer une amande de 10 euros ou piocher une carte chance
         if (payer)
             Action.retirer(somme, joueur);
-        else
-            Action.piocherChance(joueur);
+        else {
+                Action.piocherChance(joueur);
+        }
 
 
     }

@@ -30,9 +30,9 @@ public class UIPlateau {
     final static String CARTE_CAISSECOMMUNAUTE = "data/CartesCommunaute.csv";
     private static final int NOMBRE_CASES = 40;
     private static final String REGEX_COORDONNEES = "[0-9]+(;[0-9]+){4}";
-    private HashMap<Integer, UICase> cases = new HashMap<Integer, UICase>();
+    private HashMap<Integer, UICase> cases = new HashMap<>();
     private Image imagePlateau;
-    private HashMap<Pion, Image> imagesPions = new HashMap<Pion, Image>();
+    private HashMap<Pion, Image> imagesPions = new HashMap<>();
 
     ////////////////////////////////////////////////////////
     //  Champs relatifs au "Plateau"
@@ -114,26 +114,7 @@ public class UIPlateau {
     //      Parser Coordonnes du prof
     ///////////////////////////////////////////////
 
-    /*private void parserCoordonnees(String ligne) {
-        if (!Pattern.matches(REGEX_COORDONNEES, ligne))
-            throw new Error("Format des coordonnées non respecté");
-
-
-        // Tout est ok pour parser
-        int numCase, x1, y1, x2, y2;
-
-        String[] mots = ligne.split(";");
-        numCase = Integer.parseInt(mots[0]);
-        x1 = Integer.parseInt(mots[1]);
-        y1 = Integer.parseInt(mots[2]);
-        x2 = Integer.parseInt(mots[3]);
-        y2 = Integer.parseInt(mots[4]);
-
-        UICase c = cases.get(numCase);
-        c.setCoordonnees(x1, y1, x2, y2);
-    }*/
-
-    public void dessiner(Canvas grillePane) {
+/*    public void dessiner(Canvas grillePane) {
         for (int i = 0; i <= NOMBRE_CASES; i++) {
             cases.get(i).vider();
         }
@@ -148,7 +129,7 @@ public class UIPlateau {
             }
         }
 
-    }
+    }*/
 
     //////////////////////////////////////////////////////////////////////////////////
     //
