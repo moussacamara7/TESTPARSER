@@ -6,9 +6,8 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import joueur.Joueur;
 import mecanismeJeu.Action;
-import terrain.Piocher;
-import terrain.Terrain;
-import terrain.TerrainAction;
+import terrain.*;
+import mecanismeJeu.Gestion;
 
 
 public class EventJouer implements EventHandler<ActionEvent> {
@@ -78,7 +77,11 @@ public class EventJouer implements EventHandler<ActionEvent> {
             }
 
             Terrain t = joueur.getUIPlateau().getCaseP(joueur.getPositionJoueur());
-            interactionCase(t);
+            try {
+                interactionCase(t);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }else{
             //prisonnier
             if(joueur.getNombreDeTourEnPrison() == 3) {
@@ -102,8 +105,9 @@ public class EventJouer implements EventHandler<ActionEvent> {
         }
     }
 
-    public void interactionCase(Terrain t){
+    public void interactionCase(Terrain t) throws Exception {
         Joueur joueur = monopoly.getJoueurCourant();
+        payerLoyer();
         if (t instanceof TerrainAction) {
             TerrainAction tac = (TerrainAction) t;
             switch (tac.getNomTerrain()) {
@@ -126,56 +130,40 @@ public class EventJouer implements EventHandler<ActionEvent> {
             switch (tpiocher.getNomTerrain()) {
                 case "CHANCE":
                     monopoly.getMessageFooter().setText("Vous piochez une carte chance");
-                    Cartes chance = Action.piocherChance(joueur);
 
-                    if (chance instanceof Deplacement) {
-                        Deplacement c = (Deplacement) chance;
-                        monopoly.getMessageFooter().setText(c.getMessage());
-                    } else if (chance instanceof Encaisser) {
-                        Encaisser c = (Encaisser) chance;
-                        monopoly.getMessageFooter().setText(c.getMessage());
-                    } else if (chance instanceof Liberation) {
-                        Liberation c = (Liberation) chance;
-                        monopoly.getMessageFooter().setText(c.getMessage());
-                    } else if (chance instanceof Payer) {
-                        Payer c = (Payer) chance;
-                        monopoly.getMessageFooter().setText(c.getMessage());
-                    } else if (chance instanceof Impot) {
-                        Impot c = (Impot) chance;
-                        monopoly.getMessageFooter().setText(c.getMessage());
-                    } else if (chance instanceof Reparation) {
-                        Reparation c = (Reparation) chance;
-                        monopoly.getMessageFooter().setText(c.getMessage());
-                    }
-                    try {
-                        chance.action(joueur);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
+                    Cartes chance = Action.piocherChance(joueur);
+                    utiliserCarteChance(chance);
+
                     break;
 
                 case "CAISSE COMMUNAUTE":
                     monopoly.getMessageFooter().setText("Vous piochez une carte communauté");
                     Cartes communautee = Action.piocherCommunaute(joueur);
-                    if (communautee instanceof Chance) {
-                        System.out.println(((Chance) communautee).getMessage());
-                        Boolean choix = monopoly.DialogActionCarteChance();
-                        ((Chance) communautee).action(joueur, choix);
+                    if(communautee instanceof Chance) {
+                        monopoly.getMessageFooter().setText(((Chance) communautee).getMessage());
+                        Boolean payer = monopoly.DialogActionCarteChance();
+                        //on doit le gerer comme ça pour que tout s'affiche correctement
+                        if(payer)
+                            Action.retirer(10,joueur);
+                        else {
+                            Cartes chances = Action.piocherChance(joueur);
+                            utiliserCarteChance(chances);
+                        }
                     } else if (communautee instanceof Anniversaire) {
                         Anniversaire c = (Anniversaire) communautee;
-                        System.out.println(c.getMessage());
+                        monopoly.getMessageFooter().setText(c.getMessage());
                     } else if (communautee instanceof Deplacement) {
                         Deplacement c = (Deplacement) communautee;
-                        System.out.println(c.getMessage());
+                        monopoly.getMessageFooter().setText(c.getMessage());
                     } else if (communautee instanceof Encaisser) {
                         Encaisser c = (Encaisser) communautee;
-                        System.out.println(c.getMessage());
+                        monopoly.getMessageFooter().setText(c.getMessage());
                     } else if (communautee instanceof Liberation) {
                         Liberation c = (Liberation) communautee;
-                        System.out.println(c.getMessage());
+                        monopoly.getMessageFooter().setText(c.getMessage());
                     } else if (communautee instanceof Payer) {
                         Payer c = (Payer) communautee;
-                        System.out.println(c.getMessage());
+                        monopoly.getMessageFooter().setText(c.getMessage());
                     }
                     try {
                         communautee.action(joueur);
@@ -185,5 +173,79 @@ public class EventJouer implements EventHandler<ActionEvent> {
                     break;
             }
         }
+    }
+
+    public void utiliserCarteChance(Cartes chance){
+        if (chance instanceof Deplacement) {
+            Deplacement c = (Deplacement) chance;
+            monopoly.getMessageFooter().setText(c.getMessage());
+        } else if (chance instanceof Encaisser) {
+            Encaisser c = (Encaisser) chance;
+            monopoly.getMessageFooter().setText(c.getMessage());
+        } else if (chance instanceof Liberation) {
+            Liberation c = (Liberation) chance;
+            monopoly.getMessageFooter().setText(c.getMessage());
+        } else if (chance instanceof Payer) {
+            Payer c = (Payer) chance;
+            monopoly.getMessageFooter().setText(c.getMessage());
+        } else if (chance instanceof Impot) {
+            Impot c = (Impot) chance;
+            monopoly.getMessageFooter().setText(c.getMessage());
+        } else if (chance instanceof Reparation) {
+            Reparation c = (Reparation) chance;
+            monopoly.getMessageFooter().setText(c.getMessage());
+        }
+        try {
+            chance.action(monopoly.getJoueurCourant());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void payerLoyer() throws Exception {
+
+        Joueur joueur = monopoly.getJoueurCourant();
+        Terrain t = joueur.getUIPlateau().getCaseP(joueur.getPositionJoueur());
+        if(t.estAchetable()){
+            TerrainAchetable ta = (TerrainAchetable) t;
+
+            if (ta.aUnProprietaire()) {
+                if (ta instanceof Gare) {
+                    Gare g = (Gare) ta;
+                    Action.payer(g.getLoyer(), joueur, g.getProprietaire());
+                } else if (ta instanceof Compagnie) {
+                    Compagnie c = (Compagnie) ta;
+                    Action.payer(c.getLoyer(), joueur, c.getProprietaire());
+
+                } else {
+                    //c'est constructible
+                    TerrainConstructible tc = (TerrainConstructible) ta;
+                    int prixLoyer = 0;
+                    switch (tc.getNombreMaison()) {
+                        case 0:
+                            prixLoyer = tc.getLoyer().getPrixAucuneMaison();
+                            break;
+                        case 1:
+                            prixLoyer = tc.getLoyer().getPrixUnemaison();
+                            break;
+                        case 2:
+                            prixLoyer = tc.getLoyer().getPrixDeuxMaison();
+                            break;
+                        case 3:
+                            prixLoyer = tc.getLoyer().getPrixTroisMaison();
+                            break;
+                        case 4:
+                            prixLoyer = tc.getLoyer().getPrixQuatreMaison();
+                            break;
+                        case 5:
+                            prixLoyer = tc.getLoyer().getPrixHotel();
+                            break;
+                    }
+                    Action.payer(prixLoyer, joueur, tc.getProprietaire());
+                }
+            }
+        }
+
+
     }
 }
