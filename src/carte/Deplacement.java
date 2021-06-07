@@ -3,8 +3,8 @@ package carte;
 
 import joueur.Joueur;
 import mecanismeJeu.Action;
+import application.event.EventJouer;
 
-import static mecanismeJeu.Gestion.interactionCase;
 
 public class Deplacement implements Cartes {
     private String message;
@@ -46,27 +46,27 @@ public class Deplacement implements Cartes {
                 break;
             case "RUE DE LA PAIX":
                 Action.deplacer(joueur, 39);
-                interactionCase(joueur);
+                //interactionCase(joueur);
                 break;
             case "3 CASES":
                 Action.deplacer(joueur, joueur.getPositionJoueur() - 3);
-                interactionCase(joueur);
+                //interactionCase(joueur);
                 break;
             case "GARE DE LYON":
                 Action.deplacer(joueur, 15);
-                interactionCase(joueur);
+                //interactionCase(joueur);
                 break;
             case "AVENUE HENRI-MARTIN":
                 Action.deplacer(joueur, 24);
-                interactionCase(joueur);
+                //interactionCase(joueur);
                 break;
             case "BOULEVARD DE LA VILLETTE":
                 Action.deplacer(joueur, 11);
-                interactionCase(joueur);
+                //interactionCase(joueur);
                 break;
             case "BOULEVARD DE BELLEVILLE":
                 Action.deplacer(joueur, 1);
-                interactionCase(joueur);
+                //interactionCase(joueur);
                 break;
         }
 
