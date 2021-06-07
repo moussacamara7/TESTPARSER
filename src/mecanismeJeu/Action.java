@@ -52,7 +52,7 @@ public class Action {
 
     //retirer la somme à un joueur
     public static void retirer(int somme, Joueur destination) {
-        if (somme <= 0)
+        if (somme < 0)
             throw new IllegalArgumentException("somme invalide");
         destination.setCapitalJoueur(destination.getCapitalJoueur() - somme);
 
