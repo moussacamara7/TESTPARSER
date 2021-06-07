@@ -37,8 +37,8 @@ public class Monopoly extends Application {
      * YL : la liste des joueurs est représentée par une liste de noms, ainsi que la liste des pions.
      * --> A modifier !!
      */
-    private final ArrayList<Joueur> listeJoueurs = new ArrayList<Joueur>();
-    private final ArrayList<Pion> listePions = new ArrayList<Pion>();
+    private final ArrayList<Joueur> listeJoueurs = new ArrayList<>();
+    private final ArrayList<Pion> listePions = new ArrayList<>();
     private final FenetreTerrain fenetreTerrain = new FenetreTerrain();
     private UIPlateau uiPlateau;
     private Canvas grillePane;
@@ -319,6 +319,13 @@ public class Monopoly extends Application {
 
     }
 
+    public void setValueTfPorteMonnaie(String value) {
+        tfPorteMonnaie.setText(value);
+    }
 
+    public void setValueTfPorteMonnaie(int value) {
+        tfPorteMonnaie.setText(String.valueOf(value));
+    }
 }
+
 

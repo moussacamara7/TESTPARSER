@@ -114,7 +114,7 @@ public class UIPlateau {
     //      Parser Coordonnes du prof
     ///////////////////////////////////////////////
 
-/*    public void dessiner(Canvas grillePane) {
+    public void dessiner(Canvas grillePane) {
         for (int i = 0; i <= NOMBRE_CASES; i++) {
             cases.get(i).vider();
         }
@@ -129,7 +129,7 @@ public class UIPlateau {
             }
         }
 
-    }*/
+    }
 
     //////////////////////////////////////////////////////////////////////////////////
     //

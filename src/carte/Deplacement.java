@@ -49,7 +49,9 @@ public class Deplacement implements Cartes {
                 //interactionCase(joueur);
                 break;
             case "3 CASES":
-                Action.deplacer(joueur, joueur.getPositionJoueur() - 3);
+                joueur.setPositionJoueur(joueur.getPositionJoueur()-3);
+                //sinon il gagne 200 car sa nvpos < pos
+                //Action.deplacer(joueur, joueur.getPositionJoueur() - 3);
                 //interactionCase(joueur);
                 break;
             case "GARE DE LYON":

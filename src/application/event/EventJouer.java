@@ -173,6 +173,7 @@ public class EventJouer implements EventHandler<ActionEvent> {
                     break;
             }
         }
+        monopoly.setValueTfPorteMonnaie(joueur.getCapitalJoueur());
     }
 
     public void utiliserCarteChance(Cartes chance){

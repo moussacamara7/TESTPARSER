@@ -37,6 +37,7 @@ public class EventAchatTerrain implements EventHandler<ActionEvent> {
                 }else{
                     try {
                         Action.acheterPropriete(joueur, t);
+                        monopoly.setValueTfPorteMonnaie(joueur.getCapitalJoueur());
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
