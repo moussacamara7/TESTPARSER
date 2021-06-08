@@ -191,9 +191,11 @@ public class Monopoly extends Application {
         box.getChildren().add(gererMaisons);
 
         Button payerPrison = new Button(ACTION_PAYER_PRISON);
+        payerPrison.setOnAction(new EventPayerPrison(this));
         box.getChildren().add(payerPrison);
 
         Button liberation = new Button(ACTION_LIBERATION);
+        liberation.setOnAction(new EventLiberation(this));
         box.getChildren().add(liberation);
 
         panneauDroit.getChildren().add(box);
