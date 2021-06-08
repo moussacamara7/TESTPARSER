@@ -7,7 +7,7 @@ import mecanismeJeu.Action;
 
 
 public class EventPayerPrison implements EventHandler<ActionEvent> {
-    private static final int SOMME_SORTIR_DE_PRISON = 100;
+    private static final int SOMME_SORTIR_DE_PRISON = 50;
 
     private final Monopoly monopoly;
 
@@ -25,9 +25,11 @@ public class EventPayerPrison implements EventHandler<ActionEvent> {
             } else {
                 Action.retirer(SOMME_SORTIR_DE_PRISON, monopoly.getJoueurCourant());
                 Action.sortirDePrison(monopoly.getJoueurCourant());
+                monopoly.setValueTfPorteMonnaie(monopoly.getJoueurCourant().getCapitalJoueur());
                 monopoly.DialogInfo("Bon retour dans la plus grande prison !");
             }
         }
+
     }
 
 }

@@ -1,5 +1,7 @@
 package application.ui;
 
+import application.Monopoly;
+import application.event.EventPasser;
 import carte.Cartes;
 import exception.ParserManquantException;
 import fichier.LectureFichier;
@@ -34,6 +36,8 @@ public class UIPlateau {
     private Image imagePlateau;
     private HashMap<Pion, Image> imagesPions = new HashMap<>();
 
+    private Monopoly monopoly;
+
     ////////////////////////////////////////////////////////
     //  Champs relatifs au "Plateau"
     ////////////////////////////////////////////////////////
@@ -44,7 +48,7 @@ public class UIPlateau {
     private final ArrayList<Cartes> caisseCommunaute = new ArrayList<>();
 
 
-    public UIPlateau() {
+    public UIPlateau(Monopoly monopoly) {
 
         for (int i = 0; i < 41; i++)
             cases.put(i, new UICase());
@@ -55,6 +59,7 @@ public class UIPlateau {
         initialisationCarteCommunaute(CARTE_CAISSECOMMUNAUTE);
         initialisationCarteChance(CARTE_CHANCE);
         initImagesPions();
+        this.monopoly = monopoly;
     }
 
     private void initImagesPions() {
@@ -70,6 +75,10 @@ public class UIPlateau {
 
     public Image getImage() {
         return imagePlateau;
+    }
+
+    public Monopoly getMonopoly() {
+        return monopoly;
     }
 
     private void initImagePlateau(String nomFichierPlateau) {
@@ -328,7 +337,6 @@ public class UIPlateau {
 
         return listeJoueurs.get(i);
     }
-
 
     public void jouer() throws Exception {
         //jeu

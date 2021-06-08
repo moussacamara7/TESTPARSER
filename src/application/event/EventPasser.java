@@ -19,13 +19,15 @@ public class EventPasser implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent e) {
         // TODO Verifier lorsqu'il y a eu double, ou prison
-        ArrayList<Joueur> lesJoueurs = monopoly.getListeJoueurs();
+        //ArrayList<Joueur> lesJoueurs = monopoly.getListeJoueurs();
+        ArrayList<Joueur> lesJoueurs = monopoly.getUiPlateau().getListeJoueurs();
         Joueur jc = monopoly.getJoueurCourant();
         int i = lesJoueurs.indexOf(jc);
         int suivant = (i + 1) % lesJoueurs.size();
 
         ToggleButton button = monopoly.getTabBoutonsJoueurs().get(suivant);
         button.fire();
+
         monopoly.setValueTfPorteMonnaie(monopoly.getJoueurCourant().getCapitalJoueur());
     }
 

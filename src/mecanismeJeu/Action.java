@@ -4,7 +4,6 @@ import application.ui.UIPlateau;
 import carte.Cartes;
 import exception.JoueurFailliteException;
 import joueur.Joueur;
-import plateau.Plateau;
 import terrain.Terrain;
 import terrain.TerrainAchetable;
 import terrain.TerrainConstructible;
@@ -51,10 +50,13 @@ public class Action {
     //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     //retirer la somme à un joueur
-    public static void retirer(int somme, Joueur destination) {
+    public static void retirer(int somme, Joueur joueur) {
         if (somme < 0)
             throw new IllegalArgumentException("somme invalide");
-        destination.setCapitalJoueur(destination.getCapitalJoueur() - somme);
+        if(joueur.getCapitalJoueur() < somme)
+            new JoueurFailliteException(joueur);
+
+        joueur.setCapitalJoueur(joueur.getCapitalJoueur() - somme);
 
         //on peut lancer l'exception de faillite ici si le joueur est en negatif
         //ce qui l'obligera a hypotequer ou perdre la partie

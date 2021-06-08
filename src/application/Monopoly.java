@@ -37,7 +37,7 @@ public class Monopoly extends Application {
      * YL : la liste des joueurs est représentée par une liste de noms, ainsi que la liste des pions.
      * --> A modifier !!
      */
-    private final ArrayList<Joueur> listeJoueurs = new ArrayList<>();
+    //private final ArrayList<Joueur> listeJoueurs = new ArrayList<>();
     private final ArrayList<Pion> listePions = new ArrayList<>();
     private final FenetreTerrain fenetreTerrain = new FenetreTerrain();
     private UIPlateau uiPlateau;
@@ -68,9 +68,9 @@ public class Monopoly extends Application {
         return tabBoutonsJoueurs;
     }
 
-    public ArrayList<Joueur> getListeJoueurs() {
+    /*public ArrayList<Joueur> getListeJoueurs() {
         return listeJoueurs;
-    }
+    }*/
 
     public TextField getTfValeurDe1() {
         return tfDe1;
@@ -221,7 +221,7 @@ public class Monopoly extends Application {
         HBox box = new HBox();
         box.setMouseTransparent(true);
 
-        for (Joueur joueur : listeJoueurs) {
+        for (Joueur joueur : uiPlateau.getListeJoueurs()) {
 
             ToggleButton bJoueur = new ToggleButton(joueur.getNomJoueur());
             bJoueur.setToggleGroup(group);
@@ -244,15 +244,19 @@ public class Monopoly extends Application {
 
     private void initPartie() {
 
-        uiPlateau = new UIPlateau();
+        uiPlateau = new UIPlateau(this);
 
-        listeJoueurs.add(new Joueur("Han",uiPlateau));
+        //listeJoueurs.add(new Joueur("Han",uiPlateau));
+        uiPlateau.ajouterJoueur(new Joueur("Han",uiPlateau));
         listePions.add(new Pion("Bateau"));
 
-        listeJoueurs.add(new Joueur("Luke", uiPlateau));
+        //listeJoueurs.add(new Joueur("Luke", uiPlateau));
+        uiPlateau.ajouterJoueur(new Joueur("Luke",uiPlateau));
+
         listePions.add(new Pion("Chien"));
 
-        listeJoueurs.add(new Joueur("Yoda", uiPlateau));
+        //listeJoueurs.add(new Joueur("Yoda", uiPlateau));
+        uiPlateau.ajouterJoueur(new Joueur("Yoda",uiPlateau));
         listePions.add(new Pion("Voiture"));
 
         //uiPlateau = new UIPlateau(/* ? */);
@@ -292,6 +296,13 @@ public class Monopoly extends Application {
         return result.get().equals(payerButton);
     }
 
+    //retire un joueur du jeu
+    //de la liste de UIPlateau ET de l'interface
+    public void retirerJoueur(Joueur joueur){
+
+
+    }
+
     public int getNbDoubles() {
         return nbDoubles;
     }
@@ -318,7 +329,6 @@ public class Monopoly extends Application {
 
     public void setJoueurCourant(Joueur j) {
         joueurCourant = j;
-
     }
 
     public void setValueTfPorteMonnaie(String value) {

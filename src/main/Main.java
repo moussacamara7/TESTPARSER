@@ -11,7 +11,7 @@ public class Main {
     public static void main(String[] args) throws IOException {
 
 
-        UIPlateau plt = new UIPlateau();
+/*        UIPlateau plt = new UIPlateau();
         Joueur A = new Joueur("Albert", plt);
         Joueur B = new Joueur("Bertrand", plt);
 
@@ -22,7 +22,7 @@ public class Main {
             plt.jouer();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
 
         /*System.out.println("Les terrains Du jeu MONOPOLY:");
