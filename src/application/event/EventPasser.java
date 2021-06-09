@@ -29,6 +29,8 @@ public class EventPasser implements EventHandler<ActionEvent> {
         button.fire();
 
         monopoly.setValueTfPorteMonnaie(monopoly.getJoueurCourant().getCapitalJoueur());
+        monopoly.updateProprieteJoueurCourant();
+        monopoly.setTerrainSelectionne(-1);
     }
 
 }

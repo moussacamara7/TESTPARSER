@@ -1,22 +1,20 @@
 package exception;
 
 import application.Monopoly;
-import application.event.EventPasser;
+import application.ui.UIPlateau;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleButton;
 import joueur.Joueur;
-import plateau.Plateau;
-import application.ui.UIPlateau;
 
 import java.util.ArrayList;
 
 public class JoueurFailliteException {
-    public JoueurFailliteException(Joueur joueur){
+    public JoueurFailliteException(Joueur joueur) {
         UIPlateau plateau = joueur.getUIPlateau();
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("FAILLITE");
-        alert.setContentText("Le joueur "+joueur.getNomJoueur()+" est en faillite.");
+        alert.setContentText("Le joueur " + joueur.getNomJoueur() + " est en faillite.");
         alert.showAndWait();
 
         Monopoly monopoly = joueur.getUIPlateau().getMonopoly();

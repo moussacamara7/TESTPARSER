@@ -7,7 +7,6 @@ import javafx.event.EventHandler;
 import joueur.Joueur;
 import mecanismeJeu.Action;
 import terrain.*;
-import mecanismeJeu.Gestion;
 
 
 public class EventJouer implements EventHandler<ActionEvent> {
@@ -37,8 +36,11 @@ public class EventJouer implements EventHandler<ActionEvent> {
             de2 = Integer.parseInt(tfDe2);
 
         }else{
+            monopoly.getMessageFooter().setText("");
             de1 = Action.lancerDe();
             de2 = Action.lancerDe();
+            monopoly.setTfDe1(String.valueOf(de1));
+            monopoly.setTfDe2(String.valueOf(de2));
         }
 
         int nbCases = de1 + de2;
@@ -46,7 +48,6 @@ public class EventJouer implements EventHandler<ActionEvent> {
         Joueur joueur = monopoly.getJoueurCourant();
 
         System.out.println("d1=" + de1 + "  d2=" + de2 + "  nb cases=" + nbCases);
-
 
         if(! joueur.isEstprisonnier()){
 

@@ -1,7 +1,6 @@
 package joueur;
 
 import application.ui.UIPlateau;
-import plateau.Plateau;
 import terrain.TerrainAchetable;
 
 import java.util.ArrayList;

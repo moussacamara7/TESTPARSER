@@ -50,7 +50,7 @@ public class Monopoly extends Application {
      * YL : ListView peut contenir n'importe quel type d'objet. Pour l'instant, ce sont des String
      * --> A modifier !!
      */
-    private ListView<TerrainAchetable> proprietesJoueurCourant;
+    private ListView<String> proprietesJoueurCourant;
     private Joueur joueurCourant;
     private int terrainSelectionne = -1;
     private TextField tfPorteMonnaie;
@@ -60,7 +60,7 @@ public class Monopoly extends Application {
         launch(args);
     }
 
-    public ListView<TerrainAchetable> getZoneProprietes() {
+    public ListView<String> getZoneProprietes() {
         return proprietesJoueurCourant;
     }
 
@@ -68,16 +68,20 @@ public class Monopoly extends Application {
         return tabBoutonsJoueurs;
     }
 
-    /*public ArrayList<Joueur> getListeJoueurs() {
-        return listeJoueurs;
-    }*/
-
     public TextField getTfValeurDe1() {
         return tfDe1;
     }
 
     public TextField getTfValeurDe2() {
         return tfDe2;
+    }
+
+    public void setTfDe1(String tfDe1) {
+        this.tfDe1.setText(tfDe1);
+    }
+
+    public void setTfDe2(String tfDe2) {
+        this.tfDe2.setText(tfDe2);
     }
 
     public TextField getTfPorteMonnaie() {
@@ -159,7 +163,7 @@ public class Monopoly extends Application {
         proprietesJoueurCourant = new ListView<>();
         proprietesJoueurCourant.setPrefHeight(0);
 
-        proprietesJoueurCourant.getItems().addListener((ListChangeListener<TerrainAchetable>) arg0 -> {
+        proprietesJoueurCourant.getItems().addListener((ListChangeListener<String>) arg0 -> {
             proprietesJoueurCourant.setPrefHeight(proprietesJoueurCourant.getItems().size() * 24 + 4); // 24 et 4 sont des nombres magiques...
         });
 
@@ -296,11 +300,18 @@ public class Monopoly extends Application {
         return result.get().equals(payerButton);
     }
 
-    //retire un joueur du jeu
-    //de la liste de UIPlateau ET de l'interface
-    public void retirerJoueur(Joueur joueur){
+    public ListView<String> getProprietesJoueurCourant() {
+        return proprietesJoueurCourant;
+    }
 
+    public void updateProprieteJoueurCourant(){
 
+        this.getProprietesJoueurCourant().getItems().removeAll();
+
+        for(TerrainAchetable t : this.getJoueurCourant().getProprietesJoueur()) {
+            String nomTerrain = t.getNomTerrain();
+            this.getProprietesJoueurCourant().getItems().add(nomTerrain);
+        }
     }
 
     public int getNbDoubles() {
@@ -317,6 +328,10 @@ public class Monopoly extends Application {
 
     public int getTerrainSelectionne() {
         return terrainSelectionne;
+    }
+
+    public void setTerrainSelectionne(int terrainSelectionne) {
+        this.terrainSelectionne = terrainSelectionne;
     }
 
     public FenetreTerrain getFenetreTerrain() {
