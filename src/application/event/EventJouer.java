@@ -1,6 +1,7 @@
 package application.event;
 
 import application.Monopoly;
+import application.ui.Pion;
 import carte.*;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -174,6 +175,15 @@ public class EventJouer implements EventHandler<ActionEvent> {
                     break;
             }
         }
+        //on reposisionne son pion
+        int numJoueurCourant = monopoly.getUiPlateau().getListeJoueurs().indexOf(joueur);
+        Pion pionJoueurCourant = monopoly.getListePions().get(numJoueurCourant);
+        monopoly.getUiPlateau().getCase(pionJoueurCourant.getPosition()).enlever(pionJoueurCourant);
+        pionJoueurCourant.setPosition(joueur.getPositionJoueur());
+        monopoly.getUiPlateau().getCase(pionJoueurCourant.getPosition()).poser(pionJoueurCourant);
+        monopoly.getUiPlateau().dessiner(monopoly.getGrillePane());
+
+        //on mets a jour son porte monnaie
         monopoly.setValueTfPorteMonnaie(joueur.getCapitalJoueur());
     }
 

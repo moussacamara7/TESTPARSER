@@ -3,6 +3,7 @@ package application;
 
 import application.event.*;
 import application.ui.Pion;
+import application.ui.UICase;
 import application.ui.UIPlateau;
 import javafx.application.Application;
 import javafx.collections.ListChangeListener;
@@ -30,7 +31,6 @@ public class Monopoly extends Application {
     public final static String ACTION_LIBERATION = "Utiliser une carte de libération";
     public final static String ACTION_PASSER = "Passer au suivant";
     public final static String ACTION_JOUER = "Lancer les dés";
-
 
     private final ArrayList<ToggleButton> tabBoutonsJoueurs = new ArrayList<>();
     /**
@@ -251,17 +251,22 @@ public class Monopoly extends Application {
         uiPlateau = new UIPlateau(this);
 
         //listeJoueurs.add(new Joueur("Han",uiPlateau));
-        uiPlateau.ajouterJoueur(new Joueur("Han",uiPlateau));
-        listePions.add(new Pion("Bateau"));
+//        uiPlateau.ajouterJoueur(new Joueur("Han",uiPlateau));
+//        listePions.add(new Pion("Bateau"));
+        creerJoueurEtAjouter("Han", uiPlateau,"Bateau");
 
         //listeJoueurs.add(new Joueur("Luke", uiPlateau));
-        uiPlateau.ajouterJoueur(new Joueur("Luke",uiPlateau));
+//        uiPlateau.ajouterJoueur(new Joueur("Luke",uiPlateau));
+//        listePions.add(new Pion("Chien"));
+        creerJoueurEtAjouter("Luke", uiPlateau,"Chien");
 
-        listePions.add(new Pion("Chien"));
 
         //listeJoueurs.add(new Joueur("Yoda", uiPlateau));
-        uiPlateau.ajouterJoueur(new Joueur("Yoda",uiPlateau));
-        listePions.add(new Pion("Voiture"));
+//        uiPlateau.ajouterJoueur(new Joueur("Yoda",uiPlateau));
+//        listePions.add(new Pion("Voiture"));
+        creerJoueurEtAjouter("Yoda", uiPlateau,"Voiture");
+
+
 
         //uiPlateau = new UIPlateau(/* ? */);
     }
@@ -312,6 +317,18 @@ public class Monopoly extends Application {
             String nomTerrain = t.getNomTerrain();
             this.getProprietesJoueurCourant().getItems().add(nomTerrain);
         }
+    }
+
+    public void creerJoueurEtAjouter(String nom, UIPlateau plateau, String nomPion){
+        plateau.ajouterJoueur(new Joueur(nom, plateau));
+        Pion pion = new Pion(nomPion);
+        listePions.add(pion);
+        UICase caseDepart = uiPlateau.getCase(0);
+        caseDepart.poser(pion);
+    }
+
+    public ArrayList<Pion> getListePions() {
+        return listePions;
     }
 
     public int getNbDoubles() {

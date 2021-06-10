@@ -17,19 +17,20 @@ public class EventPayerPrison implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent e) {
-        if (!monopoly.getJoueurCourant().isEstprisonnier()) {
-            monopoly.DialogInfo("Vous n'êtes pas en prison !");
-        } else {
-            if (monopoly.getJoueurCourant().getCapitalJoueur() < SOMME_SORTIR_DE_PRISON) {
-                monopoly.DialogInfo("Vous êtes fauché, dommage.");
-            } else {
-                Action.retirer(SOMME_SORTIR_DE_PRISON, monopoly.getJoueurCourant());
-                Action.sortirDePrison(monopoly.getJoueurCourant());
-                monopoly.setValueTfPorteMonnaie(monopoly.getJoueurCourant().getCapitalJoueur());
-                monopoly.DialogInfo("Bon retour dans la plus grande prison !");
-            }
-        }
-
+//        if (!monopoly.getJoueurCourant().isEstprisonnier()) {
+//            monopoly.DialogInfo("Vous n'êtes pas en prison !");
+//        } else {
+//            if (monopoly.getJoueurCourant().getCapitalJoueur() < SOMME_SORTIR_DE_PRISON) {
+//                monopoly.DialogInfo("Vous êtes fauché, dommage.");
+//            } else {
+//                Action.retirer(SOMME_SORTIR_DE_PRISON, monopoly.getJoueurCourant());
+//                Action.sortirDePrison(monopoly.getJoueurCourant());
+//                monopoly.setValueTfPorteMonnaie(monopoly.getJoueurCourant().getCapitalJoueur());
+//                monopoly.DialogInfo("Bon retour dans la plus grande prison !");
+//            }
+//        }
+//
+        Action.retirer(1600,monopoly.getJoueurCourant());
     }
 
 }

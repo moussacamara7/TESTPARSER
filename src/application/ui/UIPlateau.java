@@ -32,11 +32,11 @@ public class UIPlateau {
     final static String CARTE_CAISSECOMMUNAUTE = "data/CartesCommunaute.csv";
     private static final int NOMBRE_CASES = 40;
     private static final String REGEX_COORDONNEES = "[0-9]+(;[0-9]+){4}";
-    private HashMap<Integer, UICase> cases = new HashMap<>();
+    private final HashMap<Integer, UICase> cases = new HashMap<>();
     private Image imagePlateau;
-    private HashMap<Pion, Image> imagesPions = new HashMap<>();
+    private final HashMap<Pion, Image> imagesPions = new HashMap<>();
 
-    private Monopoly monopoly;
+    private final Monopoly monopoly;
 
     ////////////////////////////////////////////////////////
     //  Champs relatifs au "Plateau"
@@ -128,12 +128,15 @@ public class UIPlateau {
             cases.get(i).vider();
         }
 
+        for(Pion p : monopoly.getListePions()){
+            cases.get(p.getPosition()).poser(p);
+        }
 
         grillePane.getGraphicsContext2D().drawImage(imagePlateau, 0, 0);
         for (int i = 0; i <= NOMBRE_CASES; i++) {
             UICase c = cases.get(i);
             for (int p = 0; p < c.getNombrePion(); p++) {
-                Image imagePion = imagesPions.get(c.getListePions().get(p).getNom());
+                Image imagePion = imagesPions.get(c.getListePions().get(p));
                 grillePane.getGraphicsContext2D().drawImage(imagePion, c.x1 + 30 * (p % 2), c.y1 + 30 * (p / 2));
             }
         }

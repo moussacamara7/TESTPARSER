@@ -1,6 +1,8 @@
 package application.ui;
 
 
+import java.util.Objects;
+
 /**
  * Cette classe existe peut-être dans votre projet. Si c'est le cas, n'utiliser pas la classe ci-dessous mais la vôtre
  *
@@ -36,5 +38,16 @@ public class Pion {
         this.position = position;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pion pion = (Pion) o;
+        return Objects.equals(nom, pion.nom);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(nom);
+    }
 }
