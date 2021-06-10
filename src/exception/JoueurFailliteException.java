@@ -3,6 +3,7 @@ package exception;
 import application.Monopoly;
 import application.ui.Pion;
 import application.ui.UIPlateau;
+import javafx.application.Platform;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleButton;
 import joueur.Joueur;
@@ -60,7 +61,12 @@ public class JoueurFailliteException {
         joueur.getUIPlateau().getListeJoueurs().remove(joueur);
 
         if(joueur.getUIPlateau().getListeJoueurs().size()<2){
-            //le dernier joueur gagne la partie
+            if (monopoly.DialogFinDePartie()){
+                Platform.exit();
+                System.exit(0);
+            }else{
+                monopoly.redemarrerPartie();
+            }
 
         }
 

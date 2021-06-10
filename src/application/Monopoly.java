@@ -5,6 +5,7 @@ import application.event.*;
 import application.ui.Pion;
 import application.ui.UICase;
 import application.ui.UIPlateau;
+import application.ui.nomPion;
 import javafx.application.Application;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;
@@ -55,6 +56,7 @@ public class Monopoly extends Application {
     private int terrainSelectionne = -1;
     private TextField tfPorteMonnaie;
     private int nbDoubles = 0;
+    private Stage primaryStage;
 
     public static void main(String[] args) {
         launch(args);
@@ -99,6 +101,7 @@ public class Monopoly extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
+            this.primaryStage = primaryStage;
 
             initPartie();
 
@@ -250,22 +253,21 @@ public class Monopoly extends Application {
 
         uiPlateau = new UIPlateau(this);
 
-        //listeJoueurs.add(new Joueur("Han",uiPlateau));
+//        listeJoueurs.add(new Joueur("Han",uiPlateau));
 //        uiPlateau.ajouterJoueur(new Joueur("Han",uiPlateau));
 //        listePions.add(new Pion("Bateau"));
-        creerJoueurEtAjouter("Han", uiPlateau,"Bateau");
+        creerJoueurEtAjouter("Nicolas", uiPlateau, nomPion.Bateau);
 
-        //listeJoueurs.add(new Joueur("Luke", uiPlateau));
+//        listeJoueurs.add(new Joueur("Luke", uiPlateau));
 //        uiPlateau.ajouterJoueur(new Joueur("Luke",uiPlateau));
 //        listePions.add(new Pion("Chien"));
-        creerJoueurEtAjouter("Luke", uiPlateau,"Chien");
+        creerJoueurEtAjouter("Yuna", uiPlateau, nomPion.Chien);
 
 
         //listeJoueurs.add(new Joueur("Yoda", uiPlateau));
 //        uiPlateau.ajouterJoueur(new Joueur("Yoda",uiPlateau));
 //        listePions.add(new Pion("Voiture"));
-        creerJoueurEtAjouter("Yoda", uiPlateau,"Voiture");
-
+        creerJoueurEtAjouter("Yann", uiPlateau, nomPion.Voiture);
 
 
         //uiPlateau = new UIPlateau(/* ? */);
@@ -305,23 +307,36 @@ public class Monopoly extends Application {
         return result.get().equals(payerButton);
     }
 
+    public boolean DialogFinDePartie() {
+        Alert alert = new Alert(AlertType.NONE);
+        alert.setTitle("Partie terminée");
+        alert.setContentText("Le joueur " + getJoueurCourant().getNomJoueur() + " a gagnée la partie !");
+        ButtonType Quitter = new ButtonType("Quitter");
+        //ButtonType Rejouer = new ButtonType("Rejouer");
+        alert.getButtonTypes().setAll(Quitter/*, Rejouer*/);
+        Optional<ButtonType> result = alert.showAndWait();
+
+        return result.get().equals(Quitter);
+
+    }
+
     public ListView<String> getProprietesJoueurCourant() {
         return proprietesJoueurCourant;
     }
 
-    public void updateProprieteJoueurCourant(){
+    public void updateProprieteJoueurCourant() {
 
         this.getProprietesJoueurCourant().getItems().removeAll();
 
-        for(TerrainAchetable t : this.getJoueurCourant().getProprietesJoueur()) {
+        for (TerrainAchetable t : this.getJoueurCourant().getProprietesJoueur()) {
             String nomTerrain = t.getNomTerrain();
             this.getProprietesJoueurCourant().getItems().add(nomTerrain);
         }
     }
 
-    public void creerJoueurEtAjouter(String nom, UIPlateau plateau, String nomPion){
+    public void creerJoueurEtAjouter(String nom, UIPlateau plateau,nomPion nomPion) {
         plateau.ajouterJoueur(new Joueur(nom, plateau));
-        Pion pion = new Pion(nomPion);
+        Pion pion = new Pion(nomPion.getNom());
         listePions.add(pion);
         UICase caseDepart = uiPlateau.getCase(0);
         caseDepart.poser(pion);
@@ -329,6 +344,10 @@ public class Monopoly extends Application {
 
     public ArrayList<Pion> getListePions() {
         return listePions;
+    }
+
+    public void redemarrerPartie() {
+
     }
 
     public int getNbDoubles() {

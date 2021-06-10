@@ -9,6 +9,8 @@ import joueur.Joueur;
 import mecanismeJeu.Action;
 import terrain.*;
 
+import java.util.concurrent.TimeUnit;
+
 
 public class EventJouer implements EventHandler<ActionEvent> {
 
@@ -31,18 +33,18 @@ public class EventJouer implements EventHandler<ActionEvent> {
 
         int de1, de2;
 
-        if(! tfDe1.trim().isEmpty() && ! tfDe2.trim().isEmpty()) {
+        //if(! tfDe1.trim().isEmpty() && ! tfDe2.trim().isEmpty()) {
 
-            de1 = Integer.parseInt(tfDe1);
-            de2 = Integer.parseInt(tfDe2);
+//            de1 = Integer.parseInt(tfDe1);
+//            de2 = Integer.parseInt(tfDe2);
 
-        }else{
+//        }else{
             monopoly.getMessageFooter().setText("");
             de1 = Action.lancerDe();
             de2 = Action.lancerDe();
             monopoly.setTfDe1(String.valueOf(de1));
             monopoly.setTfDe2(String.valueOf(de2));
-        }
+//        }
 
         int nbCases = de1 + de2;
 
