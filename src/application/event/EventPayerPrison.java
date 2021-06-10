@@ -29,7 +29,8 @@ public class EventPayerPrison implements EventHandler<ActionEvent> {
 //                monopoly.DialogInfo("Bon retour dans la plus grande prison !");
 //            }
 //        }
-//
+
+        //utiliser pour tester la faillite
         Action.retirer(1600,monopoly.getJoueurCourant());
     }
 
