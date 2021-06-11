@@ -8,7 +8,7 @@ import joueur.Joueur;
 
 public class EventChoixJoueur implements EventHandler<ActionEvent> {
 
-    private Monopoly monopoly;
+    private final Monopoly monopoly;
 
 
     public EventChoixJoueur(Monopoly monopoly) {

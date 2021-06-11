@@ -1,11 +1,8 @@
 package carte;
 
 
-import application.event.EventJouer;
 import joueur.Joueur;
 import mecanismeJeu.Action;
-
-import java.util.Random;
 
 public class Chance implements Cartes {
     private String message;
@@ -24,25 +21,18 @@ public class Chance implements Cartes {
         this.message = message;
     }
 
-    public int getSomme() {
-        return somme;
-    }
-
     public void setSomme(int somme) {
         this.somme = somme;
     }
 
 
     public void action(Joueur joueur, boolean payer) {
-        Random r = new Random();
         //payer une amande de 10 euros ou piocher une carte chance
         if (payer)
             Action.retirer(somme, joueur);
         else {
-                Action.piocherChance(joueur);
+            Action.piocherChance(joueur);
         }
-
-
     }
 
     @Override

@@ -1,7 +1,8 @@
 package application.ui;
 
 public enum nomPion {
-    Chien("Chien"), Bateau("Bateau"), Brouette("Brouette"),Chapeau("Chapeau"),Chat("Chat"), Chaussure("Chaussure"),DeACoudre("DeACoudre"), Voiture("Voiture"), ;
+    Chien("Chien"), Bateau("Bateau"), Brouette("Brouette"), Chapeau("Chapeau"), Chat("Chat"), Chaussure("Chaussure"), DeACoudre("DeACoudre"), Voiture("Voiture"),
+    ;
 
     private final String nom;
 

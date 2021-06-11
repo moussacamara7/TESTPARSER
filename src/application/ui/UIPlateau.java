@@ -1,27 +1,20 @@
 package application.ui;
 
 import application.Monopoly;
-import application.event.EventPasser;
 import carte.Cartes;
-import exception.ParserManquantException;
 import fichier.LectureFichier;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.image.Image;
 import joueur.Joueur;
-import mecanismeJeu.Action;
-import mecanismeJeu.Gestion;
+import parser.CoordoneesCases.ParserCoordoneesCases;
 import parser.Parser;
 import parser.parserCarteChance.*;
 import parser.parserCarteCommunaute.*;
 import parser.parserTerrain.*;
-import parser.CoordoneesCases.*;
 import terrain.Terrain;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
-import java.util.regex.Pattern;
 
 public class UIPlateau {
 
@@ -31,21 +24,18 @@ public class UIPlateau {
     final static String CARTE_CHANCE = "data/CartesChance.csv";
     final static String CARTE_CAISSECOMMUNAUTE = "data/CartesCommunaute.csv";
     private static final int NOMBRE_CASES = 40;
-    private static final String REGEX_COORDONNEES = "[0-9]+(;[0-9]+){4}";
-    private final HashMap<Integer, UICase> cases = new HashMap<>();
-    private Image imagePlateau;
-    private final HashMap<Pion, Image> imagesPions = new HashMap<>();
-
-    private final Monopoly monopoly;
-
     ////////////////////////////////////////////////////////
     //  Champs relatifs au "Plateau"
     ////////////////////////////////////////////////////////
-    private static final int NB_JOUEUR_MAX = 10;
+    private final HashMap<Integer, UICase> cases = new HashMap<>();
+    private final HashMap<Pion, Image> imagesPions = new HashMap<>();
+
+    private final Monopoly monopoly;
     private final ArrayList<Joueur> listeJoueurs = new ArrayList<>();
     private final ArrayList<Terrain> casesP = new ArrayList<>();
     private final ArrayList<Cartes> chance = new ArrayList<>();
     private final ArrayList<Cartes> caisseCommunaute = new ArrayList<>();
+    private Image imagePlateau;
 
 
     public UIPlateau(Monopoly monopoly) {
@@ -83,7 +73,7 @@ public class UIPlateau {
 
     private void initImagePlateau(String nomFichierPlateau) {
         //imagePlateau = new Image(getClass().getResourceAsStream(nomFichierPlateau));
-        System.out.println("Dossier : "+nomFichierPlateau+"\n");
+        System.out.println("Dossier : " + nomFichierPlateau + "\n");
         imagePlateau = new Image(nomFichierPlateau);
     }
 
@@ -107,28 +97,27 @@ public class UIPlateau {
 
         Parser premierParser = new ParserCoordoneesCases(null);
         System.out.println("Fin parser de coordonnees\n");
-        System.out.println("Dossier : "+nf+"\n");
+        System.out.println("Dossier : " + nf + "\n");
         LectureFichier.lire(nf, premierParser, this);
-        System.out.println("Fin Dossier : "+nf+"\n");
+        System.out.println("Fin Dossier : " + nf + "\n");
     }
 
     /**
      * La méthode parserCoordonnées vérifie que la ligne à parser respecte le bon format. Sinon arrêt
      * du programme en lançant une exception du type Error
-     *
+     * <p>
      * //@param ligne La ligne à parser
      */
 
     ////////////////////////////////////////
     //      Parser Coordonnes du prof
     ///////////////////////////////////////////////
-
     public void dessiner(Canvas grillePane) {
         for (int i = 0; i <= NOMBRE_CASES; i++) {
             cases.get(i).vider();
         }
 
-        for(Pion p : monopoly.getListePions()){
+        for (Pion p : monopoly.getListePions()) {
             cases.get(p.getPosition()).poser(p);
         }
 
@@ -234,14 +223,6 @@ public class UIPlateau {
 
     }
 
-    public ArrayList<Terrain> getCasesP() {
-        return casesP;
-    }
-
-
-    public int getNombreCaseP(ArrayList<Terrain> cases) {
-        return casesP.size();
-    }
 
     public Terrain getCaseP(int i) {
         if (i < 0 || i > 40)
@@ -298,10 +279,6 @@ public class UIPlateau {
     }
 
 
-    public ArrayList<Cartes> getCaisseCommunaute() {
-        return caisseCommunaute;
-    }
-
     public int getNombreCarteCommunaute() {
         return caisseCommunaute.size();
     }
@@ -327,96 +304,6 @@ public class UIPlateau {
             throw new IllegalArgumentException("joueur erroné");
 
         listeJoueurs.add(joueur);
-
-    }
-
-    public int getNombreJoueurs() {
-        return listeJoueurs.size();
-    }
-
-    public Joueur getJoueur(int i) {
-        if (i < 0 || i > NB_JOUEUR_MAX)
-            throw new IllegalArgumentException("L'indice du joueur est incorrect");
-
-        return listeJoueurs.get(i);
-    }
-
-    public void jouer() throws Exception {
-        //jeu
-        int deUn, deDeux;
-        //pour les lancés de dés
-        Scanner sc = new Scanner(System.in);
-
-        while (this.getNombreJoueurs() >= 2) {
-
-            for (Joueur joueur : this.listeJoueurs) {
-                System.out.println("tour de " + joueur.getNomJoueur() + "  Position : " + joueur.getPositionJoueur() + "\n");
-                System.out.println(joueur.toString());
-
-                if (joueur.isEstprisonnier()) {
-                    joueur.setNombreDeTourEnPrison(joueur.getNombreDeTourEnPrison() + 1);
-                    if (joueur.getCarteSortirDePrison() > 0) {
-                        System.out.println("Voulez vous utiliser votre carte sortir de prison ?\n");
-                        System.out.println("0 : non, lancer les dés\n1: oui\n");
-                        int choix;
-                        do {
-                            choix = sc.nextInt();
-                            switch (choix) {
-                                case 0:
-                                    deUn = Action.lancerDe();
-                                    deDeux = Action.lancerDe();
-                                    System.out.println("\nde 1:" + deUn + "\nde 2:" + deDeux + "\n");
-
-                                    if (deUn == deDeux) {
-                                        Action.sortirDePrison(joueur);
-                                        Gestion.jouerTour(joueur, deUn, deDeux);
-                                    } else {
-                                        if (joueur.getNombreDeTourEnPrison() == 3) {
-                                            //3 tours sans double en prison : il paye 50 et sort
-                                            Action.retirer(50, joueur);
-                                            joueur.setNombreDeTourEnPrison(0);
-                                            Action.sortirDePrison(joueur);
-                                            Gestion.jouerTour(joueur, deUn, deDeux);
-                                        }
-                                    }
-                                    break;
-
-
-                                case 1:
-                                    joueur.setCarteSortirDePrison(joueur.getCarteSortirDePrison() - 1);
-                                    Action.sortirDePrison(joueur);
-                                    Gestion.jouerTour(joueur);
-                                    break;
-                            }
-                        } while (!(choix == 1 || choix == 0));
-                    } else {
-                        System.out.println("Voulez n'avez pas de carte sortir de prison.\n");
-                        System.out.println("Entrez une touche pour lancer les dés?\n");
-                        int choix = sc.nextInt();
-                        deUn = Action.lancerDe();
-                        deDeux = Action.lancerDe();
-                        System.out.println("de 1:" + deUn + "  de 2:" + deDeux);
-                        if (deUn == deDeux) {
-                            Action.sortirDePrison(joueur);
-                            Gestion.jouerTour(joueur, deUn, deDeux);
-                        } else {
-                            if (joueur.getNombreDeTourEnPrison() == 3) {
-                                //3 tours sans double en prison : il paye 50 et sort
-                                System.out.println("3 tours en prison, vous payez 50 et vous sortez.");
-                                Action.retirer(50, joueur);
-                                joueur.setNombreDeTourEnPrison(0);
-                                Action.sortirDePrison(joueur);
-                                Gestion.jouerTour(joueur, deUn, deDeux);
-                            }
-                        }
-                    }
-                } else {
-                    //joueur pas en prison
-                    System.out.println("Vous lancez les dés\n");
-                    Gestion.jouerTour(joueur, 1, 1);
-                }
-            }
-        }
 
     }
 

@@ -1,7 +1,6 @@
 package parser;
 
 import application.ui.UIPlateau;
-import plateau.Plateau;
 
 public abstract class Parser {
     private final Parser suivant;

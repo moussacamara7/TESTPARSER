@@ -53,7 +53,7 @@ public class Action {
     public static void retirer(int somme, Joueur joueur) {
         if (somme < 0)
             throw new IllegalArgumentException("somme invalide");
-        if(joueur.getCapitalJoueur() < somme)
+        if (joueur.getCapitalJoueur() < somme)
             new JoueurFailliteException(joueur);
 
         joueur.setCapitalJoueur(joueur.getCapitalJoueur() - somme);
@@ -83,36 +83,6 @@ public class Action {
 //      Si on a besoin d'acceder aux cases, joueurs ou cartes on fait par ex: PLateau.getNombreJoueurs()    //
 //      C'est pour cela j'ai privilégié les fonctions de plateau en "static"                                //
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    /**
-     * acheter un terrain
-     * pas de verification de la position du joueur
-     */
-    public static void acheterPropriete(Joueur joueur, int numeroTerrain) throws Exception {
-
-        UIPlateau plateau = joueur.getUIPlateau();
-
-
-        if (!plateau.getCaseP(numeroTerrain).estAchetable())
-            throw new IllegalArgumentException("terrain non achetable");
-
-        //c'est bien un terrain achetable
-        TerrainAchetable T = (TerrainAchetable) plateau.getCaseP(numeroTerrain);
-
-        //on vérifie que le terrain n'ai pas de propriétaire
-        if (T.aUnProprietaire())
-            throw new Exception("Le terrain a deja un proprietaire");
-
-        //on vérifie si le joueur peut l'acheter
-        if (joueur.getCapitalJoueur() < T.getPrixAchat())
-            throw new Exception("Capital insuffisant");
-
-        //On retire l'argent au joueur et on lui ajoute la popriété
-        joueur.setCapitalJoueur(joueur.getCapitalJoueur() - T.getPrixAchat());
-        joueur.ajouterPropriete(T);
-        ((TerrainAchetable) plateau.getCaseP(numeroTerrain)).setProprietaire(joueur);
-
-    }
 
     public static void acheterPropriete(Joueur joueur, Terrain T) throws Exception {
 

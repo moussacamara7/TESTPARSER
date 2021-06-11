@@ -109,16 +109,6 @@ public class Joueur {
         this.carteSortirDePrison = carteSortirDePrison;
     }
 
-    public int getNombreProprietes() {
-        return proprietesJoueur.size();
-    }
-
-    public TerrainAchetable getPropriete(int i) {
-        if (i < 0 || i > getNombreProprietes())
-            throw new IllegalArgumentException("Propriete inaccessible");
-        return proprietesJoueur.get(i);
-    }
-
     /**
      * @return the positionJoueur
      */

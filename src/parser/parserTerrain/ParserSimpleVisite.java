@@ -3,7 +3,6 @@ package parser.parserTerrain;
 
 import application.ui.UIPlateau;
 import parser.Parser;
-import plateau.Plateau;
 import terrain.TerrainNeutre;
 
 public class ParserSimpleVisite extends Parser {

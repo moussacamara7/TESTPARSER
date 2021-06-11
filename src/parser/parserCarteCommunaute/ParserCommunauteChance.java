@@ -3,7 +3,6 @@ package parser.parserCarteCommunaute;
 import application.ui.UIPlateau;
 import carte.Chance;
 import parser.Parser;
-import plateau.Plateau;
 
 public class ParserCommunauteChance extends Parser {
 

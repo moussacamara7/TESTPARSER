@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class EventPasser implements EventHandler<ActionEvent> {
 
-    private Monopoly monopoly;
+    private final Monopoly monopoly;
 
     public EventPasser(Monopoly monopoly) {
         this.monopoly = monopoly;
@@ -18,7 +18,7 @@ public class EventPasser implements EventHandler<ActionEvent> {
 
     @Override
     public void handle(ActionEvent e) {
-        if(monopoly.isTourTermine()) {
+        if (monopoly.isTourTermine()) {
 
             monopoly.setTourTermine(false);
             monopoly.setNbDoubles(0);
@@ -33,8 +33,8 @@ public class EventPasser implements EventHandler<ActionEvent> {
             monopoly.setValueTfPorteMonnaie(monopoly.getJoueurCourant().getCapitalJoueur());
             monopoly.updateProprieteJoueurCourant();
             monopoly.setTerrainSelectionne(-1);
-        }else{
-            monopoly.DialogInfo("Ton tour n'est pas terminé " +monopoly.getJoueurCourant().getNomJoueur() +" ! Lance les dés.");
+        } else {
+            monopoly.DialogInfo("Ton tour n'est pas terminé " + monopoly.getJoueurCourant().getNomJoueur() + " ! Lance les dés.");
         }
     }
 

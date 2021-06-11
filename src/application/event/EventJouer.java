@@ -3,23 +3,18 @@ package application.event;
 import application.Monopoly;
 import application.ui.Pion;
 import carte.*;
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.util.Duration;
 import joueur.Joueur;
 import mecanismeJeu.Action;
 import terrain.*;
 
-import java.util.concurrent.TimeUnit;
-
 
 public class EventJouer implements EventHandler<ActionEvent> {
 
-    private final Monopoly monopoly;
     public static final int TAXE_DE_LUXE = 100;
     public static final int TAXE_SUR_LE_REVENU = 200;
+    private final Monopoly monopoly;
 
 
     public EventJouer(Monopoly monopoly) {
@@ -30,12 +25,13 @@ public class EventJouer implements EventHandler<ActionEvent> {
     public void handle(ActionEvent event) {
 
 
-        if(monopoly.isTourTermine()) {
-            monopoly.DialogInfo("Ton tour est fini " +monopoly.getJoueurCourant().getNomJoueur() +", gère tes terrains ou passe.");
+        if (monopoly.isTourTermine()) {
+            monopoly.DialogInfo("Ton tour est fini " + monopoly.getJoueurCourant().getNomJoueur() + ", gère tes terrains ou passe.");
             return;
         }
-        String tfDe1 = monopoly.getTfValeurDe1().getText();
-        String tfDe2 = monopoly.getTfValeurDe2().getText();
+
+        //String tfDe1 = monopoly.getTfValeurDe1().getText();
+        //String tfDe2 = monopoly.getTfValeurDe2().getText();
 
         int de1, de2;
 
@@ -45,11 +41,11 @@ public class EventJouer implements EventHandler<ActionEvent> {
             de2 = Integer.parseInt(tfDe2);
             monopoly.getMessageFooter().setText("");
         }else{*/
-            monopoly.getMessageFooter().setText("");
-            de1 = Action.lancerDe();
-            de2 = Action.lancerDe();
-            monopoly.setTfDe1(String.valueOf(de1));
-            monopoly.setTfDe2(String.valueOf(de2));
+        monopoly.getMessageFooter().setText("");
+        de1 = Action.lancerDe();
+        de2 = Action.lancerDe();
+        monopoly.setTfDe1(String.valueOf(de1));
+        monopoly.setTfDe2(String.valueOf(de2));
 //        }
 
         int nbCases = de1 + de2;
@@ -58,21 +54,21 @@ public class EventJouer implements EventHandler<ActionEvent> {
 
         //System.out.println("d1=" + de1 + "  d2=" + de2 + "  nb cases=" + nbCases);
 
-        if(! joueur.isEstprisonnier()){
+        if (!joueur.isEstprisonnier()) {
 
             if (de1 == de2) {
                 int nbDbl = monopoly.getNbDoubles();
 
                 nbDbl++;
                 monopoly.setNbDoubles(nbDbl);
-                if (nbDbl == 1){
+                if (nbDbl == 1) {
                     monopoly.getMessageFooter().setText("C'est ton premier double !");
                     Action.avancerJoueur(joueur, nbCases);
-                }else if (nbDbl == 2) {
+                } else if (nbDbl == 2) {
                     monopoly.getMessageFooter().setText("C'est ton deuxième double !! Encore un et c'est la taule...");
                     Action.avancerJoueur(joueur, nbCases);
 
-                }else {
+                } else {
                     monopoly.getMessageFooter().setText("Police, menottes, prison...");
                     Action.allerEnPrison(joueur);
                     monopoly.setTourTermine(true);
@@ -94,24 +90,24 @@ public class EventJouer implements EventHandler<ActionEvent> {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }else{
+        } else {
             //prisonnier
-            if(joueur.getNombreDeTourEnPrison() == 3 && (de1 != de2)) {
+            if (joueur.getNombreDeTourEnPrison() == 3 && (de1 != de2)) {
                 monopoly.getMessageFooter().setText("C'est ton troisième tour en prison, tu sors et tu payes 50.");
                 Action.retirer(50, joueur);
                 Action.sortirDePrison(joueur);
                 Action.avancerJoueur(joueur, nbCases);
                 monopoly.setTourTermine(true);
-            }else{
-                if(de1 == de2){
+            } else {
+                if (de1 == de2) {
                     monopoly.getMessageFooter().setText("Un double ! Vous sortez de prison !");
                     Action.sortirDePrison(joueur);
                     joueur.setNombreDeTourEnPrison(0);
                     Action.avancerJoueur(joueur, nbCases);
                     monopoly.setNbDoubles(1);
-                }else{
+                } else {
                     monopoly.getMessageFooter().setText("Pas de double... un tour de plus en prison.");
-                    joueur.setNombreDeTourEnPrison(joueur.getNombreDeTourEnPrison()+1);
+                    joueur.setNombreDeTourEnPrison(joueur.getNombreDeTourEnPrison() + 1);
                     monopoly.setTourTermine(true);
                 }
 
@@ -153,12 +149,12 @@ public class EventJouer implements EventHandler<ActionEvent> {
                 case "CAISSE COMMUNAUTE":
                     monopoly.getMessageFooter().setText("Vous piochez une carte communauté");
                     Cartes communautee = Action.piocherCommunaute(joueur);
-                    if(communautee instanceof Chance) {
+                    if (communautee instanceof Chance) {
                         monopoly.getMessageFooter().setText(((Chance) communautee).getMessage());
                         Boolean payer = monopoly.DialogActionCarteChance();
                         //on doit le gerer comme ça pour que tout s'affiche correctement
-                        if(payer)
-                            Action.retirer(10,joueur);
+                        if (payer)
+                            Action.retirer(10, joueur);
                         else {
                             Cartes chances = Action.piocherChance(joueur);
                             utiliserCarteChance(chances);
@@ -200,8 +196,7 @@ public class EventJouer implements EventHandler<ActionEvent> {
     }
 
 
-
-    public void utiliserCarteChance(Cartes chance){
+    public void utiliserCarteChance(Cartes chance) {
         if (chance instanceof Deplacement) {
             Deplacement c = (Deplacement) chance;
             monopoly.getMessageFooter().setText(c.getMessage());
@@ -232,7 +227,7 @@ public class EventJouer implements EventHandler<ActionEvent> {
 
         Joueur joueur = monopoly.getJoueurCourant();
         Terrain t = joueur.getUIPlateau().getCaseP(joueur.getPositionJoueur());
-        if(t.estAchetable()){
+        if (t.estAchetable()) {
             TerrainAchetable ta = (TerrainAchetable) t;
 
             if (ta.aUnProprietaire()) {

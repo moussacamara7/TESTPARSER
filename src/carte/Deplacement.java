@@ -3,7 +3,6 @@ package carte;
 
 import joueur.Joueur;
 import mecanismeJeu.Action;
-import application.event.EventJouer;
 
 
 public class Deplacement implements Cartes {
@@ -25,10 +24,6 @@ public class Deplacement implements Cartes {
         this.message = message;
     }
 
-    public String getDestination() {
-        return destination;
-    }
-
     public void setDestination(String destination) {
         if (destination == null || destination.trim().isEmpty())
             throw new IllegalArgumentException("Destination errone");
@@ -46,29 +41,22 @@ public class Deplacement implements Cartes {
                 break;
             case "RUE DE LA PAIX":
                 Action.deplacer(joueur, 39);
-                //interactionCase(joueur);
                 break;
             case "3 CASES":
-                joueur.setPositionJoueur(joueur.getPositionJoueur()-3);
+                joueur.setPositionJoueur(joueur.getPositionJoueur() - 3);
                 //sinon il gagne 200 car sa nvpos < pos
-                //Action.deplacer(joueur, joueur.getPositionJoueur() - 3);
-                //interactionCase(joueur);
                 break;
             case "GARE DE LYON":
                 Action.deplacer(joueur, 15);
-                //interactionCase(joueur);
                 break;
             case "AVENUE HENRI-MARTIN":
                 Action.deplacer(joueur, 24);
-                //interactionCase(joueur);
                 break;
             case "BOULEVARD DE LA VILLETTE":
                 Action.deplacer(joueur, 11);
-                //interactionCase(joueur);
                 break;
             case "BOULEVARD DE BELLEVILLE":
                 Action.deplacer(joueur, 1);
-                //interactionCase(joueur);
                 break;
         }
 

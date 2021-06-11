@@ -1,9 +1,7 @@
 package carte;
 
 
-import application.ui.UIPlateau;
 import joueur.Joueur;
-import plateau.Plateau;
 
 public class Liberation implements Cartes {
     private String message;

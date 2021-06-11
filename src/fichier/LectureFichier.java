@@ -3,7 +3,6 @@ package fichier;
 import application.ui.UIPlateau;
 import exception.ParserManquantException;
 import parser.Parser;
-import plateau.Plateau;
 
 import java.io.BufferedReader;
 import java.io.File;

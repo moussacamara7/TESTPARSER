@@ -26,7 +26,7 @@ public class Impot implements Cartes {
         int nbMaison = 0, nbHotel = 0;
         //Parcours des propriétés du joueur
         for (TerrainAchetable t : joueur.getProprietesJoueur()) {
-            if(t instanceof TerrainConstructible) {
+            if (t instanceof TerrainConstructible) {
                 TerrainConstructible tc = (TerrainConstructible) t;
                 if (tc.getNombreMaison() == 5) {          //Cas d'un hotel
                     nbHotel++;

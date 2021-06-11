@@ -1,12 +1,12 @@
 package application;
 
 import application.event.EventAcheterMaison;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
+import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -15,7 +15,6 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import terrain.Terrain;
 import terrain.TerrainAchetable;
 import terrain.TerrainConstructible;
 
@@ -35,7 +34,7 @@ public class FenetreTerrain extends Stage {
 
         //boutons
         Button acheter = new Button();
-        Button retour = new  Button();
+        Button retour = new Button();
 
         //label
         Label nomTerrain = new Label();
@@ -48,17 +47,16 @@ public class FenetreTerrain extends Stage {
         VBox vbCenter = new VBox();
 
 
-
         //label
         vbCenter.getChildren().add(nomTerrain);
         nomTerrain.setText(terrain.getNomTerrain());
         nomTerrain.setFont(Font.font(25));
 
-        if(!(terrain instanceof TerrainConstructible)) {
+        if (!(terrain instanceof TerrainConstructible)) {
             //c'est une gare, on ne peut pas acheter de maisons
             acheter.setDisable(true);
             info.setText("Rien à acheter ici !");
-        }else{
+        } else {
             //c'est un terrain constructible
             //on récupere la couleur pour l'afficher
             TerrainConstructible terrainC = (TerrainConstructible) terrain;
@@ -90,25 +88,25 @@ public class FenetreTerrain extends Stage {
             }
             vbCenter.getChildren().addAll(prixUneMaison, prixDeuxMaison, prixTroisMaison, prixQuatreMaison, prixHotel);
 
-            prixUneMaison.setText("Prix une maison :  " +terrainC.getLoyer().getPrixUnemaison());
+            prixUneMaison.setText("Prix une maison :  " + terrainC.getLoyer().getPrixUnemaison());
             prixUneMaison.setFont(Font.font(15));
 
-            prixDeuxMaison.setText("Prix deux maison :  " +terrainC.getLoyer().getPrixDeuxMaison());
+            prixDeuxMaison.setText("Prix deux maison :  " + terrainC.getLoyer().getPrixDeuxMaison());
             prixDeuxMaison.setFont(Font.font(15));
 
-            prixTroisMaison.setText("Prix trois maison :  " +terrainC.getLoyer().getPrixTroisMaison());
+            prixTroisMaison.setText("Prix trois maison :  " + terrainC.getLoyer().getPrixTroisMaison());
             prixTroisMaison.setFont(Font.font(15));
 
-            prixQuatreMaison.setText("Prix deux maison :  " +terrainC.getLoyer().getPrixQuatreMaison());
+            prixQuatreMaison.setText("Prix deux maison :  " + terrainC.getLoyer().getPrixQuatreMaison());
             prixQuatreMaison.setFont(Font.font(15));
 
-            prixHotel.setText("Prix hotel :  " +terrainC.getLoyer().getPrixHotel());
+            prixHotel.setText("Prix hotel :  " + terrainC.getLoyer().getPrixHotel());
             prixHotel.setFont(Font.font(15));
 
 
             int nbMaison = terrainC.getNombreMaison();
-            if(nbMaison<5)
-                info.setText(String.format("Vous possédez %d %s", nbMaison, nbMaison>1 ? "maisons." : "maison."));
+            if (nbMaison < 5)
+                info.setText(String.format("Vous possédez %d %s", nbMaison, nbMaison > 1 ? "maisons." : "maison."));
             else
                 info.setText("Vous possédez un Hôtel !");
         }
@@ -157,7 +155,7 @@ public class FenetreTerrain extends Stage {
         return terrain;
     }
 
-    public void setInfo(String text){
+    public void setInfo(String text) {
         info.setText(text);
     }
 

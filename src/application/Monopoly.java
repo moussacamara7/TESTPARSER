@@ -7,7 +7,6 @@ import application.ui.UICase;
 import application.ui.UIPlateau;
 import application.ui.nomPion;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -37,10 +36,8 @@ public class Monopoly extends Application {
     private ArrayList<ToggleButton> tabBoutonsJoueurs = new ArrayList<>();
 
     private ArrayList<Pion> listePions = new ArrayList<>();
-    private FenetreTerrain fenetreTerrain;
     private UIPlateau uiPlateau;
     private Canvas grillePane;
-    private Button bAvancer;
     private TextField tfDe1;
     private TextField tfDe2;
     private Label messageFooter;
@@ -81,10 +78,6 @@ public class Monopoly extends Application {
         this.tfDe2.setText(tfDe2);
     }
 
-    public TextField getTfPorteMonnaie() {
-        return tfPorteMonnaie;
-    }
-
     public UIPlateau getUiPlateau() {
         return uiPlateau;
     }
@@ -100,7 +93,7 @@ public class Monopoly extends Application {
 
     }
 
-    public void startGame(Stage primaryStage){
+    public void startGame(Stage primaryStage) {
         try {
             initPartie();
 
@@ -183,7 +176,7 @@ public class Monopoly extends Application {
     private void initActions(VBox panneauDroit) {
         VBox box = new VBox();
 
-        bAvancer = new Button(ACTION_JOUER);
+        Button bAvancer = new Button(ACTION_JOUER);
         bAvancer.setOnAction(new EventJouer(this));
         box.getChildren().add(bAvancer);
 
@@ -255,24 +248,10 @@ public class Monopoly extends Application {
 
         uiPlateau = new UIPlateau(this);
 
-//        listeJoueurs.add(new Joueur("Han",uiPlateau));
-//        uiPlateau.ajouterJoueur(new Joueur("Han",uiPlateau));
-//        listePions.add(new Pion("Bateau"));
+
         creerJoueurEtAjouter("Han", uiPlateau, nomPion.DeACoudre);
-
-//        listeJoueurs.add(new Joueur("Luke", uiPlateau));
-//        uiPlateau.ajouterJoueur(new Joueur("Luke",uiPlateau));
-//        listePions.add(new Pion("Chien"));
         creerJoueurEtAjouter("Luke", uiPlateau, nomPion.Chien);
-
-
-        //listeJoueurs.add(new Joueur("Yoda", uiPlateau));
-//        uiPlateau.ajouterJoueur(new Joueur("Yoda",uiPlateau));
-//        listePions.add(new Pion("Voiture"));
         creerJoueurEtAjouter("Yoda", uiPlateau, nomPion.Voiture);
-
-
-        //uiPlateau = new UIPlateau(/* ? */);
     }
 
     public void DialogAction(String message, boolean erreur) {
@@ -306,6 +285,7 @@ public class Monopoly extends Application {
         ButtonType piocherButton = new ButtonType("Piocher");
         alert.getButtonTypes().setAll(payerButton, piocherButton);
         Optional<ButtonType> result = alert.showAndWait();
+        
         return result.get().equals(payerButton);
     }
 
@@ -336,7 +316,7 @@ public class Monopoly extends Application {
         }
     }
 
-    public void creerJoueurEtAjouter(String nom, UIPlateau plateau,nomPion nomPion) {
+    public void creerJoueurEtAjouter(String nom, UIPlateau plateau, nomPion nomPion) {
         plateau.ajouterJoueur(new Joueur(nom, plateau));
         Pion pion = new Pion(nomPion.getNom());
         listePions.add(pion);
@@ -348,12 +328,12 @@ public class Monopoly extends Application {
         return listePions;
     }
 
-    public void redemarrerPartie (Stage stage) {
+    public void redemarrerPartie(Stage stage) {
         primaryStage.close();
         setTourTermine(false);
         setJoueurCourant(null);
-        tabBoutonsJoueurs = new ArrayList<ToggleButton>();
-        listePions = new ArrayList<Pion>();
+        tabBoutonsJoueurs = new ArrayList<>();
+        listePions = new ArrayList<>();
 
         startGame(stage);
     }

@@ -3,7 +3,6 @@ package parser.parserCarteCommunaute;
 import application.ui.UIPlateau;
 import carte.Impot;
 import parser.Parser;
-import plateau.Plateau;
 
 public class ParserCommunauteImpots extends Parser {
 

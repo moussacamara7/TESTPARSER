@@ -3,9 +3,6 @@ package carte;
 import joueur.Joueur;
 import mecanismeJeu.Action;
 
-import joueur.Joueur;
-import mecanismeJeu.Action;
-
 public class Payer implements Cartes {
     private String message;
     private int somme;

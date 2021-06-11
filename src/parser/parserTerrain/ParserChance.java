@@ -3,7 +3,6 @@ package parser.parserTerrain;
 
 import application.ui.UIPlateau;
 import parser.Parser;
-import plateau.Plateau;
 import terrain.Piocher;
 
 public class ParserChance extends Parser {

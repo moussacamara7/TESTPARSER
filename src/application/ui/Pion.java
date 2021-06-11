@@ -17,10 +17,6 @@ public class Pion {
         setNom(nom);
     }
 
-    public String getNom() {
-        return nom;
-    }
-
     private void setNom(String nom) {
         if (nom == null || nom.trim().equals(""))
             throw new IllegalArgumentException("Le nom du pion ne peut pas être vide ou null");

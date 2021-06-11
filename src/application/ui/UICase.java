@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class UICase {
 
+    private final ArrayList<Pion> listePions = new ArrayList<>();
     public int x1, y1, x2, y2;
-    private ArrayList<Pion> listePions = new ArrayList<Pion>();
 
 
     public UICase() {

@@ -18,9 +18,8 @@ public class EventGererMaison implements EventHandler<ActionEvent> {
     public void handle(ActionEvent e) {
         if (monopoly.getTerrainSelectionne() == -1)
             monopoly.DialogAction("Tu n'as sélectionné aucun terrain !", true);
-        else{
-            FenetreTerrain fenetreTerrain = new FenetreTerrain(monopoly);
-
+        else {
+            new FenetreTerrain(monopoly);
         }
     }
 

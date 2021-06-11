@@ -3,7 +3,6 @@ package parser.parserCarteChance;
 import application.ui.UIPlateau;
 import carte.Anniversaire;
 import parser.Parser;
-import plateau.Plateau;
 
 public class ParserChanceAnniversaire extends Parser {
 
@@ -12,9 +11,8 @@ public class ParserChanceAnniversaire extends Parser {
     }
 
 
-
-    public void parser(String[] values, UIPlateau plateau) throws Exception{
-        Anniversaire c = new Anniversaire(values[1],Integer.parseInt(values[2]));
+    public void parser(String[] values, UIPlateau plateau) throws Exception {
+        Anniversaire c = new Anniversaire(values[1], Integer.parseInt(values[2]));
         plateau.ajouterChance(c);
     }
 

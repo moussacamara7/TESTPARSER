@@ -25,11 +25,6 @@ public class Anniversaire implements Cartes {
     }
 
 
-    public int getSomme() {
-        return somme;
-    }
-
-
     public void setSomme(int somme) {
         this.somme = somme;
     }
