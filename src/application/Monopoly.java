@@ -35,11 +35,7 @@ public class Monopoly extends Application {
     public final static String ACTION_JOUER = "Lancer les dés";
 
     private ArrayList<ToggleButton> tabBoutonsJoueurs = new ArrayList<>();
-    /**
-     * YL : la liste des joueurs est représentée par une liste de noms, ainsi que la liste des pions.
-     * --> A modifier !!
-     */
-    //private final ArrayList<Joueur> listeJoueurs = new ArrayList<>();
+
     private ArrayList<Pion> listePions = new ArrayList<>();
     private FenetreTerrain fenetreTerrain;
     private UIPlateau uiPlateau;
@@ -48,11 +44,9 @@ public class Monopoly extends Application {
     private TextField tfDe1;
     private TextField tfDe2;
     private Label messageFooter;
-    /**
-     * YL : ListView peut contenir n'importe quel type d'objet. Pour l'instant, ce sont des String
-     * --> A modifier !!
-     */
+
     private ListView<String> proprietesJoueurCourant;
+    private boolean tourTermine = false;
     private Joueur joueurCourant;
     private int terrainSelectionne = -1;
     private TextField tfPorteMonnaie;
@@ -356,7 +350,8 @@ public class Monopoly extends Application {
 
     public void redemarrerPartie (Stage stage) {
         primaryStage.close();
-        joueurCourant = null;
+        setTourTermine(false);
+        setJoueurCourant(null);
         tabBoutonsJoueurs = new ArrayList<ToggleButton>();
         listePions = new ArrayList<Pion>();
 
@@ -365,6 +360,14 @@ public class Monopoly extends Application {
 
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public boolean isTourTermine() {
+        return tourTermine;
+    }
+
+    public void setTourTermine(boolean tourTermine) {
+        this.tourTermine = tourTermine;
     }
 
     public int getNbDoubles() {

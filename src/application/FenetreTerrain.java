@@ -88,27 +88,20 @@ public class FenetreTerrain extends Stage {
                     nomTerrain.setTextFill(Color.DARKBLUE);
                     break;
             }
-            vbCenter.getChildren().add(prixUneMaison);
+            vbCenter.getChildren().addAll(prixUneMaison, prixDeuxMaison, prixTroisMaison, prixQuatreMaison, prixHotel);
 
             prixUneMaison.setText("Prix une maison :  " +terrainC.getLoyer().getPrixUnemaison());
             prixUneMaison.setFont(Font.font(15));
 
-            vbCenter.getChildren().add(prixDeuxMaison);
             prixDeuxMaison.setText("Prix deux maison :  " +terrainC.getLoyer().getPrixDeuxMaison());
             prixDeuxMaison.setFont(Font.font(15));
 
-
-            vbCenter.getChildren().add(prixTroisMaison);
             prixTroisMaison.setText("Prix trois maison :  " +terrainC.getLoyer().getPrixTroisMaison());
             prixTroisMaison.setFont(Font.font(15));
 
-
-            vbCenter.getChildren().add(prixQuatreMaison);
             prixQuatreMaison.setText("Prix deux maison :  " +terrainC.getLoyer().getPrixQuatreMaison());
             prixQuatreMaison.setFont(Font.font(15));
 
-
-            vbCenter.getChildren().add(prixHotel);
             prixHotel.setText("Prix hotel :  " +terrainC.getLoyer().getPrixHotel());
             prixHotel.setFont(Font.font(15));
 
@@ -121,6 +114,7 @@ public class FenetreTerrain extends Stage {
         }
 
         vbCenter.getChildren().add(info);
+        info.setWrapText(true);
         info.setTextFill(Color.GREEN);
         info.setContentDisplay(ContentDisplay.BOTTOM);
         info.setFont(Font.font(20));

@@ -4,10 +4,8 @@ import application.FenetreTerrain;
 import application.Monopoly;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-import javafx.scene.control.ToggleButton;
 import joueur.Joueur;
 import mecanismeJeu.Action;
-import terrain.TerrainAchetable;
 import terrain.TerrainConstructible;
 
 public class EventAcheterMaison implements EventHandler<ActionEvent> {
@@ -26,8 +24,9 @@ public class EventAcheterMaison implements EventHandler<ActionEvent> {
         //on sait qu'il est constructible
         TerrainConstructible terrain = (TerrainConstructible) fenetreTerrain.getTerrain();
 
-        if(! Action.peutConstruire(terrain.getNumeroTerrain(),monopoly.getUiPlateau()))
-            monopoly.DialogInfo("Tu ne peux pas acheter de maisons !");
+        if(! Action.peutConstruire(terrain.getNumeroTerrain(),monopoly.getUiPlateau())) {
+            fenetreTerrain.setInfo("Tu ne peux pas acheter pour l'instant!");
+        }
         else{
             Action.construire(terrain.getNumeroTerrain(), monopoly.getUiPlateau());
             monopoly.setValueTfPorteMonnaie(joueur.getCapitalJoueur());

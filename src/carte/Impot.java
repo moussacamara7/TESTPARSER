@@ -26,11 +26,13 @@ public class Impot implements Cartes {
         int nbMaison = 0, nbHotel = 0;
         //Parcours des propriétés du joueur
         for (TerrainAchetable t : joueur.getProprietesJoueur()) {
-            TerrainConstructible tc = (TerrainConstructible) t;
-            if (tc.getNombreMaison() == 5) {          //Cas d'un hotel
-                nbHotel++;
-            } else {                                   //Cas des maisons
-                nbMaison += tc.getNombreMaison();
+            if(t instanceof TerrainConstructible) {
+                TerrainConstructible tc = (TerrainConstructible) t;
+                if (tc.getNombreMaison() == 5) {          //Cas d'un hotel
+                    nbHotel++;
+                } else {                                   //Cas des maisons
+                    nbMaison += tc.getNombreMaison();
+                }
             }
         }
         Action.retirer(40 * nbMaison, joueur);
