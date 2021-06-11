@@ -40,7 +40,7 @@ public class Monopoly extends Application {
      */
     //private final ArrayList<Joueur> listeJoueurs = new ArrayList<>();
     private final ArrayList<Pion> listePions = new ArrayList<>();
-    private final FenetreTerrain fenetreTerrain = new FenetreTerrain();
+    private FenetreTerrain fenetreTerrain;
     private UIPlateau uiPlateau;
     private Canvas grillePane;
     private Button bAvancer;
@@ -101,8 +101,6 @@ public class Monopoly extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            this.primaryStage = primaryStage;
-
             initPartie();
 
 
@@ -256,18 +254,18 @@ public class Monopoly extends Application {
 //        listeJoueurs.add(new Joueur("Han",uiPlateau));
 //        uiPlateau.ajouterJoueur(new Joueur("Han",uiPlateau));
 //        listePions.add(new Pion("Bateau"));
-        creerJoueurEtAjouter("Nicolas", uiPlateau, nomPion.Bateau);
+        creerJoueurEtAjouter("Han", uiPlateau, nomPion.DeACoudre);
 
 //        listeJoueurs.add(new Joueur("Luke", uiPlateau));
 //        uiPlateau.ajouterJoueur(new Joueur("Luke",uiPlateau));
 //        listePions.add(new Pion("Chien"));
-        creerJoueurEtAjouter("Yuna", uiPlateau, nomPion.Chien);
+        creerJoueurEtAjouter("Luke", uiPlateau, nomPion.Chien);
 
 
         //listeJoueurs.add(new Joueur("Yoda", uiPlateau));
 //        uiPlateau.ajouterJoueur(new Joueur("Yoda",uiPlateau));
 //        listePions.add(new Pion("Voiture"));
-        creerJoueurEtAjouter("Yann", uiPlateau, nomPion.Voiture);
+        creerJoueurEtAjouter("Yoda", uiPlateau, nomPion.Voiture);
 
 
         //uiPlateau = new UIPlateau(/* ? */);
@@ -368,10 +366,6 @@ public class Monopoly extends Application {
 
     public void setTerrainSelectionne(int terrainSelectionne) {
         this.terrainSelectionne = terrainSelectionne;
-    }
-
-    public FenetreTerrain getFenetreTerrain() {
-        return fenetreTerrain;
     }
 
     public Joueur getJoueurCourant() {

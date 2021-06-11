@@ -3,8 +3,11 @@ package application.event;
 import application.Monopoly;
 import application.ui.Pion;
 import carte.*;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.util.Duration;
 import joueur.Joueur;
 import mecanismeJeu.Action;
 import terrain.*;
@@ -33,18 +36,18 @@ public class EventJouer implements EventHandler<ActionEvent> {
 
         int de1, de2;
 
-        //if(! tfDe1.trim().isEmpty() && ! tfDe2.trim().isEmpty()) {
+        if(! tfDe1.trim().isEmpty() && ! tfDe2.trim().isEmpty()) {
 
-//            de1 = Integer.parseInt(tfDe1);
-//            de2 = Integer.parseInt(tfDe2);
+            de1 = Integer.parseInt(tfDe1);
+            de2 = Integer.parseInt(tfDe2);
 
-//        }else{
+        }else{
             monopoly.getMessageFooter().setText("");
             de1 = Action.lancerDe();
             de2 = Action.lancerDe();
             monopoly.setTfDe1(String.valueOf(de1));
             monopoly.setTfDe2(String.valueOf(de2));
-//        }
+        }
 
         int nbCases = de1 + de2;
 
@@ -188,6 +191,8 @@ public class EventJouer implements EventHandler<ActionEvent> {
         //on mets a jour son porte monnaie
         monopoly.setValueTfPorteMonnaie(joueur.getCapitalJoueur());
     }
+
+
 
     public void utiliserCarteChance(Cartes chance){
         if (chance instanceof Deplacement) {
