@@ -5,10 +5,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -25,25 +22,20 @@ import terrain.TerrainConstructible;
 public class FenetreTerrain extends Stage {
 
 
-    private final Monopoly monopoly;
-
-    //boutons
-    private final ToggleButton acheter = new ToggleButton();
-    private final ToggleButton retour = new ToggleButton();
-
-    //label
-    private final Label nomTerrain = new Label();
-    private final Label prixUneMaison = new Label();
-    private final Label prixDeuxMaison = new Label();
-    private final Label prixTroisMaison = new Label();
-    private final Label prixQuatreMaison = new Label();
-    private final Label prixHotel = new Label();
-    private final Label info = new Label();
-
-
-
     public FenetreTerrain(Monopoly monopoly) {
-        this.monopoly = monopoly;
+
+        //boutons
+        Button acheter = new Button();
+        Button retour = new  Button();
+
+        //label
+        Label nomTerrain = new Label();
+        Label prixUneMaison = new Label();
+        Label prixDeuxMaison = new Label();
+        Label prixTroisMaison = new Label();
+        Label prixQuatreMaison = new Label();
+        Label prixHotel = new Label();
+        Label info = new Label();
 
         VBox vbCenter = new VBox();
 
@@ -90,6 +82,7 @@ public class FenetreTerrain extends Stage {
                     break;
             }
             vbCenter.getChildren().add(prixUneMaison);
+
             prixUneMaison.setText("Prix une maison :  " +terrainC.getLoyer().getPrixUnemaison());
             prixUneMaison.setFont(Font.font(15));
 
@@ -153,22 +146,11 @@ public class FenetreTerrain extends Stage {
         initModality(Modality.APPLICATION_MODAL);
         setScene(scene);
         show();
-
-
-
-
-
-
     }
 
 
 
     public EventHandler<ActionEvent> acheterMaison(){
-
-
-
-
-
 
         return null;
     }

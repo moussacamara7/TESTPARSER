@@ -7,6 +7,7 @@ import application.ui.UICase;
 import application.ui.UIPlateau;
 import application.ui.nomPion;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -33,13 +34,13 @@ public class Monopoly extends Application {
     public final static String ACTION_PASSER = "Passer au suivant";
     public final static String ACTION_JOUER = "Lancer les dés";
 
-    private final ArrayList<ToggleButton> tabBoutonsJoueurs = new ArrayList<>();
+    private ArrayList<ToggleButton> tabBoutonsJoueurs = new ArrayList<>();
     /**
      * YL : la liste des joueurs est représentée par une liste de noms, ainsi que la liste des pions.
      * --> A modifier !!
      */
     //private final ArrayList<Joueur> listeJoueurs = new ArrayList<>();
-    private final ArrayList<Pion> listePions = new ArrayList<>();
+    private ArrayList<Pion> listePions = new ArrayList<>();
     private FenetreTerrain fenetreTerrain;
     private UIPlateau uiPlateau;
     private Canvas grillePane;
@@ -98,8 +99,14 @@ public class Monopoly extends Application {
         return grillePane;
     }
 
+
     @Override
     public void start(Stage primaryStage) {
+        startGame(primaryStage);
+
+    }
+
+    public void startGame(Stage primaryStage){
         try {
             initPartie();
 
@@ -116,10 +123,13 @@ public class Monopoly extends Application {
 
             uiPlateau.dessiner(grillePane);
 
+            this.primaryStage = primaryStage;
+
             primaryStage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 
     private void initPanneauDroit(BorderPane root) {
@@ -310,8 +320,8 @@ public class Monopoly extends Application {
         alert.setTitle("Partie terminée");
         alert.setContentText("Le joueur " + getJoueurCourant().getNomJoueur() + " a gagnée la partie !");
         ButtonType Quitter = new ButtonType("Quitter");
-        //ButtonType Rejouer = new ButtonType("Rejouer");
-        alert.getButtonTypes().setAll(Quitter/*, Rejouer*/);
+        ButtonType Rejouer = new ButtonType("Rejouer");
+        alert.getButtonTypes().setAll(Quitter, Rejouer);
         Optional<ButtonType> result = alert.showAndWait();
 
         return result.get().equals(Quitter);
@@ -344,8 +354,17 @@ public class Monopoly extends Application {
         return listePions;
     }
 
-    public void redemarrerPartie() {
+    public void redemarrerPartie (Stage stage) {
+        primaryStage.close();
+        joueurCourant = null;
+        tabBoutonsJoueurs = new ArrayList<ToggleButton>();
+        listePions = new ArrayList<Pion>();
 
+        startGame(stage);
+    }
+
+    public Stage getPrimaryStage() {
+        return primaryStage;
     }
 
     public int getNbDoubles() {
@@ -374,10 +393,6 @@ public class Monopoly extends Application {
 
     public void setJoueurCourant(Joueur j) {
         joueurCourant = j;
-    }
-
-    public void setValueTfPorteMonnaie(String value) {
-        tfPorteMonnaie.setText(value);
     }
 
     public void setValueTfPorteMonnaie(int value) {

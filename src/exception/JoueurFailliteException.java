@@ -4,8 +4,10 @@ import application.Monopoly;
 import application.ui.Pion;
 import application.ui.UIPlateau;
 import javafx.application.Platform;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ToggleButton;
+import javafx.stage.Stage;
 import joueur.Joueur;
 import terrain.Terrain;
 import terrain.TerrainAchetable;
@@ -39,10 +41,21 @@ public class JoueurFailliteException {
 
         //on retire ses propriétés
         ArrayList<TerrainAchetable> proprieteJoueur = joueur.getProprietesJoueur();
-        for(TerrainAchetable t : proprieteJoueur){
+        /*for(TerrainAchetable t : proprieteJoueur){
             t.setProprietaire(null);
             if(t instanceof TerrainConstructible)
                 ((TerrainConstructible) t).setNombreMaison(0);
+        }*/
+
+        int nb = proprieteJoueur.size();
+        System.out.println("nb de propriété du joueur a suppr : " +nb);
+        for(int iterator = 0 ;iterator < nb; iterator++){
+            TerrainAchetable t = proprieteJoueur.get(0);
+
+            t.setProprietaire(null);
+            if(t instanceof TerrainConstructible)
+                ((TerrainConstructible) t).setNombreMaison(0);
+            System.out.println("propriete reinitialise : " +t.getNomTerrain());
             proprieteJoueur.remove(t);
         }
 
@@ -56,19 +69,27 @@ public class JoueurFailliteException {
         }
         monopoly.getListePions().remove(pionJoueur);
         monopoly.getUiPlateau().dessiner(monopoly.getGrillePane());
+        monopoly.getUiPlateau().dessiner(monopoly.getGrillePane());
 
         //on le supprime du jeu
         joueur.getUIPlateau().getListeJoueurs().remove(joueur);
+
 
         if(joueur.getUIPlateau().getListeJoueurs().size()<2){
             if (monopoly.DialogFinDePartie()){
                 Platform.exit();
                 System.exit(0);
             }else{
-                monopoly.redemarrerPartie();
+                //monopoly.getPrimaryStage().close();
+                monopoly.redemarrerPartie(monopoly.getPrimaryStage());
             }
 
         }
+
+        if(joueur.getProprietesJoueur().isEmpty())
+            System.out.println("OK");
+        else
+            System.out.println("NOT OK");
 
     }
 }
