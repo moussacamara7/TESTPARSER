@@ -1,5 +1,6 @@
 package application;
 
+import application.event.EventAcheterMaison;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -21,8 +22,16 @@ import terrain.TerrainConstructible;
 
 public class FenetreTerrain extends Stage {
 
+    private final Label info = new Label();
+    private final Monopoly monopoly;
+    private final TerrainAchetable terrain;
+
 
     public FenetreTerrain(Monopoly monopoly) {
+        this.monopoly = monopoly;
+
+        //On recupere le Terrain
+        terrain = monopoly.getJoueurCourant().getProprietesJoueur().get(monopoly.getTerrainSelectionne());
 
         //boutons
         Button acheter = new Button();
@@ -35,12 +44,10 @@ public class FenetreTerrain extends Stage {
         Label prixTroisMaison = new Label();
         Label prixQuatreMaison = new Label();
         Label prixHotel = new Label();
-        Label info = new Label();
 
         VBox vbCenter = new VBox();
 
-        //On recupere le Terrain
-        TerrainAchetable terrain = monopoly.getJoueurCourant().getProprietesJoueur().get(monopoly.getTerrainSelectionne());
+
 
         //label
         vbCenter.getChildren().add(nomTerrain);
@@ -106,11 +113,11 @@ public class FenetreTerrain extends Stage {
             prixHotel.setFont(Font.font(15));
 
 
-
-            if(terrainC.getNombreMaison()<5)
-                info.setText("Vous possédez  " +terrainC.getNombreMaison() +" maison(s).");
+            int nbMaison = terrainC.getNombreMaison();
+            if(nbMaison<5)
+                info.setText(String.format("Vous possédez %d %s", nbMaison, nbMaison>1 ? "maisons." : "maison."));
             else
-                info.setText("Vous possédez un Hotel !");
+                info.setText("Vous possédez un Hôtel !");
         }
 
         vbCenter.getChildren().add(info);
@@ -123,7 +130,7 @@ public class FenetreTerrain extends Stage {
 
         //bouton acheter
         acheter.setText("Acheter");
-        acheter.setOnAction(acheterMaison());
+        acheter.setOnAction(new EventAcheterMaison(this));
         hbButtons.getChildren().add(acheter);
         hbButtons.setAlignment(Pos.CENTER_RIGHT);
 
@@ -148,14 +155,17 @@ public class FenetreTerrain extends Stage {
         show();
     }
 
-
-
-    public EventHandler<ActionEvent> acheterMaison(){
-
-        return null;
+    public Monopoly getMonopoly() {
+        return monopoly;
     }
 
+    public TerrainAchetable getTerrain() {
+        return terrain;
+    }
 
+    public void setInfo(String text){
+        info.setText(text);
+    }
 
 }
 

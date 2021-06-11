@@ -80,7 +80,6 @@ public class JoueurFailliteException {
                 Platform.exit();
                 System.exit(0);
             }else{
-                //monopoly.getPrimaryStage().close();
                 monopoly.redemarrerPartie(monopoly.getPrimaryStage());
             }
 
