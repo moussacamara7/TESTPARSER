@@ -24,7 +24,7 @@ public class EventRedemarrer implements EventHandler<ActionEvent> {
 
     private boolean DialogRedemarrer() {
         Alert alert = new Alert(Alert.AlertType.NONE);
-        alert.setTitle("Redemarrer la partie");
+        alert.setTitle("Redémarrer la partie");
         alert.setContentText("Êtes vous sûr ?");
         ButtonType oui = new ButtonType("Oui");
         ButtonType non = new ButtonType("Non");
