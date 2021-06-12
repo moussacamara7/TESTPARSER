@@ -19,7 +19,9 @@ public class EventLiberation implements EventHandler<ActionEvent> {
         if (!monopoly.getJoueurCourant().isEstprisonnier()) {
             monopoly.DialogInfo("Vous n'êtes pas en prison !");
         } else {
-            if (monopoly.getJoueurCourant().getCarteSortirDePrison() == 0) {
+            if(monopoly.isTourTermine()){
+                monopoly.DialogInfo("Ton tour est fini " + monopoly.getJoueurCourant().getNomJoueur() + ", gère tes terrains ou passe.");
+            }else if (monopoly.getJoueurCourant().getCarteSortirDePrison() == 0) {
                 monopoly.DialogInfo("Vous n'avez pas de carte libération !");
             } else {
                 monopoly.getJoueurCourant().setCarteSortirDePrison(monopoly.getJoueurCourant().getCarteSortirDePrison() - 1);

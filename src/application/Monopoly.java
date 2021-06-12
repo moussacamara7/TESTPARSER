@@ -8,6 +8,7 @@ import application.ui.UIPlateau;
 import application.ui.nomPion;
 import javafx.application.Application;
 import javafx.collections.ListChangeListener;
+import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -21,8 +22,7 @@ import javafx.stage.Stage;
 import joueur.Joueur;
 import terrain.TerrainAchetable;
 
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.*;
 
 
 public class Monopoly extends Application {
@@ -49,6 +49,8 @@ public class Monopoly extends Application {
     private TextField tfPorteMonnaie;
     private int nbDoubles = 0;
     private Stage primaryStage;
+
+    private HashMap<String, nomPion> nouveauxJoueurs = new HashMap<>();
 
     public static void main(String[] args) {
         launch(args);
@@ -109,6 +111,7 @@ public class Monopoly extends Application {
 
 
             uiPlateau.dessiner(grillePane);
+            setValueTfPorteMonnaie(joueurCourant.getCapitalJoueur());
 
             this.primaryStage = primaryStage;
 
@@ -139,9 +142,21 @@ public class Monopoly extends Application {
 
         messageFooter = new Label("");
         footer.getChildren().add(messageFooter);
+        messageFooter.setMinWidth(900);
+
+        Button changerJoueur = new Button();
+        changerJoueur.setText("Nouveaux Joueurs");
+        footer.getChildren().add(changerJoueur);
+        changerJoueur.setOnAction(new EventChangerJoueur(this));
+
+        Button quitter = new Button();
+        quitter.setText("Quitter");
+        footer.getChildren().add(quitter);
+        quitter.setOnAction(new EventQuitter());
 
         root.setBottom(footer);
     }
+
 
     private void initZonePropriete(VBox panneauDroit) {
         panneauDroit.getChildren().add(new Label(" "));
@@ -247,11 +262,19 @@ public class Monopoly extends Application {
     private void initPartie() {
 
         uiPlateau = new UIPlateau(this);
-
-
-        creerJoueurEtAjouter("Han", uiPlateau, nomPion.DeACoudre);
-        creerJoueurEtAjouter("Luke", uiPlateau, nomPion.Chien);
-        creerJoueurEtAjouter("Yoda", uiPlateau, nomPion.Voiture);
+        if(nouveauxJoueurs == null || nouveauxJoueurs.size() <2) {
+            //par défaut
+            creerJoueurEtAjouter("Han", uiPlateau, nomPion.DeACoudre);
+            creerJoueurEtAjouter("Luke", uiPlateau, nomPion.Chien);
+            creerJoueurEtAjouter("Yoda", uiPlateau, nomPion.Voiture);
+        }else{
+            Iterator it = nouveauxJoueurs.entrySet().iterator();
+            while(it.hasNext()){
+                Map.Entry e = (Map.Entry) it.next();
+                creerJoueurEtAjouter((String) e.getKey(),uiPlateau,(nomPion)e.getValue());
+            }
+        }
+        nouveauxJoueurs.clear();
     }
 
     public void DialogAction(String message, boolean erreur) {
@@ -340,6 +363,10 @@ public class Monopoly extends Application {
 
     public Stage getPrimaryStage() {
         return primaryStage;
+    }
+
+    public HashMap<String, nomPion> getNouveauxJoueurs() {
+        return nouveauxJoueurs;
     }
 
     public boolean isTourTermine() {
