@@ -106,7 +106,7 @@ public class FenetreChangerJoueur extends Stage {
     }
 
     public void updateLabelnbNouveauxJoueurs(){
-        nbNouveauxJoueurs.setText("Nombre de joueurs " +getMonopoly().getNouveauxJoueurs().size());
+        nbNouveauxJoueurs.setText("Nombre de joueurs : " +getMonopoly().getNouveauxJoueurs().size());
     }
 
     public Monopoly getMonopoly() {
