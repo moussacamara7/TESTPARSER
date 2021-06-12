@@ -142,7 +142,13 @@ public class Monopoly extends Application {
 
         messageFooter = new Label("");
         footer.getChildren().add(messageFooter);
-        messageFooter.setMinWidth(900);
+        messageFooter.setMinWidth(555);
+
+        Button redemarrer = new Button();
+        redemarrer.setText("Redémarrer");
+        redemarrer.setOnAction(new EventRedemarrer(this));
+        footer.getChildren().add(redemarrer);
+
 
         Button changerJoueur = new Button();
         changerJoueur.setText("Nouveaux Joueurs");
@@ -274,7 +280,6 @@ public class Monopoly extends Application {
                 creerJoueurEtAjouter((String) e.getKey(),uiPlateau,(nomPion)e.getValue());
             }
         }
-        nouveauxJoueurs.clear();
     }
 
     public void DialogAction(String message, boolean erreur) {

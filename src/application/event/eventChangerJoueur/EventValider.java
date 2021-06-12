@@ -1,21 +1,29 @@
 package application.event.eventChangerJoueur;
 
+import application.FenetreChangerJoueur;
+import application.FenetreTerrain;
 import application.Monopoly;
+import application.ui.nomPion;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 
-public class EventValider implements EventHandler<ActionEvent> {
-    private final Monopoly monopoly;
+import java.util.HashMap;
 
-    public EventValider(Monopoly monopoly){
-        this.monopoly = monopoly;
+public class EventValider implements EventHandler<ActionEvent> {
+    private final FenetreChangerJoueur fenetreChangerJoueur;
+
+    public EventValider(FenetreChangerJoueur fenetreChangerJoueur){
+        this.fenetreChangerJoueur = fenetreChangerJoueur;
     }
 
     @Override
     public void handle(ActionEvent event) {
-        if(monopoly.getNouveauxJoueurs().size()<2)
-            monopoly.DialogInfo("Il faut au moins deux joueurs !!");
-        else
-            monopoly.redemarrerPartie(monopoly.getPrimaryStage());
+        if(fenetreChangerJoueur.getTempNouveauxJoueurs().size()<2)
+            fenetreChangerJoueur.getMonopoly().DialogInfo("Il faut au moins deux joueurs !!");
+        else {
+            fenetreChangerJoueur.getMonopoly().getNouveauxJoueurs().clear();
+            fenetreChangerJoueur.getMonopoly().getNouveauxJoueurs().putAll(fenetreChangerJoueur.getTempNouveauxJoueurs());
+            fenetreChangerJoueur.getMonopoly().redemarrerPartie(fenetreChangerJoueur.getMonopoly().getPrimaryStage());
+        }
     }
 }

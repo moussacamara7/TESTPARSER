@@ -26,7 +26,7 @@ public class EventAjouter implements EventHandler<ActionEvent> {
             String nomJoueur = fenetreChangerJoueur.getNomJoueur().getText();
             ArrayList<nomPion> listPion = new ArrayList<>(Arrays.asList(nomPion.values()));
             nomPion p = listPion.get(fenetreChangerJoueur.getPionSelectionne());
-            fenetreChangerJoueur.getMonopoly().getNouveauxJoueurs().put(nomJoueur,p);
+            fenetreChangerJoueur.getTempNouveauxJoueurs().put(nomJoueur,p);
             fenetreChangerJoueur.getNomJoueur().setText("");
             fenetreChangerJoueur.updateLabelnbNouveauxJoueurs();
         }

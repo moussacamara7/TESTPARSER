@@ -3,6 +3,7 @@ package application;
 import application.Monopoly;
 import application.event.EventAcheterMaison;
 import application.event.eventChangerJoueur.EventAjouter;
+import application.event.eventChangerJoueur.EventAnnuler;
 import application.event.eventChangerJoueur.EventValider;
 import application.ui.nomPion;
 import com.sun.javafx.scene.traversal.Direction;
@@ -22,6 +23,7 @@ import javafx.stage.StageStyle;
 
 import java.util.ArrayList;
 import java.util.EnumSet;
+import java.util.HashMap;
 import java.util.Iterator;
 
 public class FenetreChangerJoueur extends Stage {
@@ -30,6 +32,7 @@ public class FenetreChangerJoueur extends Stage {
     private  int pionSelectionne = -1;
     private Monopoly monopoly;
     private Label nbNouveauxJoueurs = new Label();
+    private HashMap<String, nomPion> tempNouveauxJoueurs = new HashMap<>();
 
 
 
@@ -52,13 +55,13 @@ public class FenetreChangerJoueur extends Stage {
 
         //bouton valider
         valider.setText("Valider");
-        valider.setOnAction(new EventValider(monopoly));
+        valider.setOnAction(new EventValider(this));
         hbButtons.getChildren().add(valider);
         hbButtons.setAlignment(Pos.CENTER_RIGHT);
 
         //bouton annuler
         annuler.setText("Annuler");
-        annuler.setOnAction(event -> close());
+        annuler.setOnAction(new EventAnnuler(this));
         hbButtons.getChildren().add(annuler);
         hbButtons.setAlignment(Pos.CENTER_RIGHT);
         setTitle("Creation de joueurs");
@@ -70,7 +73,7 @@ public class FenetreChangerJoueur extends Stage {
         vbCenter.getChildren().add(new Label("Pion :"));
         vbCenter.getChildren().add(lvPion);
 
-
+        //listView de pions
         for(nomPion p : nomPion.values())
             lvPion.getItems().add((p));
 
@@ -83,6 +86,7 @@ public class FenetreChangerJoueur extends Stage {
             System.out.println("Item : " + lvPion.getSelectionModel().getSelectedIndex());
         });
 
+        //bouton ajouter
         Button ajouter = new Button();
         ajouter.setText("ajouter");
         ajouter.setLineSpacing(30);
@@ -106,7 +110,11 @@ public class FenetreChangerJoueur extends Stage {
     }
 
     public void updateLabelnbNouveauxJoueurs(){
-        nbNouveauxJoueurs.setText("Nombre de joueurs : " +getMonopoly().getNouveauxJoueurs().size());
+        nbNouveauxJoueurs.setText("Nombre de joueurs : " +tempNouveauxJoueurs.size());
+    }
+
+    public HashMap<String, nomPion> getTempNouveauxJoueurs() {
+        return tempNouveauxJoueurs;
     }
 
     public Monopoly getMonopoly() {
