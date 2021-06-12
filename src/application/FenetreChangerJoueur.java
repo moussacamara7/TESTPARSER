@@ -1,42 +1,36 @@
 package application;
 
-import application.Monopoly;
-import application.event.EventAcheterMaison;
 import application.event.eventChangerJoueur.EventAjouter;
 import application.event.eventChangerJoueur.EventAnnuler;
 import application.event.eventChangerJoueur.EventValider;
 import application.ui.nomPion;
-import com.sun.javafx.scene.traversal.Direction;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
-import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.HashMap;
-import java.util.Iterator;
 
 public class FenetreChangerJoueur extends Stage {
-    private TextField nomJoueur = new TextField();
-    private ListView<nomPion> lvPion = new ListView<>();
-    private  int pionSelectionne = -1;
-    private Monopoly monopoly;
-    private Label nbNouveauxJoueurs = new Label();
-    private HashMap<String, nomPion> tempNouveauxJoueurs = new HashMap<>();
+    private final TextField nomJoueur = new TextField();
+    private final ListView<nomPion> lvPion = new ListView<>();
+    private final Monopoly monopoly;
+    private final Label nbNouveauxJoueurs = new Label();
+    private final HashMap<String, nomPion> tempNouveauxJoueurs = new HashMap<>();
+    private int pionSelectionne = -1;
 
 
-
-    public FenetreChangerJoueur(Monopoly monopoly){
+    public FenetreChangerJoueur(Monopoly monopoly) {
         this.monopoly = monopoly;
 
         initStyle(StageStyle.UTILITY);
@@ -50,7 +44,7 @@ public class FenetreChangerJoueur extends Stage {
         VBox vbCenter = new VBox();
 
 
-        //zone inférieur des boutons
+        //zone inférieure des boutons
         HBox hbButtons = new HBox();
 
         //bouton valider
@@ -74,7 +68,7 @@ public class FenetreChangerJoueur extends Stage {
         vbCenter.getChildren().add(lvPion);
 
         //listView de pions
-        for(nomPion p : nomPion.values())
+        for (nomPion p : nomPion.values())
             lvPion.getItems().add((p));
 
         lvPion.getItems().addListener((ListChangeListener<nomPion>) arg0 -> {
@@ -109,8 +103,8 @@ public class FenetreChangerJoueur extends Stage {
 
     }
 
-    public void updateLabelnbNouveauxJoueurs(){
-        nbNouveauxJoueurs.setText("Nombre de joueurs : " +tempNouveauxJoueurs.size());
+    public void updateLabelnbNouveauxJoueurs() {
+        nbNouveauxJoueurs.setText("Nombre de joueurs : " + tempNouveauxJoueurs.size());
     }
 
     public HashMap<String, nomPion> getTempNouveauxJoueurs() {

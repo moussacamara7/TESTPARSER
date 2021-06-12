@@ -11,22 +11,23 @@ import java.util.Arrays;
 
 public class EventAjouter implements EventHandler<ActionEvent> {
     FenetreChangerJoueur fenetreChangerJoueur;
-    public EventAjouter(FenetreChangerJoueur fenetreChangerJoueur){
+
+    public EventAjouter(FenetreChangerJoueur fenetreChangerJoueur) {
         this.fenetreChangerJoueur = fenetreChangerJoueur;
     }
 
 
     @Override
     public void handle(ActionEvent event) {
-        if(fenetreChangerJoueur.getNomJoueur().getText().trim().isEmpty())
+        if (fenetreChangerJoueur.getNomJoueur().getText().trim().isEmpty())
             fenetreChangerJoueur.getMonopoly().DialogInfo("Vous n'avez pas saisi de nom !");
-        else if(fenetreChangerJoueur.getPionSelectionne() == -1)
+        else if (fenetreChangerJoueur.getPionSelectionne() == -1)
             fenetreChangerJoueur.getMonopoly().DialogInfo("Vous n'avez pas choisi de pion !");
         else {
             String nomJoueur = fenetreChangerJoueur.getNomJoueur().getText();
             ArrayList<nomPion> listPion = new ArrayList<>(Arrays.asList(nomPion.values()));
             nomPion p = listPion.get(fenetreChangerJoueur.getPionSelectionne());
-            fenetreChangerJoueur.getTempNouveauxJoueurs().put(nomJoueur,p);
+            fenetreChangerJoueur.getTempNouveauxJoueurs().put(nomJoueur, p);
             fenetreChangerJoueur.getNomJoueur().setText("");
             fenetreChangerJoueur.updateLabelnbNouveauxJoueurs();
         }

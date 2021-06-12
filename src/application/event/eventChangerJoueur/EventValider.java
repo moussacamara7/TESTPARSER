@@ -1,24 +1,19 @@
 package application.event.eventChangerJoueur;
 
 import application.FenetreChangerJoueur;
-import application.FenetreTerrain;
-import application.Monopoly;
-import application.ui.nomPion;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-
-import java.util.HashMap;
 
 public class EventValider implements EventHandler<ActionEvent> {
     private final FenetreChangerJoueur fenetreChangerJoueur;
 
-    public EventValider(FenetreChangerJoueur fenetreChangerJoueur){
+    public EventValider(FenetreChangerJoueur fenetreChangerJoueur) {
         this.fenetreChangerJoueur = fenetreChangerJoueur;
     }
 
     @Override
     public void handle(ActionEvent event) {
-        if(fenetreChangerJoueur.getTempNouveauxJoueurs().size()<2)
+        if (fenetreChangerJoueur.getTempNouveauxJoueurs().size() < 2)
             fenetreChangerJoueur.getMonopoly().DialogInfo("Il faut au moins deux joueurs !!");
         else {
             fenetreChangerJoueur.getMonopoly().getNouveauxJoueurs().clear();

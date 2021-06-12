@@ -9,14 +9,15 @@ import javafx.scene.control.ButtonType;
 import java.util.Optional;
 
 public class EventRedemarrer implements EventHandler<ActionEvent> {
-    private Monopoly monopoly;
+    private final Monopoly monopoly;
 
-    public EventRedemarrer(Monopoly monopoly){
+    public EventRedemarrer(Monopoly monopoly) {
         this.monopoly = monopoly;
     }
+
     @Override
     public void handle(ActionEvent event) {
-        if(DialogRedemarrer())
+        if (DialogRedemarrer())
             monopoly.redemarrerPartie(monopoly.getPrimaryStage());
 
     }

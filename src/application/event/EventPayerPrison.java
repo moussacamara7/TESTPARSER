@@ -18,12 +18,12 @@ public class EventPayerPrison implements EventHandler<ActionEvent> {
     @Override
     public void handle(ActionEvent e) {
 
-        /*if (!monopoly.getJoueurCourant().isEstprisonnier()) {
+        if (!monopoly.getJoueurCourant().isEstprisonnier()) {
             monopoly.DialogInfo("Vous n'êtes pas en prison !");
         } else {
-            if(monopoly.isTourTermine()){
+            if (monopoly.isTourTermine()) {
                 monopoly.DialogInfo("Ton tour est fini " + monopoly.getJoueurCourant().getNomJoueur() + ", gère tes terrains ou passe.");
-            }else if (monopoly.getJoueurCourant().getCapitalJoueur() < SOMME_SORTIR_DE_PRISON) {
+            } else if (monopoly.getJoueurCourant().getCapitalJoueur() < SOMME_SORTIR_DE_PRISON) {
                 monopoly.DialogInfo("Vous êtes fauché, dommage.");
             } else {
                 Action.retirer(SOMME_SORTIR_DE_PRISON, monopoly.getJoueurCourant());
@@ -31,10 +31,10 @@ public class EventPayerPrison implements EventHandler<ActionEvent> {
                 monopoly.setValueTfPorteMonnaie(monopoly.getJoueurCourant().getCapitalJoueur());
                 monopoly.DialogInfo("Bon retour dans la plus grande prison !");
             }
-        }*/
+        }
 
         //utiliser pour tester la faillite
-        Action.retirer(1600,monopoly.getJoueurCourant());
+        //Action.retirer(1600,monopoly.getJoueurCourant());
     }
 
 }
