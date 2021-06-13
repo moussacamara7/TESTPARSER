@@ -117,7 +117,16 @@ public class EventJouer implements EventHandler<ActionEvent> {
 
     public void interactionCase(Terrain t) throws Exception {
         Joueur joueur = monopoly.getJoueurCourant();
+
+        //on reposisionne son pion
+        int numJoueurCourant = monopoly.getUiPlateau().getListeJoueurs().indexOf(joueur);
+        Pion pionJoueurCourant = monopoly.getListePions().get(numJoueurCourant);
+        monopoly.getUiPlateau().getCase(pionJoueurCourant.getPosition()).enlever(pionJoueurCourant);
+        pionJoueurCourant.setPosition(joueur.getPositionJoueur());
+        monopoly.getUiPlateau().getCase(pionJoueurCourant.getPosition()).poser(pionJoueurCourant);
+        monopoly.getUiPlateau().dessiner(monopoly.getGrillePane());
         payerLoyer();
+
         if (t instanceof TerrainAction) {
             TerrainAction tac = (TerrainAction) t;
             switch (tac.getNomTerrain()) {
@@ -183,13 +192,7 @@ public class EventJouer implements EventHandler<ActionEvent> {
                     break;
             }
         }
-        //on reposisionne son pion
-        int numJoueurCourant = monopoly.getUiPlateau().getListeJoueurs().indexOf(joueur);
-        Pion pionJoueurCourant = monopoly.getListePions().get(numJoueurCourant);
-        monopoly.getUiPlateau().getCase(pionJoueurCourant.getPosition()).enlever(pionJoueurCourant);
-        pionJoueurCourant.setPosition(joueur.getPositionJoueur());
-        monopoly.getUiPlateau().getCase(pionJoueurCourant.getPosition()).poser(pionJoueurCourant);
-        monopoly.getUiPlateau().dessiner(monopoly.getGrillePane());
+
 
         //on mets a jour son porte monnaie
         monopoly.setValueTfPorteMonnaie(joueur.getCapitalJoueur());
