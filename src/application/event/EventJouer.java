@@ -30,22 +30,22 @@ public class EventJouer implements EventHandler<ActionEvent> {
             return;
         }
 
-        //String tfDe1 = monopoly.getTfValeurDe1().getText();
-        //String tfDe2 = monopoly.getTfValeurDe2().getText();
+//        String tfDe1 = monopoly.getTfValeurDe1().getText();
+//        String tfDe2 = monopoly.getTfValeurDe2().getText();
 
         int de1, de2;
 
-       /* if(! tfDe1.trim().isEmpty() && ! tfDe2.trim().isEmpty()) {
+       /* if (!tfDe1.trim().isEmpty() && !tfDe2.trim().isEmpty()) {
 
             de1 = Integer.parseInt(tfDe1);
             de2 = Integer.parseInt(tfDe2);
             monopoly.getMessageFooter().setText("");
-        }else{*/
-        monopoly.getMessageFooter().setText("");
-        de1 = Action.lancerDe();
-        de2 = Action.lancerDe();
-        monopoly.setTfDe1(String.valueOf(de1));
-        monopoly.setTfDe2(String.valueOf(de2));
+        } else {*/
+            monopoly.getMessageFooter().setText("");
+            de1 = Action.lancerDe();
+            de2 = Action.lancerDe();
+            monopoly.setTfDe1(String.valueOf(de1));
+            monopoly.setTfDe2(String.valueOf(de2));
 //        }
 
         int nbCases = de1 + de2;
@@ -84,12 +84,6 @@ public class EventJouer implements EventHandler<ActionEvent> {
                 monopoly.setTourTermine(true);
             }
 
-            Terrain t = joueur.getUIPlateau().getCaseP(joueur.getPositionJoueur());
-            try {
-                interactionCase(t);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
         } else {
             //prisonnier
             if (joueur.getNombreDeTourEnPrison() == 3 && (de1 != de2)) {
@@ -104,7 +98,7 @@ public class EventJouer implements EventHandler<ActionEvent> {
                     Action.sortirDePrison(joueur);
                     joueur.setNombreDeTourEnPrison(0);
                     Action.avancerJoueur(joueur, nbCases);
-                    monopoly.setNbDoubles(1);
+                    monopoly.setNbDoubles(monopoly.getNbDoubles() + 1);
                 } else {
                     monopoly.getMessageFooter().setText("Pas de double... un tour de plus en prison.");
                     joueur.setNombreDeTourEnPrison(joueur.getNombreDeTourEnPrison() + 1);
@@ -112,6 +106,12 @@ public class EventJouer implements EventHandler<ActionEvent> {
                 }
 
             }
+        }
+        Terrain t = joueur.getUIPlateau().getCaseP(joueur.getPositionJoueur());
+        try {
+            interactionCase(t);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
