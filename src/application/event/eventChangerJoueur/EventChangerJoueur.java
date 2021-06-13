@@ -1,12 +1,9 @@
-package application.event;
+package application.event.eventChangerJoueur;
 
-import application.Monopoly;
 import application.FenetreChangerJoueur;
-import application.ui.nomPion;
+import application.Monopoly;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
-
-import java.util.HashMap;
 
 public class EventChangerJoueur implements EventHandler<ActionEvent> {
     private final Monopoly monopoly;

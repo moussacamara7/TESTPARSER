@@ -1,6 +1,7 @@
 package carte;
 
 
+import exception.MonopolyException;
 import joueur.Joueur;
 import mecanismeJeu.Action;
 
@@ -9,28 +10,49 @@ public class Deplacement implements Cartes {
     private String message;
     private String destination;
 
+    /**
+     * Constructeur permettant de definir une carte Deplacement
+     * @param message le message figurant sur la carte
+     * @param destination le nom de la case ou le joueur est deplacer
+     */
     public Deplacement(String message, String destination) {
         setMessage(message);
         setDestination(destination);
     }
 
+    /**
+     * @return le message figurant sur la carte
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     Initialise le message figurant sur la carte
+     * @param message le message figurant sur la carte
+     */
     public void setMessage(String message) {
         if (message == null || message.trim().isEmpty())
             throw new IllegalArgumentException("Message errone");
         this.message = message;
     }
 
+    /**
+     * Initialise le nom de la case ou le joueur est deplacer
+     * @param destination le nom de la case ou le joueur est deplacer
+     */
     public void setDestination(String destination) {
         if (destination == null || destination.trim().isEmpty())
             throw new IllegalArgumentException("Destination errone");
         this.destination = destination;
     }
 
-    public void action(Joueur joueur) throws Exception {
+    /**
+     * Le joueur est deplacer sur la case destination selon les conditions de la carte
+     * @param joueur joueur qui se fait deplacer
+     * @throws MonopolyException renvoie un message d'erreur si les conditions ne sont pas respectées
+     */
+    public void action(Joueur joueur) throws MonopolyException {
         //joueur.deplacer(destination);
         switch (destination) {
             case "PRISON":
@@ -62,6 +84,9 @@ public class Deplacement implements Cartes {
 
     }
 
+    /**
+     * @return la chaine concaténée des informations de la carte Deplacement
+     */
     @Override
     public String toString() {
         return "Deplacement{" +

@@ -17,7 +17,17 @@ public class Joueur {
     private int carteSortirDePrison;
     private int nombreDeTourEnPrison;
 
-
+    /**
+     * Constructeur d'un joueur
+     * ce constructeur permet de choisir le nom et le capital, la position et l'etat prisonnier initial du joueur
+     * ce constructeur a ete implementer dans la phase de test
+     * il permet d'initialiser un joueur selon d'autre regles
+     * @param nomJoueur le nom du joueur
+     * @param capitalJoueur le capital du joueur
+     * @param positionJoueur la position du joueur
+     * @param estprisonnier l'etat prisonnier
+     * @param plateau le plateau du joueur
+     */
     public Joueur(String nomJoueur, int capitalJoueur, int positionJoueur, boolean estprisonnier, UIPlateau plateau) {
 
         setNomJoueur(nomJoueur);
@@ -30,6 +40,13 @@ public class Joueur {
 
     }
 
+    /**
+     *  Constructeur d'un joueur
+     *  Ce constructeur initialise selon les regles par défaut
+     *  avec un capital de 1500, une position initial de 0 (case depart)
+     * @param nomJoueur le nom du joueur
+     * @param plateau le plateau du joueur
+     */
     public Joueur(String nomJoueur, UIPlateau plateau) {
 
         setNomJoueur(nomJoueur);
@@ -43,14 +60,15 @@ public class Joueur {
 
 
     /**
-     * @return the nomJoueur
+     * @return le nom du Joueur
      */
     public String getNomJoueur() {
         return nomJoueur;
     }
 
     /**
-     * @param nomJoueur the nomJoueur to set
+     * Initialise le nom du joueur
+     * @param nomJoueur le nom du joueur
      */
     public void setNomJoueur(String nomJoueur) {
         if (nomJoueur == null || nomJoueur.isEmpty())
@@ -60,38 +78,46 @@ public class Joueur {
     }
 
     /**
-     * @return the capitalJoueur
+     * @return le capital du joueur
      */
     public int getCapitalJoueur() {
         return capitalJoueur;
     }
 
     /**
-     * @param capitalJoueur the capitalJoueur to set
+     * Initialise le capital du joueur
+     * @param capitalJoueur le capital du joueur
      */
     public void setCapitalJoueur(int capitalJoueur) {
         this.capitalJoueur = capitalJoueur;
     }
 
     /**
-     * @return the proprietesJoueur
+     * @return la liste de propriete du joueur
      */
     public ArrayList<TerrainAchetable> getProprietesJoueur() {
         return proprietesJoueur;
     }
 
+    /**
+     * @return le nombre de tour que le joueur a passe en prison
+     */
     public int getNombreDeTourEnPrison() {
         return nombreDeTourEnPrison;
     }
 
+    /**
+     * Initialise le nombre de tour que le joueur a passe en prisonn
+     * @param nombreDeTourEnPrison le nombre de tour que le joueur a passe en prison
+     */
     public void setNombreDeTourEnPrison(int nombreDeTourEnPrison) {
         this.nombreDeTourEnPrison = nombreDeTourEnPrison;
     }
 
     /**
-     * @param prop the proprietesAAjouter to set
+     * ajoute un propriete a celles detenues par le joueur
+     * @param prop la propriete a ajoute dans la liste de propriete du joueur
      */
-
     public void ajouterPropriete(TerrainAchetable prop) {
         if (prop == null)
             throw new IllegalArgumentException("Erreur propriete");
@@ -101,23 +127,31 @@ public class Joueur {
         proprietesJoueur.add(prop);
     }
 
+    /**
+     * @return le nombre de carte liberation du joueur
+     */
     public int getCarteSortirDePrison() {
         return carteSortirDePrison;
     }
 
+    /**
+     * Initialise le nombre de carte liberation du joueur
+     * @param carteSortirDePrison le nombre de carte liberation du joueu
+     */
     public void setCarteSortirDePrison(int carteSortirDePrison) {
         this.carteSortirDePrison = carteSortirDePrison;
     }
 
     /**
-     * @return the positionJoueur
+     * @return la position du joueur
      */
     public int getPositionJoueur() {
         return positionJoueur;
     }
 
     /**
-     * @param positionJoueur the positionJoueur to set
+     * Initialise la position du joueur
+     * @param positionJoueur la nouvelle position du joueur
      */
     public void setPositionJoueur(int positionJoueur) {
         if (positionJoueur < 0 || positionJoueur > 40)
@@ -127,29 +161,41 @@ public class Joueur {
     }
 
     /**
-     * @return the estprisonnier
+     * @return l'etat du joueur (prisonnier ou non)
      */
     public boolean isEstprisonnier() {
         return estprisonnier;
     }
 
     /**
-     * @param estprisonnier the estprisonnier to set
+     * Initalise l'etat prisonnier du joueur
+     * @param estprisonnier l'etat prisonnier du joueur
      */
     public void setEstprisonnier(boolean estprisonnier) {
         this.estprisonnier = estprisonnier;
     }
 
+    /**
+     * @return le plateau du joueur
+     */
     public UIPlateau getUIPlateau() {
         return plateau;
     }
 
-    public void setPlateau(UIPlateau plateau) throws IllegalArgumentException {
+    /**
+     * Initialise le plateau du joueur
+     * @param plateau le plateau du joueur
+     */
+    public void setPlateau(UIPlateau plateau) {
         if (plateau == null)
             throw new IllegalArgumentException("Plateau null");
         this.plateau = plateau;
     }
 
+    /**
+     * @param o objet a comparer au joueur
+     * @return renvoie vrai si l'objet est egal au joueur
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -158,6 +204,9 @@ public class Joueur {
         return capitalJoueur == joueur.capitalJoueur && positionJoueur == joueur.positionJoueur && estprisonnier == joueur.estprisonnier && Objects.equals(nomJoueur, joueur.nomJoueur) && Objects.equals(proprietesJoueur, joueur.proprietesJoueur) && Objects.equals(plateau, joueur.plateau);
     }
 
+    /**
+     * @return la chaine concaténée des informations du joueur
+     */
     @Override
     public String toString() {
         return "Joueur{" +

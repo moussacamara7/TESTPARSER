@@ -8,55 +8,78 @@ public abstract class TerrainAchetable implements Terrain {
     private int prixAchat;
     private Joueur proprietaire;
 
+    /**
+     * Constructeur permettant de definir le terrain
+     *
+     * @param numeroTerrain numero du terrain
+     * @param nomTerrain    nom du terrain
+     * @param prixAchat     prix d'achat terrain
+     */
     public TerrainAchetable(int numeroTerrain, String nomTerrain, int prixAchat) {
-        setNumeroTerrain(numeroTerrain);
-        setNomTerrain(nomTerrain);
-        setPrixAchat(prixAchat);
+        this.numeroTerrain = numeroTerrain;
+        this.nomTerrain = nomTerrain;
+        this.prixAchat = prixAchat;
         setProprietaire(null);
     }
 
+    /**
+     * @return le numero du terrain
+     */
     public int getNumeroTerrain() {
         return numeroTerrain;
     }
 
-    public void setNumeroTerrain(int numeroTerrain) {
-        this.numeroTerrain = numeroTerrain;
-    }
-
+    /**
+     * @return le nom du terrain
+     */
     public String getNomTerrain() {
         return nomTerrain;
     }
 
-    public void setNomTerrain(String nomTerrain) {
-        this.nomTerrain = nomTerrain;
-    }
-
+    /**
+     * @return le prix d'achat du terrain
+     */
     public int getPrixAchat() {
         return prixAchat;
     }
 
-    public void setPrixAchat(int prixAchat) {
-        this.prixAchat = prixAchat;
-    }
-
+    /**
+     * @return le proprietaire du terrain
+     */
     public Joueur getProprietaire() {
         return proprietaire;
     }
 
+    /**
+     * Initialise le proprietaire du terrain
+     * @param proprietaire le proprietaire du terrain
+     */
     public void setProprietaire(Joueur proprietaire) {
         this.proprietaire = proprietaire;
     }
 
+    /**
+     * @return vrai car c'est un terrain achetable
+     */
     public boolean estAchetable() {
         return true;
     }
 
+    /**
+     * @return vrai si le proprietaire n'est pas null
+     */
     public boolean aUnProprietaire() {
         return this.proprietaire != null;
     }
 
+    /**
+     * @return vrai si le terrain est constructible, sinon faux
+     */
     public abstract boolean estConstructible();
 
+    /**
+     * @return chaine concatene definissant un terrainAchetable
+     */
     @Override
     public String toString() {
         return "TerrainAchetable{" +

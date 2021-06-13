@@ -22,7 +22,7 @@ public class EventChoixJoueur implements EventHandler<ActionEvent> {
             Joueur j = (Joueur) b.getUserData();
 
             monopoly.setJoueurCourant(j);
-            System.out.println(monopoly.getJoueurCourant() + " doit jouer");
+            //System.out.println(monopoly.getJoueurCourant() + " doit jouer");
 
             monopoly.getZoneProprietes().getItems().clear();
         }

@@ -9,18 +9,33 @@ import terrain.TerrainConstructible;
 public class Impot implements Cartes {
     private String message;
 
+    /**
+     * Constructeur permettant de definir une carte Impot
+     * @param message le message figurant sur la carte
+     */
     public Impot(String message) {
         setMessage(message);
     }
 
+    /**
+     * @return le message figurant sur la carte
+     */
     public String getMessage() {
         return message;
     }
 
+    /**
+     * Initialise le message figurant sur la carte
+     * @param message le message figurant sur la carte
+     */
     public void setMessage(String message) {
         this.message = message;
     }
 
+    /**
+     * Parcours les proprietes du joueur et lui fait payer les impots selon le nombre de maison et hotel
+     * @param joueur joueur qui paye les impots
+     */
     @Override
     public void action(Joueur joueur) {
         int nbMaison = 0, nbHotel = 0;
@@ -39,6 +54,9 @@ public class Impot implements Cartes {
         Action.retirer(115 * nbHotel, joueur);
     }
 
+    /**
+     * @return la chaine concaténée des informations de la carte Impot
+     */
     @Override
     public String toString() {
         return "Impot{" +

@@ -12,6 +12,16 @@ import terrain.TerrainConstructible;
 import java.util.ArrayList;
 
 public class JoueurFailliteException {
+    /**
+     * Gere l'exception quand un joueur est en faillite
+     * Ouvre une boite de dialogue pour prevenir les joueurs
+     * Retire le joueur du jeu et renitialise ses proprietes
+     * Retire le pion du joueur
+     * Mets la couleur du bouton du joueur en exclu en gris
+     * Verfie si il y a un gagant et si c'est le cas, lance la boite de dialogue de fin de partie
+     *
+     * @param joueur le joueur qui est en faillite
+     */
     public JoueurFailliteException(Joueur joueur) {
 
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -39,14 +49,12 @@ public class JoueurFailliteException {
         ArrayList<TerrainAchetable> proprieteJoueur = joueur.getProprietesJoueur();
 
         int nb = proprieteJoueur.size();
-        System.out.println("nb de propriété du joueur a suppr : " + nb);
         for (int iterator = 0; iterator < nb; iterator++) {
             TerrainAchetable t = proprieteJoueur.get(0);
 
             t.setProprietaire(null);
             if (t instanceof TerrainConstructible)
                 ((TerrainConstructible) t).setNombreMaison(0);
-            System.out.println("propriete reinitialise : " + t.getNomTerrain());
             proprieteJoueur.remove(t);
         }
 
@@ -73,13 +81,6 @@ public class JoueurFailliteException {
             } else {
                 monopoly.redemarrerPartie(monopoly.getPrimaryStage());
             }
-
         }
-
-        if (joueur.getProprietesJoueur().isEmpty())
-            System.out.println("OK");
-        else
-            System.out.println("NOT OK");
-
     }
 }

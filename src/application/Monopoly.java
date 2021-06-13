@@ -2,13 +2,14 @@ package application;
 
 
 import application.event.*;
+import application.event.EventChoixJoueur;
+import application.event.eventChangerJoueur.EventChangerJoueur;
 import application.ui.Pion;
 import application.ui.UICase;
 import application.ui.UIPlateau;
 import application.ui.nomPion;
 import javafx.application.Application;
 import javafx.collections.ListChangeListener;
-import javafx.geometry.Bounds;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.canvas.Canvas;
@@ -188,7 +189,7 @@ public class Monopoly extends Application {
 
         proprietesJoueurCourant.setOnMouseClicked(arg0 -> {
             terrainSelectionne = proprietesJoueurCourant.getSelectionModel().getSelectedIndex();
-            System.out.println("Item : " + proprietesJoueurCourant.getSelectionModel().getSelectedIndex());
+            //System.out.println("Item : " + proprietesJoueurCourant.getSelectionModel().getSelectedIndex());
         });
 
         panneauDroit.getChildren().add(proprietesJoueurCourant);
@@ -268,7 +269,7 @@ public class Monopoly extends Application {
     private void initPartie() {
 
         uiPlateau = new UIPlateau(this);
-        if(nouveauxJoueurs == null || nouveauxJoueurs.size() <2) {
+        if(nouveauxJoueurs.size() <2) {
             //par défaut
             creerJoueurEtAjouter("Han", uiPlateau, nomPion.DeACoudre);
             creerJoueurEtAjouter("Luke", uiPlateau, nomPion.Chien);

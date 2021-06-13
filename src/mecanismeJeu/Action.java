@@ -3,6 +3,7 @@ package mecanismeJeu;
 import application.ui.UIPlateau;
 import carte.Cartes;
 import exception.JoueurFailliteException;
+import exception.MonopolyException;
 import joueur.Joueur;
 import terrain.Terrain;
 import terrain.TerrainAchetable;
@@ -28,28 +29,25 @@ public class Action {
      ****************************/
 
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
-    //  Pour les opérations vers la banque on peut supposer que la banque a un budjet illimité          //
-    //  Donc on a même pas besoin de définir une methode en destination de la banque                    //
-    //  On ajoute ou on soustrait selon le cas ou il doit être crédité ou prelevé                       //
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
-
-    //pour payer depuis la banque
+    /**
+     * pour payer depuis la banque
+     *
+     * @param somme       somme a payer
+     * @param destination le joueur recevant l'argent
+     */
     public static void payer(int somme, Joueur destination) {
         if (somme <= 0)
             throw new IllegalArgumentException("somme invalide");
         destination.setCapitalJoueur(destination.getCapitalJoueur() + somme);
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //  les cas ou le joueur perd de l'argent c'est quand quand il doit payer une amende, payer un autre    //
-    //  Joueur (Loyer, aniverssaire)                                                                        //
-    //  Pour le loyer on a déjà payer(...)                                                                  //
-    //  Pour anniversaire on peut parcourir la liste des joueurs du plateau puis les soustraire a chacun    //
-    //  la somme puis pour le joueur concerné il recoit: recu = somme * (Plateau.getNombreJoueurs() - 1)    //
-    //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    //retirer la somme à un joueur
+    /**
+     * pour retirer une somme à un joueur
+     *
+     * @param somme  somme a retirer
+     * @param joueur joueur qui paye
+     */
     public static void retirer(int somme, Joueur joueur) {
         if (somme < 0)
             throw new IllegalArgumentException("somme invalide");
@@ -57,34 +55,34 @@ public class Action {
             new JoueurFailliteException(joueur);
 
         joueur.setCapitalJoueur(joueur.getCapitalJoueur() - somme);
-
-        //on peut lancer l'exception de faillite ici si le joueur est en negatif
-        //ce qui l'obligera a hypotequer ou perdre la partie
-
-
     }
 
-    public static void payer(int somme, Joueur depart, Joueur destination) throws Exception {
+    /**
+     * Un joueur paye un autre joueur
+     * on retire l'argent au joueur qui donne et on paye le joueur qui recoit
+     *
+     * @param somme       somme a payer
+     * @param depart      joueur qui donne la somme
+     * @param destination joueur qui recoit la somme
+     * @throws MonopolyException lance l'exception quand les conditions de sont pas respectées
+     */
+    public static void payer(int somme, Joueur depart, Joueur destination) throws MonopolyException {
         if (somme <= 0)
             throw new IllegalArgumentException("somme invalide");
-        if (depart.getCapitalJoueur() < somme)
-            throw new Exception("Capital insuffisant");
         //on ne considere pas l'exception ou depart = destination
 
-        //On retire l'argent au Joueur qui donne
         Action.retirer(somme, depart);
-        //On ajoute l'argent au joueur qui le recoit
         Action.payer(somme, destination);
     }
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
-//  Dans notre cas je présuppose qu'il ne peut avoir qu'un seul plateau de monopoly                         //
-//  Plateau p1 = new Plateau();                                                                             //
-//      est une ruse pour juste charger les terrains et cartes                                              //
-//      Si on a besoin d'acceder aux cases, joueurs ou cartes on fait par ex: PLateau.getNombreJoueurs()    //
-//      C'est pour cela j'ai privilégié les fonctions de plateau en "static"                                //
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    public static void acheterPropriete(Joueur joueur, Terrain T) throws Exception {
+    /**
+     * Methode permettant a un joueur d'acheter une propriete
+     *
+     * @param joueur joueur qui achete
+     * @param T      propriete a acheter, ca doit etre un terrain achetable
+     * @throws Exception
+     */
+    public static void acheterPropriete(Joueur joueur, Terrain T) throws MonopolyException {
 
         if (!T.estAchetable())
             throw new IllegalArgumentException("terrain non achetable");
@@ -94,19 +92,24 @@ public class Action {
 
         //on vérifie que le terrain n'ai pas de propriétaire
         if (Ta.aUnProprietaire())
-            throw new Exception("Le terrain a deja un proprietaire");
+            throw new MonopolyException("Le terrain a deja un proprietaire");
 
         //on vérifie si le joueur peut l'acheter
         if (joueur.getCapitalJoueur() < Ta.getPrixAchat())
-            throw new Exception("Capital insuffisant");
+            throw new MonopolyException("Capital insuffisant");
 
         //On retire l'argent au joueur et on lui ajoute la popriété
         joueur.setCapitalJoueur(joueur.getCapitalJoueur() - Ta.getPrixAchat());
         joueur.ajouterPropriete(Ta);
         ((TerrainAchetable) T).setProprietaire(joueur);
-
     }
 
+    /**
+     * Methode permettant de mettre un joueur en prison
+     * Definie son etat prisonnier et le deplace case 40 (prison)
+     *
+     * @param joueur joueur qui va en prison
+     */
     public static void allerEnPrison(Joueur joueur) {
         if (joueur.isEstprisonnier())
             throw new IllegalArgumentException("joueur deja prisonnier");
@@ -114,19 +117,39 @@ public class Action {
         joueur.setPositionJoueur(40);
     }
 
+    /**
+     * Methode permettant de sortir un joueur de prison
+     * Definie son etat prisonnier et le deplace case 10 (simple visite)
+     *
+     * @param joueur joueur qui sort de prison
+     */
     public static void sortirDePrison(Joueur joueur) {
         if (!joueur.isEstprisonnier())
             throw new IllegalArgumentException("joueur non prisonnier");
         joueur.setEstprisonnier(false);
-        joueur.setPositionJoueur(10);   //On le place sur la case simple visite
+        joueur.setPositionJoueur(10);
     }
 
+    /**
+     * Deplace un joueur a la case position
+     * donne 200 au joueur si il passe par la case depart
+     *
+     * @param joueur   joueur a deplacer
+     * @param position nouvelle position du joueur
+     */
     public static void deplacer(Joueur joueur, int position) {
         if (position < joueur.getPositionJoueur())
             payer(200, joueur);
         joueur.setPositionJoueur(position);
     }
 
+    /**
+     * Fait avancer un joueur d'un certains nombre de case
+     * donne 200 au joueur si il passe par la case depart
+     *
+     * @param joueur        joueur a faire avancer
+     * @param nbDeplacement nombre de cases
+     */
     public static void avancerJoueur(Joueur joueur, int nbDeplacement) {
         if (nbDeplacement <= 0)
             throw new IllegalArgumentException("deplacement illegal");
@@ -143,9 +166,13 @@ public class Action {
         joueur.setPositionJoueur(nouvellePos);
     }
 
-
-    //pour verifier si un joueur peut construire sur un terrain
-    //cette methode peut etre utilisée dans la gestion du jeu
+    /**
+     * pour verifier si un joueur peut construire sur un terrain
+     *
+     * @param terrain terrain a verifier
+     * @param plateau plateau du terrain
+     * @return vrai si le proprietaire du terrain est capable de construire
+     */
     public static boolean peutConstruire(int terrain, UIPlateau plateau) {
 
         if (!plateau.getCaseP(terrain).estAchetable())
@@ -189,6 +216,12 @@ public class Action {
         return true;
     }
 
+    /**
+     * Methode permettant d'ajouter une construction (maison ou hotel) sur un terrain
+     *
+     * @param terrain terrain a construire
+     * @param plateau plateau du terrain
+     */
     public static void construire(int terrain, UIPlateau plateau) {
 
         if (!Action.peutConstruire(terrain, plateau))
@@ -198,23 +231,32 @@ public class Action {
         tc.setNombreMaison(tc.getNombreMaison() + 1);
     }
 
+    /**
+     * @return une valeur aleatoire entre 1 et 6
+     */
     public static int lancerDe() {
         return (int) Math.floor(Math.random() * (6) + 1);
     }
 
+    /**
+     * choisit aleatoire une carte Chance dans la liste de cartes chances
+     *
+     * @param joueur joueur qui pioche
+     * @return renvoie la carte choisit aleatoirement dans la liste de cartes chances
+     */
     public static Cartes piocherChance(Joueur joueur) {
         Random r = new Random();
         return joueur.getUIPlateau().getChance(r.nextInt(joueur.getUIPlateau().getNombreCarteChance() - 1));
     }
 
+    /**
+     * choisit aleatoire une carte Communaute dans la liste de cartes communautees
+     *
+     * @param joueur joueur qui pioche
+     * @return renvoie la carte choisit aleatoirement dans la liste de cartes comunautees
+     */
     public static Cartes piocherCommunaute(Joueur joueur) {
         Random r = new Random();
         return joueur.getUIPlateau().getCommunaute(r.nextInt(joueur.getUIPlateau().getNombreCarteCommunaute() - 1));
     }
-
-    public void hypotequer(int terrain) {
-
-    }
-
-
 }
