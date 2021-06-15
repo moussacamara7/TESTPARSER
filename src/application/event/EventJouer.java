@@ -3,6 +3,7 @@ package application.event;
 import application.Monopoly;
 import application.ui.Pion;
 import carte.*;
+import exception.MonopolyException;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import joueur.Joueur;
@@ -34,8 +35,8 @@ public class EventJouer implements EventHandler<ActionEvent> {
 //        String tfDe2 = monopoly.getTfValeurDe2().getText();
 
         int de1, de2;
-
-       /* if (!tfDe1.trim().isEmpty() && !tfDe2.trim().isEmpty()) {
+/*
+        if (!tfDe1.trim().isEmpty() && !tfDe2.trim().isEmpty()) {
 
             de1 = Integer.parseInt(tfDe1);
             de2 = Integer.parseInt(tfDe2);
@@ -107,25 +108,21 @@ public class EventJouer implements EventHandler<ActionEvent> {
 
             }
         }
+
+        repositionnerPion();
+
         Terrain t = joueur.getUIPlateau().getCaseP(joueur.getPositionJoueur());
         try {
             interactionCase(t);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
     }
 
-    public void interactionCase(Terrain t) throws Exception {
+    private void interactionCase(Terrain t) {
         Joueur joueur = monopoly.getJoueurCourant();
-
-        //on reposisionne son pion
-        int numJoueurCourant = monopoly.getUiPlateau().getListeJoueurs().indexOf(joueur);
-        Pion pionJoueurCourant = monopoly.getListePions().get(numJoueurCourant);
-        monopoly.getUiPlateau().getCase(pionJoueurCourant.getPosition()).enlever(pionJoueurCourant);
-        pionJoueurCourant.setPosition(joueur.getPositionJoueur());
-        monopoly.getUiPlateau().getCase(pionJoueurCourant.getPosition()).poser(pionJoueurCourant);
-        monopoly.getUiPlateau().dessiner(monopoly.getGrillePane());
-        payerLoyer();
 
         if (t instanceof TerrainAction) {
             TerrainAction tac = (TerrainAction) t;
@@ -193,13 +190,13 @@ public class EventJouer implements EventHandler<ActionEvent> {
             }
         }
 
-
+        repositionnerPion();
         //on mets a jour son porte monnaie
         monopoly.setValueTfPorteMonnaie(joueur.getCapitalJoueur());
     }
 
 
-    public void utiliserCarteChance(Cartes chance) {
+    private void utiliserCarteChance(Cartes chance) {
         if (chance instanceof Deplacement) {
             Deplacement c = (Deplacement) chance;
             monopoly.getMessageFooter().setText(c.getMessage());
@@ -226,7 +223,7 @@ public class EventJouer implements EventHandler<ActionEvent> {
         }
     }
 
-    public void payerLoyer() throws Exception {
+    private void payerLoyer(){
 
         Joueur joueur = monopoly.getJoueurCourant();
         Terrain t = joueur.getUIPlateau().getCaseP(joueur.getPositionJoueur());
@@ -236,10 +233,18 @@ public class EventJouer implements EventHandler<ActionEvent> {
             if (ta.aUnProprietaire()) {
                 if (ta instanceof Gare) {
                     Gare g = (Gare) ta;
-                    Action.payer(g.getLoyer(), joueur, g.getProprietaire());
+                    try {
+                        Action.payer(g.getLoyer(), joueur, g.getProprietaire());
+                    } catch (MonopolyException e) {
+                        e.printStackTrace();
+                    }
                 } else if (ta instanceof Compagnie) {
                     Compagnie c = (Compagnie) ta;
-                    Action.payer(c.getLoyer(), joueur, c.getProprietaire());
+                    try {
+                        Action.payer(c.getLoyer(), joueur, c.getProprietaire());
+                    } catch (MonopolyException e) {
+                        e.printStackTrace();
+                    }
 
                 } else {
                     //c'est constructible
@@ -265,11 +270,32 @@ public class EventJouer implements EventHandler<ActionEvent> {
                             prixLoyer = tc.getLoyer().getPrixHotel();
                             break;
                     }
-                    Action.payer(prixLoyer, joueur, tc.getProprietaire());
+                    try {
+                        Action.payer(prixLoyer, joueur, tc.getProprietaire());
+                    } catch (MonopolyException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         }
+    }
 
-
+    private void repositionnerPion(){
+        Joueur joueur = monopoly.getJoueurCourant();
+        int numJoueurCourant = monopoly.getUiPlateau().getListeJoueurs().indexOf(joueur);
+        Pion pionJoueurCourant = monopoly.getListePions().get(numJoueurCourant);
+        try {
+            monopoly.getUiPlateau().getCase(pionJoueurCourant.getPosition()).enlever(pionJoueurCourant);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        pionJoueurCourant.setPosition(joueur.getPositionJoueur());
+        monopoly.getUiPlateau().getCase(pionJoueurCourant.getPosition()).poser(pionJoueurCourant);
+        monopoly.getUiPlateau().dessiner(monopoly.getGrillePane());
+        try {
+            payerLoyer();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
