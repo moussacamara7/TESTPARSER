@@ -179,7 +179,6 @@ public class Action {
             return false;
         //terrain non achetable
 
-
         TerrainAchetable ta = (TerrainAchetable) plateau.getCaseP(terrain);
 
         if (!ta.estConstructible())
@@ -190,10 +189,15 @@ public class Action {
             return false;
         //le terrain n'a pas de propriétaire
 
+
         TerrainConstructible tc = (TerrainConstructible) ta;
         String couleur = tc.getCouleur();
         Joueur propietaire = tc.getProprietaire();
         int nbMaison = tc.getNombreMaison();
+
+        if(tc.getPrixAchatMaison() > propietaire.getCapitalJoueur())
+            return false;
+        //le proprietaire n'a pas l'argent
 
         for (Terrain n : plateau.getListeCasesP()) {
             if (n.estAchetable()) {
