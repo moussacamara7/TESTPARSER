@@ -12,11 +12,19 @@ import java.util.Arrays;
 public class EventAjouter implements EventHandler<ActionEvent> {
     FenetreChangerJoueur fenetreChangerJoueur;
 
+    /**
+     * Constructeur de EventAjouter
+     * @param fenetreChangerJoueur la fenetreChangerJoueur
+     */
     public EventAjouter(FenetreChangerJoueur fenetreChangerJoueur) {
         this.fenetreChangerJoueur = fenetreChangerJoueur;
     }
 
 
+    /**
+     * La fonction qui permet d'ajouter un joueur depuis la fenetre d'ajouts
+     * @param event evenement bouton ajouter
+     */
     @Override
     public void handle(ActionEvent event) {
         if (fenetreChangerJoueur.getNomJoueur().getText().trim().isEmpty())

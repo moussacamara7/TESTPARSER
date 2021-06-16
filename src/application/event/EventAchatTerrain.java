@@ -13,10 +13,18 @@ public class EventAchatTerrain implements EventHandler<ActionEvent> {
 
     private final Monopoly monopoly;
 
+    /**
+     * Constructeur EventAchatTerrain
+     * @param monopoly instance monopoly
+     */
     public EventAchatTerrain(Monopoly monopoly) {
         this.monopoly = monopoly;
     }
 
+    /**
+     * Fonction permettant de gerer l'achat d'un terrain
+     * @param e evenement bouton acheter le terrain
+     */
     @Override
     public void handle(ActionEvent e) {
         UIPlateau UIP = monopoly.getJoueurCourant().getUIPlateau();
@@ -38,6 +46,7 @@ public class EventAchatTerrain implements EventHandler<ActionEvent> {
                         Action.acheterPropriete(joueur, t);
                         monopoly.setValueTfPorteMonnaie(joueur.getCapitalJoueur());
                         monopoly.getProprietesJoueurCourant().getItems().add(((TerrainAchetable) t).getNomTerrain());
+                        monopoly.DialogAction(((TerrainAchetable) t).getNomTerrain(), false);
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }

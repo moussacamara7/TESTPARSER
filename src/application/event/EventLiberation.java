@@ -10,10 +10,19 @@ public class EventLiberation implements EventHandler<ActionEvent> {
 
     private final Monopoly monopoly;
 
+    /**
+     * Constructeur EventLiberation
+     * @param monopoly instance monomoply
+     */
     public EventLiberation(Monopoly monopoly) {
         this.monopoly = monopoly;
     }
 
+    /**
+     * gere l'utilisation d'une carte liberation
+     * fait toutes les verifications necaissaires
+     * @param e evenement bouton utiliser une carte liberation
+     */
     @Override
     public void handle(ActionEvent e) {
         if (!monopoly.getJoueurCourant().isEstprisonnier()) {

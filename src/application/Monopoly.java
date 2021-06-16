@@ -53,49 +53,86 @@ public class Monopoly extends Application {
 
     private HashMap<String, nomPion> nouveauxJoueurs = new HashMap<>();
 
+    /**
+     * fonction principale
+     * @param args arguments
+     */
     public static void main(String[] args) {
         launch(args);
     }
 
+    /**
+     * @return la ListView proprietesJoueurCourant
+     */
     public ListView<String> getZoneProprietes() {
         return proprietesJoueurCourant;
     }
 
+    /**
+     * @return la liste tabBoutonsJoueurs
+     */
     public ArrayList<ToggleButton> getTabBoutonsJoueurs() {
         return tabBoutonsJoueurs;
     }
 
+    /**
+     * @return le TextField tfDe1
+     */
     public TextField getTfValeurDe1() {
         return tfDe1;
     }
 
+    /**
+     * @return le TextField tfDe2
+     */
     public TextField getTfValeurDe2() {
         return tfDe2;
     }
 
+    /**
+     * Initialise le TextField tfDe1
+     * @param tfDe1 TextField du premier de
+     */
     public void setTfDe1(String tfDe1) {
         this.tfDe1.setText(tfDe1);
     }
 
+    /**
+     * Initialise le TextField tfDe2
+     * @param tfDe2 TextField du deuxieme  de
+     */
     public void setTfDe2(String tfDe2) {
         this.tfDe2.setText(tfDe2);
     }
 
+    /**
+     * @return le uiPlateau
+     */
     public UIPlateau getUiPlateau() {
         return uiPlateau;
     }
 
+    /**
+     * @return la toile grillePane
+     */
     public Canvas getGrillePane() {
         return grillePane;
     }
 
-
+    /**
+     * Fonction de creation la scene
+     * @param primaryStage scene principale de l'interface
+     */
     @Override
     public void start(Stage primaryStage) {
         startGame(primaryStage);
 
     }
 
+    /**
+     * Fonction pour creer une partie de jeu et initialiser l'interface
+     * @param primaryStage scene principale de l'interface
+     */
     public void startGame(Stage primaryStage) {
         try {
             initPartie();
@@ -123,6 +160,10 @@ public class Monopoly extends Application {
 
     }
 
+    /**
+     * fonction d'initialisation du panneau droit de l'interface
+     * @param root racine de la scene principale
+     */
     private void initPanneauDroit(BorderPane root) {
         VBox panneauDroit = new VBox();
         panneauDroit.setAlignment(Pos.TOP_CENTER);
@@ -137,6 +178,10 @@ public class Monopoly extends Application {
         root.setRight(panneauDroit);
     }
 
+    /**
+     * fonction d'initialisation de la partie inférieure de l'interface
+     * @param root racine de la scene principale
+     */
     private void initFooter(BorderPane root) {
         HBox footer = new HBox();
         footer.setAlignment(Pos.BASELINE_LEFT);
@@ -165,6 +210,10 @@ public class Monopoly extends Application {
     }
 
 
+    /**
+     * fonction d'initialisation de la partie inferieure du panneau droit
+     * @param panneauDroit panneau droit de l'interface
+     */
     private void initZonePropriete(VBox panneauDroit) {
         panneauDroit.getChildren().add(new Label(" "));
 
@@ -195,6 +244,10 @@ public class Monopoly extends Application {
         panneauDroit.getChildren().add(proprietesJoueurCourant);
     }
 
+    /**
+     * Initialise les boutons du panneau droit de l'interface
+     * @param panneauDroit panneau droit de l'interface
+     */
     private void initActions(VBox panneauDroit) {
         VBox box = new VBox();
 
@@ -225,6 +278,10 @@ public class Monopoly extends Application {
         panneauDroit.getChildren().add(box);
     }
 
+    /**
+     * Initialise la zone des des dans l'interface
+     * @param panneau panneau supérieur du panneua droit de l'interface
+     */
     private void initDes(VBox panneau) {
         Label des = new Label("Dés :");
         tfDe1 = new TextField();
@@ -260,12 +317,21 @@ public class Monopoly extends Application {
         panneau.getChildren().add(box);
     }
 
+    /**
+     * Initialise le plateau de jeu de l'interface
+     * @param root racine de la scene principale
+     */
     private void initPanneauPlateau(BorderPane root) {
         Image image = uiPlateau.getImage();
         grillePane = new Canvas(image.getWidth(), image.getHeight());
         root.setCenter(grillePane);
     }
 
+    /**
+     * Initialise le plateau et les joueurs de l'interface
+     * Les joueurs par defauts sont Han Luke et Yoda, sinon l'utilisateur choisit
+     * les noms et le nombre de joueurs avec leur pion, qui seront choisit en priorite
+     */
     private void initPartie() {
 
         uiPlateau = new UIPlateau(this);
@@ -283,6 +349,11 @@ public class Monopoly extends Application {
         }
     }
 
+    /**
+     * Ouvre une boite de dialogue relative a l'achat d'un terrain
+     * @param message message a afficher
+     * @param erreur vrai en cas d'erreur
+     */
     public void DialogAction(String message, boolean erreur) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle("Achat d'un terrain");
@@ -298,6 +369,10 @@ public class Monopoly extends Application {
         alert.showAndWait();
     }
 
+    /**
+     * Ouvre une boite de dialogue d'information
+     * @param message message a afficher
+     */
     public void DialogInfo(String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setHeaderText("");
@@ -305,6 +380,10 @@ public class Monopoly extends Application {
         alert.showAndWait();
     }
 
+    /**
+     * Ouvre une boite de dialogue relative a la carte Chance
+     * @return vrai si le joueur paye au lieu de piocher
+     */
     public Boolean DialogActionCarteChance() {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Carte Chance");
@@ -318,6 +397,11 @@ public class Monopoly extends Application {
         return result.get().equals(payerButton);
     }
 
+    /**
+     * Ouvre une boite de dialogue relative a la fin de partie
+     * Elle propose de Rejouer ou de quitter le programme
+     * @return vrai si on souhaite quitter le programme
+     */
     public boolean DialogFinDePartie() {
         Alert alert = new Alert(AlertType.NONE);
         alert.setTitle("Partie terminée");
@@ -331,10 +415,16 @@ public class Monopoly extends Application {
 
     }
 
+    /**
+     * @return la listView proprietesJoueurCourant
+     */
     public ListView<String> getProprietesJoueurCourant() {
         return proprietesJoueurCourant;
     }
 
+    /**
+     * mets a jour la liste des proprietes du joueur courant dans l'interface
+     */
     public void updateProprieteJoueurCourant() {
 
         this.getProprietesJoueurCourant().getItems().removeAll();
@@ -345,6 +435,12 @@ public class Monopoly extends Application {
         }
     }
 
+    /**
+     * creer un joueur et l'ajoute au plateau avec son pion
+     * @param nom le nom du joueur
+     * @param plateau le plateau de jeu
+     * @param nomPion le pion du joueur
+     */
     public void creerJoueurEtAjouter(String nom, UIPlateau plateau, nomPion nomPion) {
         plateau.ajouterJoueur(new Joueur(nom, plateau));
         Pion pion = new Pion(nomPion.getNom());
@@ -353,64 +449,104 @@ public class Monopoly extends Application {
         caseDepart.poser(pion);
     }
 
+    /**
+     * @return la liste des pions
+     */
     public ArrayList<Pion> getListePions() {
         return listePions;
     }
 
-    public void redemarrerPartie(Stage stage) {
+    /**
+     * Relance une partie avec les memes joueurs
+     */
+    public void redemarrerPartie() {
         primaryStage.close();
         setTourTermine(false);
         setJoueurCourant(null);
         tabBoutonsJoueurs = new ArrayList<>();
         listePions = new ArrayList<>();
 
-        startGame(stage);
+        startGame(primaryStage);
     }
 
-    public Stage getPrimaryStage() {
-        return primaryStage;
-    }
-
+    /**
+     * @return la hashMap des nouveaux joueurs
+     */
     public HashMap<String, nomPion> getNouveauxJoueurs() {
         return nouveauxJoueurs;
     }
 
+    /**
+     * @return l'etat du tour du joueur
+     */
     public boolean isTourTermine() {
         return tourTermine;
     }
 
+    /**
+     * Initialise l'etat du tour du joueur
+     * @param tourTermine vrai si le joueur ne peux plus lancer les des dans ce tour
+     */
     public void setTourTermine(boolean tourTermine) {
         this.tourTermine = tourTermine;
     }
 
+    /**
+     * @return le nombre de double par le joueur ce tour ci
+     */
     public int getNbDoubles() {
         return nbDoubles;
     }
 
+    /**
+     * Initialise le nombre de double par le joueur ce tour ci
+     * @param nbDoubles le nombre de double par le joueur ce tour ci
+     */
     public void setNbDoubles(int nbDoubles) {
         this.nbDoubles = nbDoubles;
     }
 
+    /**
+     * @return le Label du message de la partie inferieure de l'interface
+     */
     public Label getMessageFooter() {
         return messageFooter;
     }
 
+    /**
+     * @return la valeur du terrain selectionne dans la ListView, -1 si aucun
+     */
     public int getTerrainSelectionne() {
         return terrainSelectionne;
     }
 
+    /**
+     * Initialise le terrain selectionne dans la ListView
+     * @param terrainSelectionne terrain selectionne dans la ListView
+     */
     public void setTerrainSelectionne(int terrainSelectionne) {
         this.terrainSelectionne = terrainSelectionne;
     }
 
+    /**
+     * @return le joueur courant
+     */
     public Joueur getJoueurCourant() {
         return joueurCourant;
     }
 
+    /**
+     * Initialise le joueur courant
+     * @param j le joueur courant
+     */
     public void setJoueurCourant(Joueur j) {
         joueurCourant = j;
     }
 
+    /**
+     * Initialise le TextField de la valeur du porte monnaie
+     * @param value valeur du porte monnaie
+     */
     public void setValueTfPorteMonnaie(int value) {
         tfPorteMonnaie.setText(String.valueOf(value));
     }

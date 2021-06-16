@@ -11,10 +11,19 @@ public class EventPayerPrison implements EventHandler<ActionEvent> {
 
     private final Monopoly monopoly;
 
+    /**
+     * Constructeur EventPayerPrison
+     * @param monopoly instance monomoply
+     */
     public EventPayerPrison(Monopoly monopoly) {
         this.monopoly = monopoly;
     }
 
+    /**
+     * Fonction permettant au joueur de payer pour sortir de prison
+     * fait toutes les verifications necaissaires
+     * @param e evenement bouton payer pour sortir de prison
+     */
     @Override
     public void handle(ActionEvent e) {
 

@@ -1,7 +1,6 @@
 package application;
 
 import application.event.eventChangerJoueur.EventAjouter;
-import application.event.eventChangerJoueur.EventAnnuler;
 import application.event.eventChangerJoueur.EventValider;
 import application.ui.nomPion;
 import javafx.collections.ListChangeListener;
@@ -29,7 +28,10 @@ public class FenetreChangerJoueur extends Stage {
     private final HashMap<String, nomPion> tempNouveauxJoueurs = new HashMap<>();
     private int pionSelectionne = -1;
 
-
+    /**
+     * Constructeur de la fenetre pour changer les joueurs
+     * @param monopoly l'instance monopoly
+     */
     public FenetreChangerJoueur(Monopoly monopoly) {
         this.monopoly = monopoly;
 
@@ -55,7 +57,7 @@ public class FenetreChangerJoueur extends Stage {
 
         //bouton annuler
         annuler.setText("Annuler");
-        annuler.setOnAction(new EventAnnuler(this));
+        annuler.setOnAction(event-> close());
         hbButtons.getChildren().add(annuler);
         hbButtons.setAlignment(Pos.CENTER_RIGHT);
         setTitle("Creation de joueurs");
@@ -103,22 +105,37 @@ public class FenetreChangerJoueur extends Stage {
 
     }
 
+    /**
+     * Mets a jour l'affichage sur le nombre de joueurs creee
+     */
     public void updateLabelnbNouveauxJoueurs() {
         nbNouveauxJoueurs.setText("Nombre de joueurs : " + tempNouveauxJoueurs.size());
     }
 
+    /**
+     * @return la hashMap des joueurs creer dans la fenetre
+     */
     public HashMap<String, nomPion> getTempNouveauxJoueurs() {
         return tempNouveauxJoueurs;
     }
 
+    /**
+     * @return l'instance monoply
+     */
     public Monopoly getMonopoly() {
         return monopoly;
     }
 
+    /**
+     * @return le TextField du nom du joueur
+     */
     public TextField getNomJoueur() {
         return nomJoueur;
     }
 
+    /**
+     * @return le pion selectionne dans la liste
+     */
     public int getPionSelectionne() {
         return pionSelectionne;
     }

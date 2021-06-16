@@ -79,7 +79,7 @@ public class JoueurFailliteException {
                 Platform.exit();
                 System.exit(0);
             } else {
-                monopoly.redemarrerPartie(monopoly.getPrimaryStage());
+                monopoly.redemarrerPartie();
             }
         }
     }

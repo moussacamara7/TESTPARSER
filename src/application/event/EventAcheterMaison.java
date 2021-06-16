@@ -11,11 +11,19 @@ import terrain.TerrainConstructible;
 public class EventAcheterMaison implements EventHandler<ActionEvent> {
     private final FenetreTerrain fenetreTerrain;
 
+    /**
+     * Constructeur EventAcheterMaison
+     * @param fenetreTerrain fenetre de gestion de terrain
+     */
     public EventAcheterMaison(FenetreTerrain fenetreTerrain) {
         this.fenetreTerrain = fenetreTerrain;
     }
 
 
+    /**
+     * gere l'achat de maisons
+     * @param e evenement de clique sur acheter
+     */
     @Override
     public void handle(ActionEvent e) {
         Monopoly monopoly = fenetreTerrain.getMonopoly();

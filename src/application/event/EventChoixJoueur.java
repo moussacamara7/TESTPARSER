@@ -11,10 +11,18 @@ public class EventChoixJoueur implements EventHandler<ActionEvent> {
     private final Monopoly monopoly;
 
 
+    /**
+     * Constructeur de EventChoixJoueur
+     * @param monopoly instance monopoly
+     */
     public EventChoixJoueur(Monopoly monopoly) {
         this.monopoly = monopoly;
     }
 
+    /**
+     * Gere la selection des joueurs
+     * @param e evenement changement de joueur
+     */
     @Override
     public void handle(ActionEvent e) {
         if (e.getSource() instanceof ToggleButton) {
@@ -22,7 +30,7 @@ public class EventChoixJoueur implements EventHandler<ActionEvent> {
             Joueur j = (Joueur) b.getUserData();
 
             monopoly.setJoueurCourant(j);
-            //System.out.println(monopoly.getJoueurCourant() + " doit jouer");
+            System.out.println(monopoly.getJoueurCourant() + " doit jouer");
 
             monopoly.getZoneProprietes().getItems().clear();
         }

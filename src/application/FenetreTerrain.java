@@ -25,7 +25,10 @@ public class FenetreTerrain extends Stage {
     private final Monopoly monopoly;
     private final TerrainAchetable terrain;
 
-
+    /**
+     * Consutructeur de la fenetre d'achat d'un terrain
+     * @param monopoly l'instance monopoly
+     */
     public FenetreTerrain(Monopoly monopoly) {
         this.monopoly = monopoly;
 
@@ -147,14 +150,24 @@ public class FenetreTerrain extends Stage {
         show();
     }
 
+    /**
+     * @return monopoly
+     */
     public Monopoly getMonopoly() {
         return monopoly;
     }
 
+    /**
+     * @return le terrain
+     */
     public TerrainAchetable getTerrain() {
         return terrain;
     }
 
+    /**
+     * Initialise le Label Info
+     * @param text texte a afficher
+     */
     public void setInfo(String text) {
         info.setText(text);
     }

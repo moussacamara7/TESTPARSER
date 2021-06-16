@@ -12,10 +12,19 @@ public class EventPasser implements EventHandler<ActionEvent> {
 
     private final Monopoly monopoly;
 
+    /**
+     * Constructeur EventPasser
+     * @param monopoly instance monomoply
+     */
     public EventPasser(Monopoly monopoly) {
         this.monopoly = monopoly;
     }
 
+    /**
+     * Passe au joueur suivant si le joueur courant a fini son tour
+     * sinon affiche les messages necessaires
+     * @param e evenement bouton passer son tour
+     */
     @Override
     public void handle(ActionEvent e) {
         if (monopoly.isTourTermine()) {

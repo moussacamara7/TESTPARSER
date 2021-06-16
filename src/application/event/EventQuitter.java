@@ -10,6 +10,11 @@ import java.util.Optional;
 
 public class EventQuitter implements EventHandler<ActionEvent> {
 
+    /**
+     * Ouvre une boite de dialogue demandant si le joueur veut vraiment quitter
+     * Ferme l'application si DialogQuitter est vrai
+     * @param e evenement bouton quitter
+     */
     @Override
     public void handle(ActionEvent e) {
         if(DialogQuitter()) {
@@ -18,6 +23,9 @@ public class EventQuitter implements EventHandler<ActionEvent> {
         }
     }
 
+    /**
+     * @return vrai si le joueur appuie sur oui
+     */
     private boolean DialogQuitter() {
         Alert alert = new Alert(Alert.AlertType.NONE);
         alert.setTitle("Quitter la partie");
