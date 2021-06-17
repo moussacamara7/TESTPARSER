@@ -24,6 +24,7 @@ public class UIPlateau {
     final static String CARTE_CHANCE = "data/CartesChance.csv";
     final static String CARTE_CAISSECOMMUNAUTE = "data/CartesCommunaute.csv";
     private static final int NOMBRE_CASES = 40;
+
     ////////////////////////////////////////////////////////
     //  Champs relatifs au "Plateau"
     ////////////////////////////////////////////////////////
@@ -38,6 +39,10 @@ public class UIPlateau {
     private Image imagePlateau;
 
 
+    /**
+     * Constructeur de UIPlateau
+     * @param monopoly instance monopoly
+     */
     public UIPlateau(Monopoly monopoly) {
 
         for (int i = 0; i < 41; i++)
@@ -52,6 +57,9 @@ public class UIPlateau {
         this.monopoly = monopoly;
     }
 
+    /**
+     * Initialise les images des pions dans la hashMap imagesPions
+     */
     private void initImagesPions() {
         imagesPions.put(new Pion("Chien"), new Image("file:image/Chien.png"));
         imagesPions.put(new Pion("Bateau"), new Image("file:image/Bateau.png"));
@@ -63,20 +71,33 @@ public class UIPlateau {
         imagesPions.put(new Pion("Voiture"), new Image("file:image/Voiture.png"));
     }
 
+    /**
+     * @return l'image du plateau
+     */
     public Image getImage() {
         return imagePlateau;
     }
 
+    /**
+     * @return l'instance monopoly
+     */
     public Monopoly getMonopoly() {
         return monopoly;
     }
 
+    /**
+     * Initialise l'image du plateau
+     * @param nomFichierPlateau le chemin de l'image
+     */
     private void initImagePlateau(String nomFichierPlateau) {
-        //imagePlateau = new Image(getClass().getResourceAsStream(nomFichierPlateau));
         System.out.println("Dossier : " + nomFichierPlateau + "\n");
         imagePlateau = new Image(nomFichierPlateau);
     }
 
+    /**
+     * @param numCase le numero de la case
+     * @return une la case du numero numCase
+     */
     public UICase getCase(int numCase) {
         if (numCase < 0 || numCase > NOMBRE_CASES)
             throw new IllegalArgumentException("Le numéro de la case est incorrect");
@@ -91,7 +112,6 @@ public class UIPlateau {
      * @param nf nom du fichier contenant les coordonnées des cases du plateau. Ces coordonnées
      *           sont celles pour le plateau 800x800 pixels
      *           <p>
-     *           YL : --> A remplacer avec vos parser !!! ça c'est moche et ça doit disparaitre !!!
      */
     private void initCoordonnees(String nf) {
 
@@ -102,16 +122,12 @@ public class UIPlateau {
         System.out.println("Fin Dossier : " + nf + "\n");
     }
 
-    /**
-     * La méthode parserCoordonnées vérifie que la ligne à parser respecte le bon format. Sinon arrêt
-     * du programme en lançant une exception du type Error
-     * <p>
-     * //@param ligne La ligne à parser
-     */
 
-    ////////////////////////////////////////
-    //      Parser Coordonnes du prof
-    ///////////////////////////////////////////////
+    /**
+     * dessine le palteau
+     * retire toutes les images des pions du plateau puis les replace sur leur case
+     * @param grillePane la grille du plateau
+     */
     public void dessiner(Canvas grillePane) {
         for (int i = 0; i <= NOMBRE_CASES; i++) {
             cases.get(i).vider();
@@ -138,10 +154,13 @@ public class UIPlateau {
     //
     //////////////////////////////////////////////////////////////////////////////////
 
+    /**
+     * Initialise le terrain
+     * @param nf nom du fichier contenant le terrain
+     */
     public void initialisationTerrain(String nf) {
 
         try {
-            //String fichierTerrain = "data/Terrains.csv";
 
             Parser premierParser = new ParserAllezEnPrison(null);
             premierParser = new ParserCaisseCommunaute(premierParser);
@@ -164,11 +183,13 @@ public class UIPlateau {
         }
     }
 
+    /**
+     * Initialise les cartes communautees
+     * @param nf nom du fichier contenant les cartes communautees
+     */
     public void initialisationCarteCommunaute(String nf) {
 
         try {
-            //String fichierCommunaute = "data/CartesCommunaute.csv";
-
 
             Parser premierParser = new ParserCommunauteAnniversaire(null);
             premierParser = new ParserCommunauteImpots(premierParser);
@@ -187,6 +208,10 @@ public class UIPlateau {
         }
     }
 
+    /**
+     * Initialise les cartes chances
+     * @param nf nom du fichier contenant les cartes chances
+     */
     public void initialisationCarteChance(String nf) {
 
         try {
@@ -212,9 +237,14 @@ public class UIPlateau {
 
     ////////////////////////////////////////////
     //
-    //      Methodes relatifs aux Cases
+    //      Methodes relatives aux Cases
     //
     ////////////////////////////////////////////
+
+    /**
+     * ajoute une case
+     * @param cas case a ajouter
+     */
     public void ajouterCasesP(Terrain cas) {
         if (cas == null)
             throw new IllegalArgumentException("Case erronee");
@@ -223,7 +253,10 @@ public class UIPlateau {
 
     }
 
-
+    /**
+     * @param i le numero de la case
+     * @return la case du numero indique
+     */
     public Terrain getCaseP(int i) {
         if (i < 0 || i > 40)
             throw new IllegalArgumentException("L'indice de la case est incorrect");
@@ -231,6 +264,9 @@ public class UIPlateau {
         return casesP.get(i);
     }
 
+    /**
+     * @return la liste de cases
+     */
     public ArrayList<Terrain> getListeCasesP() {
         return this.casesP;
     }
@@ -241,6 +277,11 @@ public class UIPlateau {
     //      Methodes relatifs aux Cartes Chance
     //
     ////////////////////////////////////////////
+
+    /**
+     * ajoute une carte chance a la liste chance
+     * @param cChance la carte a ajouter
+     */
     public void ajouterChance(Cartes cChance) {
         if (cChance == null)
             throw new IllegalArgumentException("Carte chance erronee");
@@ -249,15 +290,25 @@ public class UIPlateau {
 
     }
 
+    /**
+     * @return la liste de cartes chance
+     */
     public ArrayList<Cartes> getChance() {
         return chance;
     }
 
 
+    /**
+     * @return le nombre de cartes chances dans la liste chance
+     */
     public int getNombreCarteChance() {
         return chance.size();
     }
 
+    /**
+     * @param i indice de la carte
+     * @return la carte chance d'indice i dans la liste chance
+     */
     public Cartes getChance(int i) {
         if (i < 0 || i > 15)
             throw new IllegalArgumentException("L'indice de la carte est incorrect");
@@ -270,6 +321,11 @@ public class UIPlateau {
     //      Methodes relatifs aux Cartes Caisse de communauté
     //
     ////////////////////////////////////////////
+
+    /**
+     * ajouter une carte communaute a la liste caisseCommunaute
+     * @param cCommunaute la carte a ajouter
+     */
     public void ajouterCommunaute(Cartes cCommunaute) {
         if (cCommunaute == null)
             throw new IllegalArgumentException("Carte communaute erronee");
@@ -278,7 +334,9 @@ public class UIPlateau {
 
     }
 
-
+    /**
+     * @return le nombre de cartes communautees dans la liste caisseCommunaute
+     */
     public int getNombreCarteCommunaute() {
         return caisseCommunaute.size();
     }
@@ -290,6 +348,9 @@ public class UIPlateau {
         return caisseCommunaute.get(i);
     }
 
+    /**
+     * @return la liste des joueurs
+     */
     public ArrayList<Joueur> getListeJoueurs() {
         return listeJoueurs;
     }
@@ -299,6 +360,11 @@ public class UIPlateau {
     //      Methodes relatifs aux Joueurs
     //
     ////////////////////////////////////////////
+
+    /**
+     * Ajoute un joueur a la liste de joueurs du plateau
+     * @param joueur le joueur a ajouter
+     */
     public void ajouterJoueur(Joueur joueur) {
         if (joueur == null)
             throw new IllegalArgumentException("joueur erroné");

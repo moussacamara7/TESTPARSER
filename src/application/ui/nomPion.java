@@ -6,10 +6,17 @@ public enum nomPion {
 
     private final String nom;
 
+    /**
+     * Initalise le nom du pion
+     * @param nom le nom du pion
+     */
     nomPion(String nom) {
         this.nom = nom;
     }
 
+    /**
+     * @return le nom du pion
+     */
     public String getNom() {
         return nom;
     }
