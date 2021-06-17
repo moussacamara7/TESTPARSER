@@ -18,10 +18,18 @@ public class EventJouer implements EventHandler<ActionEvent> {
     private final Monopoly monopoly;
 
 
+    /**
+     * Constructeur EventJouer
+     * @param monopoly instance monomoply
+     */
     public EventJouer(Monopoly monopoly) {
         this.monopoly = monopoly;
     }
 
+    /**
+     * gere le tour d'un joueur
+     * @param event evenement bouton lancer les des
+     */
     @Override
     public void handle(ActionEvent event) {
 
@@ -31,24 +39,23 @@ public class EventJouer implements EventHandler<ActionEvent> {
             return;
         }
 
-//        String tfDe1 = monopoly.getTfValeurDe1().getText();
-//        String tfDe2 = monopoly.getTfValeurDe2().getText();
+        String tfDe1 = monopoly.getTfValeurDe1().getText();
+        String tfDe2 = monopoly.getTfValeurDe2().getText();
 
         int de1, de2;
-/*
+
         if (!tfDe1.trim().isEmpty() && !tfDe2.trim().isEmpty()) {
 
             de1 = Integer.parseInt(tfDe1);
             de2 = Integer.parseInt(tfDe2);
             monopoly.getMessageFooter().setText("");
-        } else {*/
+        } else {
             monopoly.getMessageFooter().setText("");
             de1 = Action.lancerDe();
             de2 = Action.lancerDe();
             monopoly.setTfDe1(String.valueOf(de1));
             monopoly.setTfDe2(String.valueOf(de2));
-//        }
-
+        }
         int nbCases = de1 + de2;
 
         Joueur joueur = monopoly.getJoueurCourant();
@@ -121,6 +128,10 @@ public class EventJouer implements EventHandler<ActionEvent> {
 
     }
 
+    /**
+     * Gere l'interaction entre la case et le joueur
+     * @param t le terrain ou se trouve le joueur
+     */
     private void interactionCase(Terrain t) {
         Joueur joueur = monopoly.getJoueurCourant();
 
@@ -195,7 +206,10 @@ public class EventJouer implements EventHandler<ActionEvent> {
         monopoly.setValueTfPorteMonnaie(joueur.getCapitalJoueur());
     }
 
-
+    /**
+     * Fonction qui permet d'utiliser une carte chance piocher
+     * @param chance la carte pioche par le joueur
+     */
     private void utiliserCarteChance(Cartes chance) {
         if (chance instanceof Deplacement) {
             Deplacement c = (Deplacement) chance;
@@ -223,6 +237,10 @@ public class EventJouer implements EventHandler<ActionEvent> {
         }
     }
 
+    /**
+     * Fonction qui verifie si le joueur doit payer un loyer sur le terrain ou il se trouve
+     * si se trouve sur la propriete d'un autre joueur, il lui paye le loyer
+     */
     private void payerLoyer(){
 
         Joueur joueur = monopoly.getJoueurCourant();
@@ -280,6 +298,9 @@ public class EventJouer implements EventHandler<ActionEvent> {
         }
     }
 
+    /**
+     * Fonction permettant de repositionner le pion des joueurs sur l'interface
+     */
     private void repositionnerPion(){
         Joueur joueur = monopoly.getJoueurCourant();
         int numJoueurCourant = monopoly.getUiPlateau().getListeJoueurs().indexOf(joueur);
