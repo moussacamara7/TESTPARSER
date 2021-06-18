@@ -39,23 +39,23 @@ public class EventJouer implements EventHandler<ActionEvent> {
             return;
         }
 
-        String tfDe1 = monopoly.getTfValeurDe1().getText();
-        String tfDe2 = monopoly.getTfValeurDe2().getText();
+//        String tfDe1 = monopoly.getTfValeurDe1().getText();
+//        String tfDe2 = monopoly.getTfValeurDe2().getText();
 
         int de1, de2;
 
-        if (!tfDe1.trim().isEmpty() && !tfDe2.trim().isEmpty()) {
+        /*if (!tfDe1.trim().isEmpty() && !tfDe2.trim().isEmpty()) {
 
             de1 = Integer.parseInt(tfDe1);
             de2 = Integer.parseInt(tfDe2);
             monopoly.getMessageFooter().setText("");
-        } else {
+        } else {*/
             monopoly.getMessageFooter().setText("");
             de1 = Action.lancerDe();
             de2 = Action.lancerDe();
             monopoly.setTfDe1(String.valueOf(de1));
             monopoly.setTfDe2(String.valueOf(de2));
-        }
+        //}
         int nbCases = de1 + de2;
 
         Joueur joueur = monopoly.getJoueurCourant();
