@@ -1,5 +1,7 @@
 package terrain;
 
+import joueur.Joueur;
+
 public class TerrainNeutre extends terrain.TerrainNonAchetable {
 
     /**
@@ -9,6 +11,10 @@ public class TerrainNeutre extends terrain.TerrainNonAchetable {
      */
     public TerrainNeutre(int numeroTerrain, String nomTerrain) {
         super(numeroTerrain, nomTerrain);
+    }
+
+    @Override
+    public void action(Joueur joueur) {
     }
 
     /**

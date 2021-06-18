@@ -77,6 +77,8 @@ public abstract class TerrainAchetable implements Terrain {
      */
     public abstract boolean estConstructible();
 
+    public abstract void action(Joueur joueur);
+
     /**
      * @return chaine concatene definissant un terrainAchetable
      */

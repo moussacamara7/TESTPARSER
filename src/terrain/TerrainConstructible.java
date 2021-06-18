@@ -1,5 +1,9 @@
 package terrain;
 
+import exception.MonopolyException;
+import joueur.Joueur;
+import mecanismeJeu.Action;
+
 public class TerrainConstructible extends TerrainAchetable {
 
 
@@ -68,6 +72,38 @@ public class TerrainConstructible extends TerrainAchetable {
      */
     public boolean estConstructible() {
         return true;
+    }
+
+    @Override
+    public void action(Joueur joueur) {
+        if(this.aUnProprietaire() && ! this.getProprietaire().equals(joueur)) {
+            int prixLoyer = 0;
+            switch (this.getNombreMaison()) {
+                case 0:
+                    prixLoyer = this.getLoyer().getPrixAucuneMaison();
+                    break;
+                case 1:
+                    prixLoyer = this.getLoyer().getPrixUnemaison();
+                    break;
+                case 2:
+                    prixLoyer = this.getLoyer().getPrixDeuxMaison();
+                    break;
+                case 3:
+                    prixLoyer = this.getLoyer().getPrixTroisMaison();
+                    break;
+                case 4:
+                    prixLoyer = this.getLoyer().getPrixQuatreMaison();
+                    break;
+                case 5:
+                    prixLoyer = this.getLoyer().getPrixHotel();
+                    break;
+            }
+            try {
+                Action.payer(prixLoyer, joueur, this.getProprietaire());
+            } catch (MonopolyException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

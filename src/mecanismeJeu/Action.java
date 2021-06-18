@@ -80,7 +80,7 @@ public class Action {
      *
      * @param joueur joueur qui achete
      * @param T      propriete a acheter, ca doit etre un terrain achetable
-     * @throws Exception
+     * @throws MonopolyException e
      */
     public static void acheterPropriete(Joueur joueur, Terrain T) throws MonopolyException {
 

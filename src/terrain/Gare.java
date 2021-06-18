@@ -1,6 +1,10 @@
 package terrain;
 
 
+import exception.MonopolyException;
+import joueur.Joueur;
+import mecanismeJeu.Action;
+
 public class Gare extends TerrainAchetable {
 
     private int loyer;
@@ -37,6 +41,17 @@ public class Gare extends TerrainAchetable {
      */
     public boolean estConstructible() {
         return false;
+    }
+
+    @Override
+    public void action(Joueur joueur) {
+        if(this.aUnProprietaire() && ! this.getProprietaire().equals(joueur)){
+            try {
+                Action.payer(this.getLoyer(), joueur, this.getProprietaire());
+            } catch (MonopolyException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**

@@ -1,6 +1,8 @@
 package terrain;
 
 
+import joueur.Joueur;
+
 public abstract class TerrainNonAchetable implements Terrain {
     private final int numeroTerrain;
     private final String nomTerrain;
@@ -28,6 +30,8 @@ public abstract class TerrainNonAchetable implements Terrain {
     public boolean estAchetable() {
         return false;
     }
+
+    public abstract void action(Joueur joueur);
 
     /**
      * @return Chaine concatenee definissant terrain non achetable
