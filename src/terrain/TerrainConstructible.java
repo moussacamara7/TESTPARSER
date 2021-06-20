@@ -1,5 +1,6 @@
 package terrain;
 
+import application.ui.UIPlateau;
 import exception.MonopolyException;
 import joueur.Joueur;
 import mecanismeJeu.Action;
@@ -72,6 +73,15 @@ public class TerrainConstructible extends TerrainAchetable {
      */
     public boolean estConstructible() {
         return true;
+    }
+
+    public void construire(Joueur joueur){
+        UIPlateau plateau = joueur.getUIPlateau();
+        if (!Action.peutConstruire(getNumeroTerrain(), plateau))
+            throw new IllegalArgumentException(("terrain non eligible a la construction"));
+        Action.retirer(getPrixAchatMaison(), getProprietaire());
+        setNombreMaison(getNombreMaison() + 1);
+
     }
 
     @Override

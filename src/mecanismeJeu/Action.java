@@ -75,34 +75,7 @@ public class Action {
         Action.payer(somme, destination);
     }
 
-    /**
-     * Methode permettant a un joueur d'acheter une propriete
-     *
-     * @param joueur joueur qui achete
-     * @param T      propriete a acheter, ca doit etre un terrain achetable
-     * @throws MonopolyException e
-     */
-    public static void acheterPropriete(Joueur joueur, Terrain T) throws MonopolyException {
 
-        if (!T.estAchetable())
-            throw new IllegalArgumentException("terrain non achetable");
-
-        //c'est bien un terrain achetable
-        TerrainAchetable Ta = (TerrainAchetable) T;
-
-        //on vérifie que le terrain n'ai pas de propriétaire
-        if (Ta.aUnProprietaire())
-            throw new MonopolyException("Le terrain a deja un proprietaire");
-
-        //on vérifie si le joueur peut l'acheter
-        if (joueur.getCapitalJoueur() < Ta.getPrixAchat())
-            throw new MonopolyException("Capital insuffisant");
-
-        //On retire l'argent au joueur et on lui ajoute la popriété
-        joueur.setCapitalJoueur(joueur.getCapitalJoueur() - Ta.getPrixAchat());
-        joueur.ajouterPropriete(Ta);
-        ((TerrainAchetable) T).setProprietaire(joueur);
-    }
 
     /**
      * Methode permettant de mettre un joueur en prison
@@ -218,21 +191,6 @@ public class Action {
             }
         }
         return true;
-    }
-
-    /**
-     * Methode permettant d'ajouter une construction (maison ou hotel) sur un terrain
-     *
-     * @param terrain terrain a construire
-     * @param plateau plateau du terrain
-     */
-    public static void construire(int terrain, UIPlateau plateau) {
-
-        if (!Action.peutConstruire(terrain, plateau))
-            throw new IllegalArgumentException(("terrain non eligible a la construction"));
-        TerrainConstructible tc = (TerrainConstructible) plateau.getCaseP(terrain);
-        Action.retirer(tc.getPrixAchatMaison(), tc.getProprietaire());
-        tc.setNombreMaison(tc.getNombreMaison() + 1);
     }
 
     /**

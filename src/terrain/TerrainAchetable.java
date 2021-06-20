@@ -1,5 +1,6 @@
 package terrain;
 
+import exception.MonopolyException;
 import joueur.Joueur;
 
 public abstract class TerrainAchetable implements Terrain {
@@ -78,6 +79,20 @@ public abstract class TerrainAchetable implements Terrain {
     public abstract boolean estConstructible();
 
     public abstract void action(Joueur joueur);
+
+    public void acheter(Joueur joueur) throws MonopolyException {
+        if (aUnProprietaire())
+            throw new MonopolyException("Le terrain a deja un proprietaire");
+
+        //on vérifie si le joueur peut l'acheter
+        if (joueur.getCapitalJoueur() < getPrixAchat())
+            throw new MonopolyException("Capital insuffisant");
+
+        //On retire l'argent au joueur et on lui ajoute la popriété
+        joueur.setCapitalJoueur(joueur.getCapitalJoueur() - getPrixAchat());
+        joueur.ajouterPropriete(this);
+        setProprietaire(joueur);
+    }
 
     /**
      * @return chaine concatene definissant un terrainAchetable

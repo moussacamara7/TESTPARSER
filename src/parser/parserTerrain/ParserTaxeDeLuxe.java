@@ -4,7 +4,7 @@ package parser.parserTerrain;
 import application.ui.UIPlateau;
 import exception.ParserManquantException;
 import parser.Parser;
-import terrain.TerrainAction;
+import terrain.TerrainTaxeDeLuxe;
 
 public class ParserTaxeDeLuxe extends Parser {
 
@@ -24,7 +24,7 @@ public class ParserTaxeDeLuxe extends Parser {
      */
     @Override
     public void parser(String[] values, UIPlateau plateau) throws ParserManquantException {
-        TerrainAction T = new TerrainAction(Integer.parseInt(values[0]), values[1]);
+        TerrainTaxeDeLuxe T = new TerrainTaxeDeLuxe(Integer.parseInt(values[0]), values[1]);
 
         plateau.ajouterCasesP(T);
     }

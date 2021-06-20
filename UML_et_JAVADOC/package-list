@@ -1,0 +1,15 @@
+application
+application.event
+application.event.eventChangerJoueur
+application.ui
+carte
+exception
+fichier
+joueur
+mecanismeJeu
+parser
+parser.CoordoneesCases
+parser.parserCarteChance
+parser.parserCarteCommunaute
+parser.parserTerrain
+terrain

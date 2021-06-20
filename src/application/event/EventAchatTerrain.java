@@ -43,7 +43,7 @@ public class EventAchatTerrain implements EventHandler<ActionEvent> {
                     monopoly.DialogAction("Vous n'avez pas l'argent nécessaire !!", true);
                 } else {
                     try {
-                        Action.acheterPropriete(joueur, t);
+                        ta.acheter(joueur);
                         monopoly.setValueTfPorteMonnaie(joueur.getCapitalJoueur());
                         monopoly.getProprietesJoueurCourant().getItems().add(((TerrainAchetable) t).getNomTerrain());
                         monopoly.DialogAction(((TerrainAchetable) t).getNomTerrain(), false);

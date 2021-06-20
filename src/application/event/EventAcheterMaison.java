@@ -35,7 +35,7 @@ public class EventAcheterMaison implements EventHandler<ActionEvent> {
         if (!Action.peutConstruire(terrain.getNumeroTerrain(), monopoly.getUiPlateau())) {
             fenetreTerrain.setInfo("Tu ne peux pas acheter pour l'instant!");
         } else {
-            Action.construire(terrain.getNumeroTerrain(), monopoly.getUiPlateau());
+            terrain.construire(joueur);
             monopoly.setValueTfPorteMonnaie(joueur.getCapitalJoueur());
 
             int nbMaison = terrain.getNombreMaison();
